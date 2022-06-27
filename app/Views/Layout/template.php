@@ -164,12 +164,13 @@
                                 <li class="nav-item <?= ($menu == $list['nama_menu']) ? 'menu-open' : '' ?>">
                                     <a href="<?= base_url($list['link']); ?>" class="nav-link <?= ($menu == $list['nama_menu']) ? 'active' : '' ?>">
                                         <i class="nav-icon <?= $list['icon']; ?>"></i>
-                                        <p><?= $list['nama_menu']; ?></p>
-                                        <?php foreach ($list_submenu as $sub) {
-                                            if ($sub['menu_id'] == $list['id'])
-                                                $angle = 'right fas fa-angle-left';
-                                        }  ?>
-                                        <i class="<?= $angle; ?>"></i>
+                                        <p><?= $list['nama_menu']; ?>
+                                            <?php foreach ($list_submenu as $sub) {
+                                                if ($sub['menu_id'] == $list['id'])
+                                                    $angle = 'right fas fa-angle-left';
+                                            }  ?>
+                                            <i class="<?= $angle; ?>"></i>
+                                        </p>
                                     </a>
                                     <?php if ($angle != '#') : ?>
                                         <ul class="nav nav-treeview">
