@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
     <!-- daterange picker -->
@@ -92,13 +91,11 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="siphpMaster/images/1.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3" />
+                                <img src="siphpMaster/images/1.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3" />
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i
-                                                class="fas fa-star"></i></span>
+                                        <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
                                     </h3>
                                     <p class="text-sm">The subject goes here</p>
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
@@ -112,11 +109,9 @@
                 </li>
                 <!-- Profile Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#"> Admin BPS<i class="right fas fa-angle-down"
-                            style="margin-left: 10px"></i> </a>
+                    <a class="nav-link" data-toggle="dropdown" href="#"> Admin BPS<i class="right fas fa-angle-down" style="margin-left: 10px"></i> </a>
                     <div class="dropdown-menu dropdown-menu-md">
-
-                        <a href="/profile" class="dropdown-item">
+                        <a href="<?= base_url('/profile') ?>" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i> Profile
                         </a>
                         <div class="dropdown-divider"></div>
@@ -124,10 +119,9 @@
                             <button class="dropdown-item text-center">Admin</button>
                         </form>
                         <div class="dropdown-divider"></div>
-                        <a href="/logout" class="dropdown-item">
+                        <a href="<?= base_url('/logout') ?>" class="dropdown-item">
                             <i class="fas fa-sign-out-alt mr-2"></i> Logout
                         </a>
-
                     </div>
                 </li>
             </ul>
@@ -137,7 +131,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #3c4b64;">
             <!-- Brand Logo -->
-            <a href="/dashboard" class="brand-link" style="border: none">
+            <a href="<?= base_url('/dashboard') ?>" class="brand-link" style="border: none">
                 <img src="images/BPS.png" alt="Logo BPS" class="brand-image image-circle" style="opacity: 0.8" />
                 <span class="brand-text font-weight-light">SIPHP</span>
             </a>
@@ -149,8 +143,7 @@
                 <!-- SidebarSearch Form -->
                 <div class="form-inline mt-3">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search" style="background-color: #4D5F7C; border: none;" />
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search" style="background-color: #4D5F7C; border: none;" />
                         <div class="input-group-append">
                             <button class="btn btn-sidebar" style="background-color: #3A4B68;">
                                 <i class="fas fa-search fa-fw"></i>
@@ -161,42 +154,39 @@
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <?php $list_menu = session('list_menu') ?>
                         <?php $angle = '#' ?>
                         <?php $list_submenu = session('list_submenu') ?>
                         <?php foreach ($list_menu as $list) : ?>
 
-                        <?php if ($list['is_active'] == 'Y') : ?>
-                        <li class="nav-item <?= ($menu == $list['nama_menu']) ? 'menu-open' : '' ?>">
-                            <a href="<?= base_url($list['link']); ?>"
-                                class="nav-link <?= ($menu == $list['nama_menu']) ? 'active' : '' ?>">
-                                <i class="nav-icon <?= $list['icon']; ?>"></i>
-                                <p><?= $list['nama_menu']; ?></p>
-                                <?php foreach ($list_submenu as $sub) {
-                      if ($sub['menu_id'] == $list['id'])
-                        $angle = 'right fas fa-angle-left';
-                    }  ?>
-                                <i class="<?= $angle; ?>"></i>
-                            </a>
-                            <?php if ($angle != '#') : ?>
-                            <ul class="nav nav-treeview">
-                                <?php foreach ($list_submenu as $sub) : ?>
-                                <?php if (($sub['menu_id'] == $list['id']) && $sub['is_active'] == 'Y') :  ?>
-                                <li class="nav-item">
-                                    <a href="<?= base_url($sub['link']) ?>"
-                                        class="nav-link <?= ($subMenu == $sub['nama_submenu']) ? 'active' : '' ?>">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p><?= $sub['nama_submenu']; ?></p>
+                            <?php if ($list['is_active'] == 'Y') : ?>
+                                <li class="nav-item <?= ($menu == $list['nama_menu']) ? 'menu-open' : '' ?>">
+                                    <a href="<?= base_url($list['link']); ?>" class="nav-link <?= ($menu == $list['nama_menu']) ? 'active' : '' ?>">
+                                        <i class="nav-icon <?= $list['icon']; ?>"></i>
+                                        <p><?= $list['nama_menu']; ?></p>
+                                        <?php foreach ($list_submenu as $sub) {
+                                            if ($sub['menu_id'] == $list['id'])
+                                                $angle = 'right fas fa-angle-left';
+                                        }  ?>
+                                        <i class="<?= $angle; ?>"></i>
                                     </a>
+                                    <?php if ($angle != '#') : ?>
+                                        <ul class="nav nav-treeview">
+                                            <?php foreach ($list_submenu as $sub) : ?>
+                                                <?php if (($sub['menu_id'] == $list['id']) && $sub['is_active'] == 'Y') :  ?>
+                                                    <li class="nav-item">
+                                                        <a href="<?= base_url($sub['link']) ?>" class="nav-link <?= ($subMenu == $sub['nama_submenu']) ? 'active' : '' ?>">
+                                                            <i class="far fa-circle nav-icon"></i>
+                                                            <p><?= $sub['nama_submenu']; ?></p>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
                                 </li>
-                                <?php endif; ?>
-                                <?php endforeach; ?>
-                            </ul>
                             <?php endif; ?>
-                        </li>
-                        <?php endif; ?>
 
                         <?php endforeach; ?>
 
@@ -228,7 +218,7 @@
         <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
-        $.widget.bridge('uibutton', $.ui.button);
+            $.widget.bridge('uibutton', $.ui.button);
         </script>
         <!-- Bootstrap 4 -->
         <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

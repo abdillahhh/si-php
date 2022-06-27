@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="/masterUser">Master User</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('/masterUser') ?>">Master User</a></li>
                         <li class="breadcrumb-item active">Tambah User</li>
                     </ol>
                 </div>

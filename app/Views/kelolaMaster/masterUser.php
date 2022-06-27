@@ -94,7 +94,7 @@
                                     <option>User</option>
                                     <option>Super Admin</option>
                                 </select>
-                                <a href="/tambahUser" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</a>
+                                <a href="<?= base_url('/tambahUser') ?>" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</a>
                             </div>
                         </form>
                     </div>
