@@ -154,6 +154,6 @@
     <!-- /.content -->
   </div>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="/dist/js/pages/dashboard.js"></script>
+  <script src="<?= base_url('/dist/js/pages/dashboard.js') ?>"></script>
   <?= $this->endSection(); ?>
 <?php endif; ?>

@@ -160,9 +160,9 @@
     </section>
 </div>
 <!-- Bootstrap 4 -->
-<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url('/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <!-- Summernote -->
-<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="<?= base_url('/plugins/summernote/summernote-bs4.min.js') ?>"></script>
 
 <script>
     $(function() {

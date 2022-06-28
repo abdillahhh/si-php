@@ -126,7 +126,7 @@
                         </div>
                         <div class="card-body">
                             <div id="liveAlertPlaceholder"></div>
-                            <form action="/login" method="post">
+                            <form action="<?= base_url('/login') ?>" method="post">
                                 <div class="form-group">
                                     <label for="login" class="fw-semibold mb-2">Username</label>
                                     <input type="text" class="form-control shadow-none" name="username" placeholder="Username">
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 test2">
-                        <img src="/images/1.png" class="card-img" style="object-fit: cover;" height="100%">
+                        <img src="<?= base_url('/images/1.png') ?>" class="card-img" style="object-fit: cover;" height="100%">
                     </div>
                 </div>
             </div>
