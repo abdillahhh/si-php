@@ -52,10 +52,14 @@
                                         <div class="form-group">
                                             <div class="input-group date" id="timepicker" data-target-input="nearest">
                                                 <div class="input-group-prepend">
-                                                    <span class="btn" style="background-color: #3c4b64; color: white;">Mulai</span>
+                                                    <span class="btn"
+                                                        style="background-color: #3c4b64; color: white;">Mulai</span>
                                                 </div>
-                                                <input type="text" name="mulai" class="form-control datetimepicker-input" data-target="#timepicker" />
-                                                <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                                                <input type="text" name="mulai"
+                                                    class="form-control datetimepicker-input"
+                                                    data-target="#timepicker" />
+                                                <div class="input-group-append" data-target="#timepicker"
+                                                    data-toggle="datetimepicker">
                                                     <div class="input-group-text">
                                                         <i class="far fa-clock"></i>
                                                     </div>
@@ -73,10 +77,14 @@
                                         <div class="form-group">
                                             <div class="input-group date" id="timepicker2" data-target-input="nearest">
                                                 <div class="input-group-prepend">
-                                                    <span class="btn" style="background-color: #3c4b64; color: white;">Selesai</span>
+                                                    <span class="btn"
+                                                        style="background-color: #3c4b64; color: white;">Selesai</span>
                                                 </div>
-                                                <input type="text" name="selesai" class="form-control datetimepicker-input" data-target="#timepicker2" />
-                                                <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
+                                                <input type="text" name="selesai"
+                                                    class="form-control datetimepicker-input"
+                                                    data-target="#timepicker2" />
+                                                <div class="input-group-append" data-target="#timepicker2"
+                                                    data-toggle="datetimepicker">
                                                     <div class="input-group-text">
                                                         <i class="far fa-clock"></i>
                                                     </div>
@@ -97,7 +105,8 @@
                                 <div class="col-md-10">
                                     <!-- textarea -->
                                     <div class="form-group">
-                                        <textarea class="form-control" name="uraian_kegiatan" rows="3" placeholder="Masukkan Uraian Kegiatan ..."></textarea>
+                                        <textarea class="form-control" name="uraian_kegiatan" rows="3"
+                                            placeholder="Masukkan Uraian Kegiatan ..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +119,8 @@
                                 <div class="col-md-10">
                                     <!-- textarea -->
                                     <div class="form-group">
-                                        <textarea class="form-control" name="hasil_kegiatan" rows="3" placeholder="Masukkan Hasil Kegiatan ..."></textarea>
+                                        <textarea class="form-control" name="hasil_kegiatan" rows="3"
+                                            placeholder="Masukkan Hasil Kegiatan ..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +158,8 @@
                                 <div class="col-md-12 ">
                                     <div class="float-right ">
                                         <button type="reset" class="btn btn-danger mr-2">Batal</button>
-                                        <button type="submit" class="btn tombol" style="color: white; background-color: #3c4b64;">Simpan</button>
+                                        <button type="submit" class="btn tombol"
+                                            style="color: white; background-color: #3c4b64;">Simpan</button>
                                     </div>
                                 </div>
                             </div>
@@ -160,23 +171,23 @@
     </section>
 </div>
 <!-- Bootstrap 4 -->
-<script src="<?= base_url('/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <!-- Summernote -->
-<script src="<?= base_url('/plugins/summernote/summernote-bs4.min.js') ?>"></script>
+<script src="<?= base_url('plugins/summernote/summernote-bs4.min.js') ?>"></script>
 
 <script>
-    $(function() {
-        // Summernote
-        $("#summernote").summernote({
-            placeholder: 'Link/list bukti kegiatan',
-            height: 120,
-            style: false,
-            toolbar: [
-                ['para', ['ul', 'ol']],
-                ['insert', ['link']],
-            ]
-        });
+$(function() {
+    // Summernote
+    $("#summernote").summernote({
+        placeholder: 'Link/list bukti kegiatan',
+        height: 120,
+        style: false,
+        toolbar: [
+            ['para', ['ul', 'ol']],
+            ['insert', ['link']],
+        ]
     });
+});
 </script>
 
 <?= $this->endSection(); ?>

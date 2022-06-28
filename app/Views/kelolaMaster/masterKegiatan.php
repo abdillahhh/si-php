@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" src="<?= base_url('/images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" src="<?= base_url('images/default.jpg') ?>" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">John Doe</h2>
@@ -44,8 +44,10 @@
                                         <!-- FILTER -->
                                         <div class="row px-4">
                                             <!-- SEARCH -->
-                                            <form action="" method="POST" class="col-md-5 mt-3 input-group input-group-md">
-                                                <input type="search" name="table_search" class="form-control float-right" placeholder="Search" />
+                                            <form action="" method="POST"
+                                                class="col-md-5 mt-3 input-group input-group-md">
+                                                <input type="search" name="table_search"
+                                                    class="form-control float-right" placeholder="Search" />
                                                 <div class=" input-group-append">
                                                     <button type="submit" class="btn btn-default">
                                                         <i class="fas fa-search"></i>
@@ -89,7 +91,10 @@
                                                             <span class="badge bg-success">selesai</span>
                                                         </td>
                                                         <td>
-                                                            <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-eye"></i></a>
+                                                            <a href="#" type="button"
+                                                                class="btn btn-info btn-xs tombol pb-0"
+                                                                style="background-color: #E18939; border:none;"><i
+                                                                    class="fas fa-eye"></i></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -150,7 +155,8 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <form class="input-group input-group-md pt-3 px-4" style="width: 250px">
-                                    <input type="search" name="table_search" class="form-control float-right" placeholder="Search" />
+                                    <input type="search" name="table_search" class="form-control float-right"
+                                        placeholder="Search" />
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
@@ -177,7 +183,9 @@
                                                     Administrasi
                                                 </td>
                                                 <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
+                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0"
+                                                        style="background-color: #E18939; border:none;"><i
+                                                            class="fas fa-plus"></i></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -187,7 +195,9 @@
                                                     Regular User
                                                 </td>
                                                 <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
+                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0"
+                                                        style="background-color: #E18939; border:none;"><i
+                                                            class="fas fa-plus"></i></a>
                                                 </td>
                                             </tr>
                                         </tbody>

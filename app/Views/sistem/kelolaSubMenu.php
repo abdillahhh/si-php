@@ -29,7 +29,8 @@
                     <div class="row">
                         <div class="col-md-6 py-1">
                             <div class="input-group input-group-md" style="width: 250px">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
+                                <input type="text" name="table_search" class="form-control float-right"
+                                    placeholder="Search" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
                                         <i class="fas fa-search"></i>
@@ -42,8 +43,12 @@
                         <form method="" action="" class="col-md-5 py-1">
                             <div class="float-right">
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-download"></i></button>
-                                    <button type="button" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus mr-2"></i> Tambah</button>
+                                    <button type="button" class="btn btn-info tombol mr-2"
+                                        style="background-color: #3c4b64; border:none;"><i
+                                            class="fas fa-download"></i></button>
+                                    <button type="button" class="btn btn-info tombol"
+                                        style="background-color: #3c4b64; border:none;" data-toggle="modal"
+                                        data-target="#modal-tambah"><i class="fas fa-plus mr-2"></i> Tambah</button>
                                 </div>
                             </div>
                         </form>
@@ -72,28 +77,34 @@
                                 <tbody>
 
                                     <?php foreach ($dataSubmenu as $list) : ?>
-                                        <tr>
-                                            <td><?= $list['nama_submenu']; ?></td>
-                                            <td><?= $list['link']; ?></td>
+                                    <tr>
+                                        <td><?= $list['nama_submenu']; ?></td>
+                                        <td><?= $list['link']; ?></td>
 
-                                            <?php foreach ($list_menu as $menu) {
+                                        <?php foreach ($list_menu as $menu) {
                                                 if ($menu['id'] == $list['menu_id']) {
                                                     $nama_menu_id = $menu['nama_menu'];
                                                 }
                                             } ?>
-                                            <td><?= $nama_menu_id; ?></td>
-                                            <td>
-                                                <?php if ($list['is_active'] == 'Y') {
+                                        <td><?= $nama_menu_id; ?></td>
+                                        <td>
+                                            <?php if ($list['is_active'] == 'Y') {
 
                                                     echo '<span class="badge bg-success">active</span>';
                                                 } else {
                                                     echo '<span class="badge bg-danger">non-active</span>';
                                                 } ?>
-                                            </td>
-                                            <td>
-                                                <button id="btn-edit" type="button" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;" data-toggle="modal" data-target="#modal-edit" data-id="<?= $list['id'] ?>" data-nama_submenu="<?= $list['nama_submenu'] ?>" data-link="<?= $list['link'] ?>" data-menu_id="<?= $list['menu_id'] ?>" data-is_active="<?= $list['is_active'] ?>"><i class="fas fa-pen"></i></button>
-                                            </td>
-                                        </tr>
+                                        </td>
+                                        <td>
+                                            <button id="btn-edit" type="button" class="btn btn-info btn-xs tombol"
+                                                style="background-color: #2D95C9; border:none;" data-toggle="modal"
+                                                data-target="#modal-edit" data-id="<?= $list['id'] ?>"
+                                                data-nama_submenu="<?= $list['nama_submenu'] ?>"
+                                                data-link="<?= $list['link'] ?>" data-menu_id="<?= $list['menu_id'] ?>"
+                                                data-is_active="<?= $list['is_active'] ?>"><i
+                                                    class="fas fa-pen"></i></button>
+                                        </td>
+                                    </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -130,7 +141,7 @@
                         <label>Parent Menu</label>
                         <select name="menu_id" class="form-control mr-2" style="border-radius: 5px;">
                             <?php foreach ($list_menu as $menu) : ?>
-                                <option value="<?= $menu['id']; ?>"><?= $menu['nama_menu']; ?></option>
+                            <option value="<?= $menu['id']; ?>"><?= $menu['nama_menu']; ?></option>
                             <?php endforeach; ?>
 
                         </select>
@@ -147,7 +158,8 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                    <button type="submit" class="btn btn-info tombol"
+                        style="background-color: #3c4b64; border:none;">Simpan</button>
                 </div>
             </form>
             <!-- /.modal-content -->
@@ -162,14 +174,16 @@
                 <input type="text" id="submenu_id" name="submenu_id" class="d-none">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Menu</h4>
-                    <button type="button" class="close" onclick="tutupModalEdit()" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" onclick="tutupModalEdit()" data-dismiss="modal"
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nama</label>
-                        <input type="text" name="nama_submenu" id="nama_submenu" class="form-control" placeholder="Nama Menu ...">
+                        <input type="text" name="nama_submenu" id="nama_submenu" class="form-control"
+                            placeholder="Nama Menu ...">
                     </div>
                     <div class="form-group">
                         <label>Link</label>
@@ -180,7 +194,7 @@
                         <label>Parent Menu</label>
                         <select name="menu_id" id="menu_id" class="form-control mr-2" style="border-radius: 5px;">
                             <?php foreach ($list_menu as $menu) : ?>
-                                <option value="<?= $menu['id']; ?>"><?= $menu['nama_menu']; ?></option>
+                            <option value="<?= $menu['id']; ?>"><?= $menu['nama_menu']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -194,8 +208,10 @@
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" onclick="tutupModalEdit()" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                    <button type="button" onclick="tutupModalEdit()" class="btn btn-default"
+                        data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-info tombol"
+                        style="background-color: #3c4b64; border:none;">Simpan</button>
                 </div>
             </form>
             <!-- /.modal-content -->
@@ -206,39 +222,39 @@
 </div>
 
 <!-- SweetAlert2 -->
-<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <script>
-    //Mengambil Data edit dengan menggunakan Jquery
-    $(document).on('click', '#btn-edit', function() {
-        $('#submenu_id').val($(this).data('id'));
-        $('#nama_submenu').val($(this).data('nama_submenu'));
-        $('#link').val($(this).data('link'));
-        $('#menu_id').val($(this).data('menu_id'));
-        $('#is_active').val($(this).data('is_active'));
-    })
+//Mengambil Data edit dengan menggunakan Jquery
+$(document).on('click', '#btn-edit', function() {
+    $('#submenu_id').val($(this).data('id'));
+    $('#nama_submenu').val($(this).data('nama_submenu'));
+    $('#link').val($(this).data('link'));
+    $('#menu_id').val($(this).data('menu_id'));
+    $('#is_active').val($(this).data('is_active'));
+})
 
-    //  Mengosongkan Input
-    function tutupModalEdit() {
-        $('#id').val('');
-        $('#nama_submenu').val('');
-        $('#link').val('');
-        $('#menu_id').val('');
-    }
+//  Mengosongkan Input
+function tutupModalEdit() {
+    $('#id').val('');
+    $('#nama_submenu').val('');
+    $('#link').val('');
+    $('#menu_id').val('');
+}
 </script>
 
 <!-- ALERT BERHASIL -->
 <script>
-    $(document).ready(function() {
-        <?php if (session()->getFlashdata('pesan')) { ?>
-            Swal.fire({
-                position: 'top-end',
-                title: "<?= session()->getFlashdata('pesan') ?>",
-                icon: "<?= session()->getFlashdata('pesan_icon') ?>",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-        <?php } ?>
+$(document).ready(function() {
+    <?php if (session()->getFlashdata('pesan')) { ?>
+    Swal.fire({
+        position: 'top-end',
+        title: "<?= session()->getFlashdata('pesan') ?>",
+        icon: "<?= session()->getFlashdata('pesan_icon') ?>",
+        showConfirmButton: false,
+        timer: 1500,
     });
+    <?php } ?>
+});
 </script>
 
 <?= $this->endSection(); ?>

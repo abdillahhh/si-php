@@ -29,7 +29,8 @@
                     <div class="row">
                         <div class="col-md-6 py-1">
                             <div class="input-group input-group-md" style="width: 250px">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
+                                <input type="text" name="table_search" class="form-control float-right"
+                                    placeholder="Search" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
                                         <i class="fas fa-search"></i>
@@ -42,8 +43,12 @@
                         <form method="" action="" class="col-md-5 py-1">
                             <div class="float-right">
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-download"></i></button>
-                                    <button type="button" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus mr-2"></i> Tambah</button>
+                                    <button type="button" class="btn btn-info tombol mr-2"
+                                        style="background-color: #3c4b64; border:none;"><i
+                                            class="fas fa-download"></i></button>
+                                    <button type="button" class="btn btn-info tombol"
+                                        style="background-color: #3c4b64; border:none;" data-toggle="modal"
+                                        data-target="#modal-tambah"><i class="fas fa-plus mr-2"></i> Tambah</button>
                                 </div>
                             </div>
                         </form>
@@ -73,26 +78,33 @@
                                 <tbody>
 
                                     <?php foreach ($list_menu as $list) :  ?>
-                                        <tr>
-                                            <td><?= $list['nama_menu']; ?></td>
-                                            <td><?= $list['link']; ?></td>
-                                            <td>
-                                                <?= $list['icon']; ?>
-                                            </td>
-                                            <td><?= $list['urutan']; ?></td>
-                                            <td>
-                                                <?php if ($list['is_active'] == 'Y') {
+                                    <tr>
+                                        <td><?= $list['nama_menu']; ?></td>
+                                        <td><?= $list['link']; ?></td>
+                                        <td>
+                                            <?= $list['icon']; ?>
+                                        </td>
+                                        <td><?= $list['urutan']; ?></td>
+                                        <td>
+                                            <?php if ($list['is_active'] == 'Y') {
 
                                                     echo '<span class="badge bg-success">active</span>';
                                                 } else {
                                                     echo '<span class="badge bg-danger">non-active</span>';
                                                 } ?>
-                                            </td>
-                                            <td>
-                                                <button id="btn-edit" type="button" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;" data-toggle="modal" data-target="#modal-edit" data-id="<?= $list['id'] ?>" data-nama_menu="<?= $list['nama_menu'] ?>" data-link="<?= $list['link'] ?>" data-icon="<?= $list['icon'] ?>" data-urutan="<?= $list['urutan'] ?>" data-is_active="<?= $list['is_active'] ?>"><i class="fas fa-pen"></i></button>
+                                        </td>
+                                        <td>
+                                            <button id="btn-edit" type="button" class="btn btn-info btn-xs tombol"
+                                                style="background-color: #2D95C9; border:none;" data-toggle="modal"
+                                                data-target="#modal-edit" data-id="<?= $list['id'] ?>"
+                                                data-nama_menu="<?= $list['nama_menu'] ?>"
+                                                data-link="<?= $list['link'] ?>" data-icon="<?= $list['icon'] ?>"
+                                                data-urutan="<?= $list['urutan'] ?>"
+                                                data-is_active="<?= $list['is_active'] ?>"><i
+                                                    class="fas fa-pen"></i></button>
 
-                                            </td>
-                                        </tr>
+                                        </td>
+                                    </tr>
                                     <?php endforeach; ?>
 
 
@@ -176,7 +188,8 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                    <button type="submit" class="btn btn-info tombol"
+                        style="background-color: #3c4b64; border:none;">Simpan</button>
                 </div>
             </form>
             <!-- /.modal-content -->
@@ -204,7 +217,8 @@
                 <div id="modal" class="modal-body">
                     <div class="form-group">
                         <label>Nama</label>
-                        <input type="nama_menu" id="nama_menu" name="nama_menu" class="form-control" placeholder="Nama Menu ...">
+                        <input type="nama_menu" id="nama_menu" name="nama_menu" class="form-control"
+                            placeholder="Nama Menu ...">
                     </div>
                     <div class="form-group">
                         <label>Link</label>
@@ -229,7 +243,8 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                    <button type="submit" class="btn btn-info tombol"
+                        style="background-color: #3c4b64; border:none;">Simpan</button>
                 </div>
             </form>
             <!-- /.modal-content -->
@@ -240,35 +255,35 @@
     <!-- /.modal -->
 </div>
 <!-- SweetAlert2 -->
-<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <script>
-    // Mengambil Data edit dengan menggunakan Jquery
-    $(document).on('click', '#btn-edit', function() {
-        $('#id_menu').val($(this).data('id'));
-        $('#nama_menu').val($(this).data('nama_menu'));
-        $('#urutan').val($(this).data('urutan'));
-        $('#icon').val($(this).data('icon'));
-        $('#link').val($(this).data('link'));
-        $('#menu_id').val($(this).data('menu_id'));
-        $('#is_active').val($(this).data('is_active'));
-    })
-    // $(document).on('click', '#btn-edit', function() {
-    //     console.log($(this).data('id'));
-    // })
+// Mengambil Data edit dengan menggunakan Jquery
+$(document).on('click', '#btn-edit', function() {
+    $('#id_menu').val($(this).data('id'));
+    $('#nama_menu').val($(this).data('nama_menu'));
+    $('#urutan').val($(this).data('urutan'));
+    $('#icon').val($(this).data('icon'));
+    $('#link').val($(this).data('link'));
+    $('#menu_id').val($(this).data('menu_id'));
+    $('#is_active').val($(this).data('is_active'));
+})
+// $(document).on('click', '#btn-edit', function() {
+//     console.log($(this).data('id'));
+// })
 </script>
 
 <!-- ALERT BERHASIL -->
 <script>
-    $(document).ready(function() {
-        <?php if (session()->getFlashdata('pesan')) { ?>
-            Swal.fire({
-                position: 'top-end',
-                title: "<?= session()->getFlashdata('pesan') ?>",
-                icon: "<?= session()->getFlashdata('pesan_icon') ?>",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-        <?php } ?>
+$(document).ready(function() {
+    <?php if (session()->getFlashdata('pesan')) { ?>
+    Swal.fire({
+        position: 'top-end',
+        title: "<?= session()->getFlashdata('pesan') ?>",
+        icon: "<?= session()->getFlashdata('pesan_icon') ?>",
+        showConfirmButton: false,
+        timer: 1500,
     });
+    <?php } ?>
+});
 </script>
 <?= $this->endSection(); ?>
