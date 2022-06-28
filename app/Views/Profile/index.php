@@ -28,7 +28,7 @@
                     <div class="card card-primary">
                         <form action="" method="POST" class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid" src="/images/1.jpg" alt="User profile picture">
+                                <img class="profile-user-img img-fluid" src="images/1.jpg" alt="User profile picture">
                             </div>
 
                             <h3 class="profile-username text-center"><strong id="nama-lengkap">Nina Mcintire</strong> <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button></h3>

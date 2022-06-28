@@ -240,7 +240,7 @@
     <!-- /.modal -->
 </div>
 <!-- SweetAlert2 -->
-<script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
     // Mengambil Data edit dengan menggunakan Jquery
     $(document).on('click', '#btn-edit', function() {

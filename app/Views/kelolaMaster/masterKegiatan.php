@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" src="/images/default.jpg" alt="">
+                                    <img class="img-fluid" src="images/default.jpg" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">John Doe</h2>
