@@ -36,23 +36,32 @@
                                     <p id="oldRole" class="text-gray">Administrator</p>
                                     <!-- FORM -->
                                     <form action="" method="POST" enctype="multipart/form-data" id="roleForm" class="row d-none">
-                                        <div class="col-md-8">
+                                        <div class="col-md-12">
                                             <div class="form-group">
-                                                <select name="jenis_kelamin" class="form-control form-control-sm mr-2" style="border-radius: 5px;">
-                                                    <option selected disabled>- Pilih Role -</option>
+                                                <label for="role">Role/level</label>
+                                                <select name="role" class="form-control form-control-sm mr-2" style="border-radius: 5px;">
+                                                    <option>Administrasi</option>
                                                     <option>Regular User</option>
                                                     <option>Pegawai</option>
                                                     <option>Admin Kepegawaian</option>
-                                                    <option>Administrasi</option>
                                                 </select>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="role">Status</label>
+                                                <select name="is_active" class="form-control form-control-sm mr-2" style="border-radius: 5px;">
+                                                    <option value="Y">Active</option>
+                                                    <option value="N">Non-active</option>
+                                                </select>
+                                            </div>
+
+                                            <div>
+                                                <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
+                                                <button type="button" id="cancel" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <button type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
-                                            <button type="button" id="cancel" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
-                                        </div>
+
                                     </form>
-                                    <button id="openRole" class="btn btn-info btn-sm tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-pen mr-1"></i> Ubah Role</button>
+                                    <button id="openRole" class="btn btn-info btn-sm tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-pen mr-1"></i> Ubah Data</button>
                                 </div>
                             </div>
                             <hr>
@@ -60,21 +69,30 @@
                                 <div class="col-md-12 px-5">
                                     <!-- KETERANGAN -->
                                     <div class="col-md-12">
-                                        <strong>NIP</strong>
+                                        <strong>Nama Lengkap</strong>
+                                        <p class="text-muted">
+                                            Ahmed John Doe
+                                        </p>
+
+                                        <strong>NIP Lama</strong>
                                         <p class="text-muted">
                                             19901109 201402 1 007
                                         </p>
 
-                                        <strong>Tempat/tanggal lahir</strong>
-                                        <p class="text-muted">Jambi, 1 Januari 1998</p>
+                                        <strong>Email</strong>
+                                        <p class="text-muted">johndoe@gmail.com</p>
 
                                         <strong>Telepon</strong>
                                         <p class="text-muted">
                                             0812 3456 7890
                                         </p>
 
-                                        <strong>Alamat</strong>
-                                        <p class="text-muted">Jl.A. Yani No.4 Telanaipura, Jambi, Indonesia, Telp (62-741) 60497, Mailbox :bps1500@bps.go.id</p>
+                                        <strong>Status</strong>
+                                        <div>
+                                            <span class="badge badge-success px-2">
+                                                aktif
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

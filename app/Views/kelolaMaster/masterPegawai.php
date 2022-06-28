@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" src="/images/default.jpg" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="/images/default.jpg" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">John Doe</h2>
@@ -209,6 +209,10 @@
     $(document).on('click', '#openInputan', function() {
         $('#keterangan').toggleClass('d-none');
         $('#inputan').toggleClass('d-none');
+    })
+    $(document).on('click', '#batal', function() {
+        $('#keterangan').removeClass('d-none');
+        $('#inputan').addClass('d-none');
     })
 </script>
 

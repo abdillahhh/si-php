@@ -27,6 +27,7 @@ class masterAkses extends BaseController
         $password = $this->request->getVar('password');
         $user = $this->masterUserModel->getUser($username);
 
+
         if ($user == NULL) {
             session()->setFlashdata('pesan', 'username anda salah');
             return redirect()->to('/');
@@ -51,15 +52,42 @@ class masterAkses extends BaseController
                     'level_id' => $level_id,
                     'list_user_level' => $list_user_level,
                     'list_menu'  => $list_menu,
-                    'list_submenu' => $list_submenu
+                    'list_submenu' => $list_submenu,
+                    'fullname' => $user['fullname']
                 ];
             }
+
+
+
             session()->set($data);
             session()->setFlashdata('pesan', 'berhasil login');
             return redirect()->to('/dashboard');
         }
         session()->setFlashdata('pesan', 'password salah');
         return redirect()->to('/');
+    }
+
+    public function switchLevel()
+    {
+        $id = $this->request->getVar('id');
+
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($id);
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($id);
+
+        $data1 = [
+            'log' => TRUE,
+            'user_id' => session('user_id'),
+            'level_id' => $id,
+            'list_user_level' => session('list_user_level'),
+            'list_menu'  => $list_menu,
+            'list_submenu' => $list_submenu,
+            'fullname' => session('fullname')
+        ];
+
+        session()->set($data1);
+
+
+        return redirect()->to('/dashboard');
     }
 
     public function logout()

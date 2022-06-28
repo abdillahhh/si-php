@@ -140,7 +140,7 @@
     <!-- MODAL TAMBAH MENU -->
     <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
-            <form action="/saveMenu" method="POST" class="modal-content">
+            <form action="<?= base_url('/saveMenu') ?>" method="POST" class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Tambah Menu</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -192,14 +192,15 @@
 
     <div class="modal fade" id="modal-edit">
         <div class="modal-dialog">
-            <form action="/updateMenu" method="POST" class="modal-content">
+            <form action="<?= base_url('/updateMenu') ?>" method="POST" class="modal-content">
+                <input type="text" name="id" id="id_menu" class="d-none form-control">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Menu</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <input type="text" name="id" id="id" class="d-none form-control">
+
                 <div id="modal" class="modal-body">
                     <div class="form-group">
                         <label>Nama</label>
@@ -238,10 +239,12 @@
 
     <!-- /.modal -->
 </div>
+<!-- SweetAlert2 -->
+<script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
-    //Mengambil Data edit dengan menggunakan Jquery
+    // Mengambil Data edit dengan menggunakan Jquery
     $(document).on('click', '#btn-edit', function() {
-        $('#id').val($(this).data('id'));
+        $('#id_menu').val($(this).data('id'));
         $('#nama_menu').val($(this).data('nama_menu'));
         $('#urutan').val($(this).data('urutan'));
         $('#icon').val($(this).data('icon'));
@@ -249,7 +252,23 @@
         $('#menu_id').val($(this).data('menu_id'));
         $('#is_active').val($(this).data('is_active'));
     })
+    // $(document).on('click', '#btn-edit', function() {
+    //     console.log($(this).data('id'));
+    // })
 </script>
 
-
+<!-- ALERT BERHASIL -->
+<script>
+    $(document).ready(function() {
+        <?php if (session()->getFlashdata('pesan')) { ?>
+            Swal.fire({
+                position: 'top-end',
+                title: "<?= session()->getFlashdata('pesan') ?>",
+                icon: "<?= session()->getFlashdata('pesan_icon') ?>",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        <?php } ?>
+    });
+</script>
 <?= $this->endSection(); ?>

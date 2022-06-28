@@ -19,4 +19,13 @@ class MasterSubmenuModel extends Model
             ->orderBy('id', 'DESC')
             ->first();
     }
+
+    public function getListSubmenu()
+    {
+        return $this
+            ->table($this->table)
+            ->select('id')
+            ->get()
+            ->getResultArray();
+    }
 }

@@ -29,4 +29,14 @@ class masterLaporanHarian extends BaseController
         ];
         return view('laporanHarian/inputKegiatan', $data);
     }
+
+    public function detailKegiatan()
+    {
+        $data = [
+            'title' => 'Detail Kegiatan',
+            'menu' => 'Laporan Harian',
+            'subMenu' => 'Daftar Laporan'
+        ];
+        return view('laporanHarian/detailKegiatan', $data);
+    }
 }

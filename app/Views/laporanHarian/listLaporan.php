@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>List Laporan</h1>
+                    <h1>Daftar Laporan</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">List Laporan Harian</li>
+                        <li class="breadcrumb-item active">Daftar Laporan Harian</li>
                     </ol>
                 </div>
             </div>
@@ -28,8 +28,7 @@
                     <div class="row">
                         <div class="col-md-6 py-1">
                             <div class="input-group input-group-md" style="width: 250px">
-                                <input type="text" name="table_search" class="form-control float-right"
-                                    placeholder="Search" />
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
                                         <i class="fas fa-search"></i>
@@ -57,12 +56,8 @@
                                     <option>Belum</option>
                                 </select>
 
-                                <button type="button" id="enableEdit" class="btn btn-info tombol mr-2"
-                                    style="background-color: #3c4b64; border:none;"><i
-                                        class="fas fa-download"></i></button>
-                                <a href="<?= base_url('/inputKegiatan'); ?>" type="button" id="enableEdit"
-                                    class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i
-                                        class="fas fa-plus mr-2"></i> Tambah</a>
+                                <button type="button" id="enableEdit" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-download"></i></button>
+                                <a href="<?= base_url('/inputKegiatan') ?>" type="button" id="enableEdit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</a>
                             </div>
                         </form>
                     </div>
@@ -103,12 +98,8 @@
                                         <td>Lorem, ipsum dolor.</td>
                                         <td><span class="badge bg-success">selesai</span></td>
                                         <td>
-                                            <a href="#" type="button" class="btn btn-info btn-xs tombol"
-                                                style="background-color: #E18939; border:none;"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" type="button" class="btn btn-info btn-xs tombol"
-                                                style="background-color: #2D95C9; border:none;"><i
-                                                    class="fas fa-pen"></i></a>
+                                            <a href="<?= base_url("/detailKegiatan") ?>" type="button" class="btn btn-info btn-xs tombol" style="background-color: #E18939; border:none;"><i class="fas fa-eye"></i></a>
+                                            <a href="#" type="button" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-pen"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -124,12 +115,8 @@
                                         <td>Lorem, ipsum dolor.</td>
                                         <td><span class="badge bg-warning">Proses</span></td>
                                         <td>
-                                            <a href="#" type="button" class="btn btn-info btn-xs tombol"
-                                                style="background-color: #E18939; border:none;"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" type="button" class="btn btn-info btn-xs tombol"
-                                                style="background-color: #2D95C9; border:none;"><i
-                                                    class="fas fa-pen"></i></a>
+                                            <a href="#" type="button" class="btn btn-info btn-xs tombol" style="background-color: #E18939; border:none;"><i class="fas fa-eye"></i></a>
+                                            <a href="#" type="button" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-pen"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>

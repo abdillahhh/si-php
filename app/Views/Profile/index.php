@@ -24,7 +24,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
-
                     <!-- Profile Image -->
                     <div class="card card-primary">
                         <form action="" method="POST" class="card-body box-profile">
@@ -32,7 +31,7 @@
                                 <img class="profile-user-img img-fluid" src="/images/1.jpg" alt="User profile picture">
                             </div>
 
-                            <h3 class="profile-username text-center"><strong>Nina Mcintire</strong> <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button></h3>
+                            <h3 class="profile-username text-center"><strong id="nama-lengkap">Nina Mcintire</strong> <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button></h3>
 
                             <p class="text-muted text-center">Software Engineer</p>
 
@@ -44,7 +43,7 @@
                             <hr>
                             <div class="form-group">
                                 <label>Nama lengkap</label>
-                                <input type="text" name="nama" class="form-control" placeholder="Nama Lengkap ..." disabled>
+                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Lengkap ..." disabled>
                             </div>
                             <hr>
                             <div class="form-group">
@@ -52,20 +51,10 @@
                                 <input type="email" name="email" class="form-control" placeholder="Email ..." disabled>
                             </div>
                             <hr>
-
-                            <div class="form-group">
-                                <label style="color: gray;">Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Password ..." disabled>
-                            </div>
-                            <hr>
-                            <div class="form-group">
-                                <label style="color: gray;">Token</label>
-                                <input type="text" name="token" class="form-control" placeholder="Token ..." disabled>
-                            </div>
-
                             <div class="d-none" id="button">
                                 <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
                                 <button type="button" id="batal" class="btn btn-danger" style=" border:none;">Batal</button>
+                                <button type="button" class="btn btn-info" style="border: none;" data-toggle="modal" data-target="#modal-ubah-password">Ubah Password</button>
                             </div>
                         </form>
                         <!-- /.card-body -->
@@ -155,7 +144,42 @@
         </div>
     </section>
 </div>
+<!-- MODAL UBAH PASSWORD -->
+<div class="modal fade" style="padding-top: 11%;" id="modal-ubah-password">
+    <div class="modal-dialog">
+        <form action="" method="POST" class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ubah Password</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="Password ...">
+                </div>
+                <div class="form-group">
+                    <label>Token</label>
+                    <input type="text" name="token" class="form-control" placeholder="Token ...">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
+<script>
+    $(document).on('input', "#nama", function() {
+        $('#nama-lengkap').html($('#nama').val());
+    });
+</script>
 <script>
     const enableEdit = document.querySelector('#enableEdit');
     const button = document.querySelector('#button');

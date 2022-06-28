@@ -39,6 +39,7 @@ $routes->set404Override();
 //Routes Ke views dan controller Akses
 
 $routes->get('/', 'masterAkses::index');
+
 //routes Akses
 $routes->post('/login', 'masterAkses::open');
 //routes Logout
@@ -53,6 +54,7 @@ $routes->get('/profile', 'masterUser::profile'); //selanjutnya akan dilakukan pe
 //Routes Ke views dan controller list Laporan dan Input Kegiatan
 $routes->get('/listLaporan', 'masterLaporanHarian::listLaporan');
 $routes->get('/inputKegiatan', 'masterLaporanHarian::inputKegiatan');
+$routes->get('/detailKegiatan', 'masterLaporanHarian::detailKegiatan');
 
 //Routes Ke views dan controller Kelola Master
 $routes->get('/masterUser', 'masterKelolaMaster::masterUser');
@@ -63,8 +65,15 @@ $routes->get('/masterKegiatan', 'masterKelolaMaster::masterKegiatan');
 $routes->get('/tambahUser', 'masterKelolaMaster::tambahUser');
 
 //Routes Ke views dan controller Sistem
-$routes->get('/kelolaUser', 'masterSistem::kelolaUser');
 $routes->get('/kelolaLevel', 'masterSistem::kelolaLevel');
+//routes ke editKelolaMenu bagi level tertentu
+$routes->get('/editKelolaLevel/(:segment)', 'masterSistem::editKelolaLevel/$1');
+$routes->post('/updateKelolaLevel/(:segment)', 'masterSistem::updateKelolaLevel/$1');
+//routes ke save level baru yang dibuat
+$routes->post('/saveLevel', 'masterSistem::saveLevel');
+//routes ke update nama level yang ada di list
+$routes->post('/updateNamaLevel', 'masterSistem::updateNamaLevel');
+
 $routes->get('/kelolaMenu', 'masterSistem::kelolaMenu');
 $routes->get('/kelolaSubMenu', 'masterSistem::kelolaSubMenu');
 
@@ -75,6 +84,13 @@ $routes->post('/updateSubmenu', 'masterSistem::updateSubmenu');
 //Routes ke save dan controller sistem
 $routes->post('/saveMenu', 'masterSistem::saveMenu');
 $routes->post('/saveSubmenu', 'masterSistem::saveSubmenu');
+
+
+//routes ke switch level akun dan controller master akses
+$routes->post('/switchLevel', 'masterAkses::switchLevel');
+
+
+
 
 
 /*

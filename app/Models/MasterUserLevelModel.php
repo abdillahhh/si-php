@@ -19,4 +19,22 @@ class MasterUserLevelModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function getAlllevel()
+    {
+        return $this
+            ->table($this->table)
+            ->select('id')
+            ->select('nama_level')
+            ->get()
+            ->getResultArray();
+    }
+    public function getLastId()
+    {
+        return $this
+            ->table($this->table)
+            ->select('id')
+            ->orderBy('id', 'DESC')
+            ->first();
+    }
 }

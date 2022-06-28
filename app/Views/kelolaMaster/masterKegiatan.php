@@ -41,14 +41,30 @@
                                 <!-- DAFTAR KEGIATAN -->
                                 <div class="col-md-12 px-2">
                                     <div class="card">
-                                        <form class="input-group input-group-md pt-3 px-4" style="width: 250px">
-                                            <input type="search" name="table_search" class="form-control float-right" placeholder="Search" />
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </form>
+                                        <!-- FILTER -->
+                                        <div class="row px-4">
+                                            <!-- SEARCH -->
+                                            <form action="" method="POST" class="col-md-5 mt-3 input-group input-group-md">
+                                                <input type="search" name="table_search" class="form-control float-right" placeholder="Search" />
+                                                <div class=" input-group-append">
+                                                    <button type="submit" class="btn btn-default">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                            <div class="col-md-2"></div>
+                                            <!-- TANGGAL DAN STATUS -->
+                                            <form action="" method="POST" class="mt-3 col-md-5">
+                                                <div class="input-group">
+                                                    <select class="form-control" style="border-radius: 5px;">
+                                                        <option selected disabled>- Status -</option>
+                                                        <option>belum</option>
+                                                        <option>proses</option>
+                                                        <option>selesai</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
 
                                         <!-- /.card-header -->
                                         <div class="card-body table-responsive px-4">

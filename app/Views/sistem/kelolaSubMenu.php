@@ -71,7 +71,7 @@
                                 </thead>
                                 <tbody>
 
-                                    <?php foreach ($list_submenu as $list) : ?>
+                                    <?php foreach ($dataSubmenu as $list) : ?>
                                         <tr>
                                             <td><?= $list['nama_submenu']; ?></td>
                                             <td><?= $list['link']; ?></td>
@@ -99,32 +99,7 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p>Menampilkan 6 data dari 33</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="pagination pagination-sm m-0 float-right">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">&laquo;</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">&raquo;</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <?= $pager->links('dataSubmenu', 'custom_simple'); ?>
                     </div>
                     <!-- /.card -->
                 </div>
@@ -135,7 +110,7 @@
     <!-- MODAL TAMBAH SUBMENU -->
     <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
-            <form action="/saveSubmenu" method="POST" class="modal-content">
+            <form action="<?= base_url('/saveSubmenu') ?>" method="POST" class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Tambah Menu</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -183,8 +158,8 @@
     <!-- MODAL EDIT MENU -->
     <div class="modal fade" id="modal-edit">
         <div class="modal-dialog">
-            <form action="/updateSubmenu" method="POST" class="modal-content">
-                <input type="text" id="id" name="submenu_id" class="d-none">
+            <form action="<?= base_url('/updateSubmenu') ?>" method="POST" class="modal-content">
+                <input type="text" id="submenu_id" name="submenu_id" class="d-none">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Menu</h4>
                     <button type="button" class="close" onclick="tutupModalEdit()" data-dismiss="modal" aria-label="Close">
@@ -229,10 +204,13 @@
     </div>
     <!-- /.modal -->
 </div>
+
+<!-- SweetAlert2 -->
+<script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
     //Mengambil Data edit dengan menggunakan Jquery
     $(document).on('click', '#btn-edit', function() {
-        $('#id').val($(this).data('id'));
+        $('#submenu_id').val($(this).data('id'));
         $('#nama_submenu').val($(this).data('nama_submenu'));
         $('#link').val($(this).data('link'));
         $('#menu_id').val($(this).data('menu_id'));
@@ -246,6 +224,21 @@
         $('#link').val('');
         $('#menu_id').val('');
     }
+</script>
+
+<!-- ALERT BERHASIL -->
+<script>
+    $(document).ready(function() {
+        <?php if (session()->getFlashdata('pesan')) { ?>
+            Swal.fire({
+                position: 'top-end',
+                title: "<?= session()->getFlashdata('pesan') ?>",
+                icon: "<?= session()->getFlashdata('pesan_icon') ?>",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        <?php } ?>
+    });
 </script>
 
 <?= $this->endSection(); ?>

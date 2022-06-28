@@ -119,9 +119,6 @@
                                     <label>Jenis Kelamin</label>
                                     <input type="text" name="bidang" class="form-control" style="background-color: white;" placeholder="-" disabled>
                                 </div>
-                                <div class="float-right">
-                                    <button type="reset" class="btn btn-danger">Clear</button>
-                                </div>
                             </div>
                         </div>
                     </div>
