@@ -28,28 +28,22 @@
                     <div class="card card-primary">
                         <form action="" method="POST" class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid" src="<?= base_url('images/1.png') ?>"
-                                    alt="User profile picture">
+                                <img class="profile-user-img img-fluid" src="<?= base_url('/images/1.png') ?>" alt="User profile picture">
                             </div>
 
-                            <h3 class="profile-username text-center"><strong id="nama-lengkap">Nina Mcintire</strong>
-                                <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol"
-                                    style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button>
-                            </h3>
+                            <h3 class="profile-username text-center"><strong id="nama-lengkap">Nina Mcintire</strong> <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button></h3>
 
                             <p class="text-muted text-center">Software Engineer</p>
 
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" name="username" class="form-control" placeholder="Username ..."
-                                    disabled>
+                                <input type="text" name="username" class="form-control" placeholder="Username ..." disabled>
                             </div>
 
                             <hr>
                             <div class="form-group">
                                 <label>Nama lengkap</label>
-                                <input type="text" name="nama" id="nama" class="form-control"
-                                    placeholder="Nama Lengkap ..." disabled>
+                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Lengkap ..." disabled>
                             </div>
                             <hr>
                             <div class="form-group">
@@ -58,12 +52,9 @@
                             </div>
                             <hr>
                             <div class="d-none" id="button">
-                                <button type="submit" class="btn btn-info tombol"
-                                    style="background-color: #3c4b64; border:none;">Simpan</button>
-                                <button type="button" id="batal" class="btn btn-danger"
-                                    style=" border:none;">Batal</button>
-                                <button type="button" class="btn btn-info" style="border: none;" data-toggle="modal"
-                                    data-target="#modal-ubah-password">Ubah Password</button>
+                                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                                <button type="button" id="batal" class="btn btn-danger" style=" border:none;">Batal</button>
+                                <button type="button" class="btn btn-info" style="border: none;" data-toggle="modal" data-target="#modal-ubah-password">Ubah Password</button>
                             </div>
                         </form>
                         <!-- /.card-body -->
@@ -105,8 +96,7 @@
 
                                     <strong> Notes</strong>
 
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                                        fermentum enim neque.</p>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
                                 </div>
                                 <div class="col-md-6">
                                     <strong>NIP Lama</strong>
@@ -137,8 +127,7 @@
 
                                     <strong> Notes</strong>
 
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                                        fermentum enim neque.</p>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
                                 </div>
                             </div>
 
@@ -177,8 +166,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-info tombol"
-                    style="background-color: #3c4b64; border:none;">Simpan</button>
+                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
             </div>
         </form>
         <!-- /.modal-content -->
@@ -188,30 +176,30 @@
 <!-- /.modal -->
 
 <script>
-$(document).on('input', "#nama", function() {
-    $('#nama-lengkap').html($('#nama').val());
-});
+    $(document).on('input', "#nama", function() {
+        $('#nama-lengkap').html($('#nama').val());
+    });
 </script>
 <script>
-const enableEdit = document.querySelector('#enableEdit');
-const button = document.querySelector('#button');
-const batal = document.querySelector('#batal');
-const inputan = document.getElementsByTagName('input');
+    const enableEdit = document.querySelector('#enableEdit');
+    const button = document.querySelector('#button');
+    const batal = document.querySelector('#batal');
+    const inputan = document.getElementsByTagName('input');
 
-enableEdit.addEventListener('click', function() {
-    for (i = 0; i < inputan.length; i++) {
-        inputan[i].disabled = false;
-    }
-    button.classList.remove('d-none');
-    enableEdit.classList.add('d-none');
-})
-batal.addEventListener('click', function() {
-    for (i = 0; i < inputan.length; i++) {
-        inputan[i].disabled = true;
-    }
-    button.classList.add('d-none');
-    enableEdit.classList.remove('d-none');
-})
+    enableEdit.addEventListener('click', function() {
+        for (i = 0; i < inputan.length; i++) {
+            inputan[i].disabled = false;
+        }
+        button.classList.remove('d-none');
+        enableEdit.classList.add('d-none');
+    })
+    batal.addEventListener('click', function() {
+        for (i = 0; i < inputan.length; i++) {
+            inputan[i].disabled = true;
+        }
+        button.classList.add('d-none');
+        enableEdit.classList.remove('d-none');
+    })
 </script>
 
 <?= $this->endSection(); ?>

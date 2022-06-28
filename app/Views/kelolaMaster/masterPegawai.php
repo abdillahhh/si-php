@@ -29,15 +29,12 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;"
-                                        src="<?= base_url('images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">John Doe</h2>
                                     <p class="text-gray">Administrator</p>
-                                    <button id="openInputan" class="btn btn-info btn-sm tombol"
-                                        style="background-color: #2D95C9; border:none;"><i class="fas fa-pen mr-1"></i>
-                                        Edit Data</button>
+                                    <button id="openInputan" class="btn btn-info btn-sm tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-pen mr-1"></i> Edit Data</button>
                                 </div>
                             </div>
                             <hr>
@@ -60,25 +57,21 @@
                                         </p>
 
                                         <strong>Alamat</strong>
-                                        <p class="text-muted">Jl.A. Yani No.4 Telanaipura, Jambi, Indonesia, Telp
-                                            (62-741) 60497, Mailbox :bps1500@bps.go.id</p>
+                                        <p class="text-muted">Jl.A. Yani No.4 Telanaipura, Jambi, Indonesia, Telp (62-741) 60497, Mailbox :bps1500@bps.go.id</p>
                                     </div>
                                     <!-- INPUT -->
                                     <div id="inputan" class="col-md-12 d-none">
                                         <div class="form-group">
                                             <label>NIP</label>
-                                            <input type="text" name="nip" class="form-control" placeholder="NIP ..."
-                                                value="19901109 201402 1 007">
+                                            <input type="text" name="nip" class="form-control" placeholder="NIP ..." value="19901109 201402 1 007">
                                         </div>
                                         <div class="form-group">
                                             <label>Tempat/Tanggal Lahir</label>
-                                            <input type="text" name="ttl" class="form-control"
-                                                placeholder="Tempat/Tanggal Lahir ..." value="Jambi, 1 Januari 1998">
+                                            <input type="text" name="ttl" class="form-control" placeholder="Tempat/Tanggal Lahir ..." value="Jambi, 1 Januari 1998">
                                         </div>
                                         <div class="form-group">
                                             <label>Jennis Kelamin</label>
-                                            <select name="jenis_kelamin" class="form-control mr-2"
-                                                style="border-radius: 5px;">
+                                            <select name="jenis_kelamin" class="form-control mr-2" style="border-radius: 5px;">
                                                 <option selected disabled>- Pilih Jenis Kelamin -</option>
                                                 <option selected>Laki-laki</option>
                                                 <option>Perempuan</option>
@@ -86,30 +79,24 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Telepon</label>
-                                            <input type="telephone" name="telepon" class="form-control"
-                                                placeholder="Nomor telepon ..." value="0812 3456 7890">
+                                            <input type="telephone" name="telepon" class="form-control" placeholder="Nomor telepon ..." value="0812 3456 7890">
                                         </div>
                                         <div class="form-group">
                                             <label>Alamat</label>
-                                            <textarea class="form-control" name="alamat" rows="3"
-                                                placeholder="Alamat ...">Jl.A. Yani No.4 Telanaipura, Jambi, Indonesia, Telp (62-741) 60497, Mailbox :bps1500@bps.go.id</textarea>
+                                            <textarea class="form-control" name="alamat" rows="3" placeholder="Alamat ...">Jl.A. Yani No.4 Telanaipura, Jambi, Indonesia, Telp (62-741) 60497, Mailbox :bps1500@bps.go.id</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">Foto </label>
                                             <div class="input-group">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input"
-                                                        id="exampleInputFile" />
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose
-                                                        file</label>
+                                                    <input type="file" class="custom-file-input" id="exampleInputFile" />
+                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mt-2">
-                                            <button type="submit" class="btn btn-info tombol"
-                                                style="background-color: #3c4b64; border:none;">Simpan</button>
-                                            <button type="button" id="batal" class="btn btn-danger"
-                                                style=" border:none;">Batal</button>
+                                            <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                                            <button type="button" id="batal" class="btn btn-danger" style=" border:none;">Batal</button>
                                         </div>
                                     </div>
                                 </form>
@@ -130,9 +117,7 @@
                                     <option>User</option>
                                     <option>Super Admin</option>
                                 </select>
-                                <a href="" type="button" class="btn btn-info tombol"
-                                    style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i>
-                                    Tambah</a>
+                                <a href="" type="button" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</a>
                             </div>
                         </form>
                     </div>
@@ -140,8 +125,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <form class="input-group input-group-md pt-3 px-4" style="width: 250px">
-                                    <input type="search" name="table_search" class="form-control float-right"
-                                        placeholder="Search" />
+                                    <input type="search" name="table_search" class="form-control float-right" placeholder="Search" />
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
@@ -168,9 +152,7 @@
                                                     Administrasi
                                                 </td>
                                                 <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0"
-                                                        style="background-color: #E18939; border:none;"><i
-                                                            class="fas fa-plus"></i></a>
+                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -180,9 +162,7 @@
                                                     Regular User
                                                 </td>
                                                 <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0"
-                                                        style="background-color: #E18939; border:none;"><i
-                                                            class="fas fa-plus"></i></a>
+                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -226,14 +206,14 @@
 </div>
 
 <script>
-$(document).on('click', '#openInputan', function() {
-    $('#keterangan').toggleClass('d-none');
-    $('#inputan').toggleClass('d-none');
-})
-$(document).on('click', '#batal', function() {
-    $('#keterangan').removeClass('d-none');
-    $('#inputan').addClass('d-none');
-})
+    $(document).on('click', '#openInputan', function() {
+        $('#keterangan').toggleClass('d-none');
+        $('#inputan').toggleClass('d-none');
+    })
+    $(document).on('click', '#batal', function() {
+        $('#keterangan').removeClass('d-none');
+        $('#inputan').addClass('d-none');
+    })
 </script>
 
 <?= $this->endSection(); ?>
