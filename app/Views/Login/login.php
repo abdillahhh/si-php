@@ -13,107 +13,109 @@
     <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/x-icon" href="<?= base_url('images/bps.png') ?>">
-    <title>Login</title>
+    <<<<<<< HEAD <link rel="icon" type="image/x-icon" href="<?= base_url('images/bps.png') ?>">
+        =======
+        >>>>>>> cd9849b8ebd3c4df972d8c71c23ada0865a4db62
+        <title>Login</title>
 
-    <style>
-        body {
-            font-family: 'Andika', sans-serif;
-        }
+        <style>
+            body {
+                font-family: 'Andika', sans-serif;
+            }
 
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-            background-color: #e3ecfa;
-        }
+            html,
+            body {
+                height: 100%;
+                width: 100%;
+                background-color: #e3ecfa;
+            }
 
-        .containers {
-            /* padding: 60px 0 60px 0; */
-        }
+            .containers {
+                /* padding: 60px 0 60px 0; */
+            }
 
-        .login {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            justify-items: center;
-        }
+            .login {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                justify-items: center;
+            }
 
-        .button {
-            background-color: #3C4B64;
-            padding: 10px;
-            border: none;
-            color: white;
-        }
+            .button {
+                background-color: #3C4B64;
+                padding: 10px;
+                border: none;
+                color: white;
+            }
 
-        .button:hover {
-            background-color: #1A2B48;
-            color: white;
-        }
+            .button:hover {
+                background-color: #1A2B48;
+                color: white;
+            }
 
-        .button:focus {
-            background-color: #3C4B64;
-            color: white;
-        }
+            .button:focus {
+                background-color: #3C4B64;
+                color: white;
+            }
 
-        .title {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+            .title {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
 
-        .test {
-            max-width: 1000px;
-            overflow: hidden;
-        }
+            .test {
+                max-width: 1000px;
+                overflow: hidden;
+            }
 
-        .test2 {
-            background-color: #3C4B64;
-            padding: 0;
-        }
+            .test2 {
+                background-color: #3C4B64;
+                padding: 0;
+            }
 
-        .test2 img {
-            opacity: 80%;
-            border-radius: 0;
-        }
+            .test2 img {
+                opacity: 80%;
+                border-radius: 0;
+            }
 
-        .test2 img:hover {
-            opacity: 100%;
-            transition: 0.5s;
-        }
+            .test2 img:hover {
+                opacity: 100%;
+                transition: 0.5s;
+            }
 
-        .logo {
-            position: absolute;
-            width: 100px;
-            top: 50%;
-            right: 50%;
-        }
+            .logo {
+                position: absolute;
+                width: 100px;
+                top: 50%;
+                right: 50%;
+            }
 
-        .password {
-            position: relative;
-        }
+            .password {
+                position: relative;
+            }
 
-        .eye {
-            position: absolute;
-            top: 30%;
-            right: 10px;
-            cursor: pointer;
-        }
+            .eye {
+                position: absolute;
+                top: 30%;
+                right: 10px;
+                cursor: pointer;
+            }
 
-        .eye:hover {
-            color: gray;
-        }
+            .eye:hover {
+                color: gray;
+            }
 
-        textarea:focus,
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        .uneditable-input:focus {
-            border-color: #3C4B64;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #3C4B64;
-            outline: 0 none;
-        }
-    </style>
+            textarea:focus,
+            input[type="text"]:focus,
+            input[type="password"]:focus,
+            .uneditable-input:focus {
+                border-color: #3C4B64;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #3C4B64;
+                outline: 0 none;
+            }
+        </style>
 </head>
 
 <body class="position-relative">
