@@ -11,6 +11,18 @@ class MasterAksesUserLevelModel extends Model
     protected $table = 'tbl_akses_user_level';
     protected $allowedFields = ['user_id', 'level_id'];
 
+
+    // public function getAll()
+    // {
+    //     return $this
+    //         ->table($this->table)
+    //         ->select('tbl_akses_user_level.*,user_level.nama_level, tbl_user.*')
+    //         ->join('user_level', 'tbl_akses_user_level.level_id = user_level.id')
+    //         ->join('tbl_user', 'tbl_user.id_user = tbl_akses_user_level.user_id')
+    //         ->get()
+    //         ->getResultArray();
+    // }
+
     public function getUserLevel($user_id)
     {
         return $this
@@ -22,12 +34,13 @@ class MasterAksesUserLevelModel extends Model
             ->getResultArray();
     }
 
-    public function getAksesMenu($level_id)
+    public function getAksesMenu($level_id, $user_id)
     {
         return $this
             ->table($this->table)
             ->select('tbl_akses_user_level.*,user_level.*,tbl_akses_menu.*,tbl_menu.*')
             ->where('tbl_akses_user_level.level_id', $level_id)
+            ->where('tbl_akses_user_level.user_id', $user_id)
             ->join('user_level', 'user_level.id = tbl_akses_user_level.level_id')
             ->join('tbl_akses_menu', 'tbl_akses_menu.level_id = user_level.id')
             ->join('tbl_menu', 'tbl_akses_menu.menu_id = tbl_menu.id')
@@ -36,12 +49,13 @@ class MasterAksesUserLevelModel extends Model
             ->getResultArray();
     }
 
-    public function getAksesMenuLevel($level_id)
+    public function getAksesMenuLevel($level_id, $user_id)
     {
         return $this
             ->table($this->table)
             ->select('tbl_akses_user_level.*,user_level.*,tbl_akses_menu.*,tbl_menu.*')
             ->where('tbl_akses_user_level.level_id', $level_id)
+            ->where('tbl_akses_user_level.user_id', $user_id)
             ->join('user_level', 'user_level.id = tbl_akses_user_level.level_id')
             ->join('tbl_akses_menu', 'tbl_akses_menu.level_id = user_level.id')
             ->join('tbl_menu', 'tbl_akses_menu.menu_id = tbl_menu.id')
@@ -51,12 +65,13 @@ class MasterAksesUserLevelModel extends Model
     }
 
 
-    public function getAksesSubmenu($level_id)
+    public function getAksesSubmenu($level_id, $user_id)
     {
         return $this
             ->table($this->table)
             ->select('tbl_akses_user_level.*,user_level.*,tbl_akses_submenu.*,tbl_submenu.*')
             ->where('tbl_akses_user_level.level_id', $level_id)
+            ->where('tbl_akses_user_level.user_id', $user_id)
             ->join('user_level', 'user_level.id = tbl_akses_user_level.level_id')
             ->join('tbl_akses_submenu', 'tbl_akses_submenu.level_id = user_level.id')
             ->join('tbl_submenu', 'tbl_akses_submenu.submenu_id = tbl_submenu.id')
@@ -64,12 +79,13 @@ class MasterAksesUserLevelModel extends Model
             ->getResultArray();
     }
 
-    public function getAksesSubmenuLevel($level_id)
+    public function getAksesSubmenuLevel($level_id, $user_id)
     {
         return $this
             ->table($this->table)
             ->select('tbl_akses_user_level.*,user_level.*,tbl_akses_submenu.*,tbl_submenu.*')
             ->where('tbl_akses_user_level.level_id', $level_id)
+            ->where('tbl_akses_user_level.user_id', $user_id)
             ->join('user_level', 'user_level.id = tbl_akses_user_level.level_id')
             ->join('tbl_akses_submenu', 'tbl_akses_submenu.level_id = user_level.id')
             ->join('tbl_submenu', 'tbl_akses_submenu.submenu_id = tbl_submenu.id')

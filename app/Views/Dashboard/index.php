@@ -153,7 +153,38 @@
     </section>
     <!-- /.content -->
   </div>
+
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="<?= base_url('/dist/js/pages/dashboard.js') ?>"></script>
+  <script src="<?= base_url('dist/js/pages/dashboard.js') ?>"></script>
+  <!-- fullCalendar 2.2.5 -->
+  <script src="<?= base_url('plugins/moment/moment.min.js') ?>"></script>
+  <script src="<?= base_url('plugins/fullcalendar/main.js') ?>"></script>
+
+  <!-- KALENDER -->
+  <script>
+    $(function() {
+      var date = new Date();
+      var d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+
+      var Calendar = FullCalendar.Calendar;
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new Calendar(calendarEl, {
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        },
+        themeSystem: 'bootstrap',
+        events: <?= $events; ?>,
+        editable: false,
+        droppable: false,
+      });
+      calendar.render();
+    });
+  </script>
+
+
   <?= $this->endSection(); ?>
 <?php endif; ?>

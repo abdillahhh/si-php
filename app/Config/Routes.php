@@ -56,10 +56,18 @@ $routes->get('/listLaporan', 'masterLaporanHarian::listLaporan');
 $routes->get('/inputKegiatan', 'masterLaporanHarian::inputKegiatan');
 $routes->get('/detailKegiatan', 'masterLaporanHarian::detailKegiatan');
 
+//Routes ke save laporan harian dan controller save laporan harian
+$routes->post('/saveLaporanHarian', 'masterLaporanHarian::saveLaporanHarian');
+
+//Routes ke save laporan harian dan controller save laporan harian
+$routes->post('/updateLaporanHarian', 'masterLaporanHarian::updateLaporanHarian');
+
+
 //Routes Ke views dan controller Kelola Master
 $routes->get('/masterUser', 'masterKelolaMaster::masterUser');
 $routes->get('/masterPegawai', 'masterKelolaMaster::masterPegawai');
 $routes->get('/masterKegiatan', 'masterKelolaMaster::masterKegiatan');
+$routes->get('/masterUser/get_autofillPegawai', 'masterKelolaMaster::get_autofillPegawai');
 
 //Routes Ke views dan controller Kelola Master Tambah
 $routes->get('/tambahUser', 'masterKelolaMaster::tambahUser');

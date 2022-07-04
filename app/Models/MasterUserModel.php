@@ -27,5 +27,19 @@ class MasterUserModel extends Model
             ->first();
     }
 
-  
+    public function getProfilUser($user_id)
+    {
+        return $this
+            ->table('tbl_user')
+            ->where('id_user', $user_id)
+            ->first();
+    }
+
+    public function getAllUser()
+    {
+        return $this
+            ->table('tbl_user')
+            ->get()
+            ->getResultArray();
+    }
 }

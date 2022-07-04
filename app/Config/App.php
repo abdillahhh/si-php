@@ -24,9 +24,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    // public $baseURL = 'http://localhost/siphp/';
-    public $baseURL = BASE;
-
+    public $baseURL = 'http://localhost/siphp/';
 
     /**
      * --------------------------------------------------------------------------

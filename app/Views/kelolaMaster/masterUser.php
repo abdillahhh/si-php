@@ -29,22 +29,34 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">John Doe</h2>
-                                    <p id="oldRole" class="text-gray">Administrator</p>
+                                    <p id="oldRole" class="text-gray">Administrator | Pegawai</p>
                                     <!-- FORM -->
-                                    <form action="" method="POST" enctype="multipart/form-data" id="roleForm" class="row d-none">
+                                    <form action="<?= base_url() ?>" method="POST" enctype="multipart/form-data" id="roleForm" class="row d-none">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="role">Role/level</label>
-                                                <select name="role" class="form-control form-control-sm mr-2" style="border-radius: 5px;">
-                                                    <option>Administrasi</option>
-                                                    <option>Regular User</option>
-                                                    <option>Pegawai</option>
-                                                    <option>Admin Kepegawaian</option>
-                                                </select>
+                                                <label>Role/level</label>
+                                                <div id="roles">
+                                                    <!-- foreach disini -->
+                                                    <select name="role" class="form-control form-control-sm mr-2 mb-2" style="border-radius: 5px;">
+                                                        <option>Administrasi</option>
+                                                        <option>Regular User</option>
+                                                        <option>Pegawai</option>
+                                                        <option>Admin Kepegawaian</option>
+                                                    </select>
+                                                    <!-- endforeach -->
+                                                    <div class="row">
+                                                        <div class="col-12 ">
+                                                            <div class="float-right">
+                                                                <button type="button" data-toggle="modal" data-target="#modal-tambah-role" class="btn btn-success btn-sm tombol" style="background-color: #3c4b64; border: none;">Tambah Role</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="role">Status</label>
@@ -55,7 +67,7 @@
                                             </div>
 
                                             <div>
-                                                <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
+                                                <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-save mr-1"></i> Simpan</button>
                                                 <button type="button" id="cancel" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
                                             </div>
                                         </div>
@@ -112,7 +124,7 @@
                                     <option>User</option>
                                     <option>Super Admin</option>
                                 </select>
-                                <a href="<?= base_url('/tambahUser') ?>" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</a>
+                                <button type="button" data-toggle="modal" data-target="#modal-tambah-user" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</button>
                             </div>
                         </form>
                     </div>
@@ -135,31 +147,29 @@
                                             <tr>
                                                 <th>NO.</th>
                                                 <th>USERNAME</th>
-                                                <th>ROLE</th>
+                                                <th>STATUS AKUN</th>
                                                 <th>AKSI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1.</td>
-                                                <td>John Doe</td>
-                                                <td>
-                                                    Administrasi
-                                                </td>
-                                                <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2.</td>
-                                                <td>David M. Adams</td>
-                                                <td>
-                                                    Regular User
-                                                </td>
-                                                <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
-                                                </td>
-                                            </tr>
+                                            <?php foreach ($list_user as $list) : ?>
+                                                <tr>
+                                                    <td><?= $list['id_user']; ?></td>
+                                                    <td><?= $list['username']; ?></td>
+
+                                                    <td>
+                                                        <?php if ($list['is_active'] == 'Y') {
+
+                                                            echo '<span class="badge bg-success">active</span>';
+                                                        } else {
+                                                            echo '<span class="badge bg-danger">non-active</span>';
+                                                        } ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -199,6 +209,142 @@
         </div>
     </section>
 </div>
+
+<!-- MODAL TAMBAH USER -->
+<div class="modal fade" id="modal-tambah-user">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <form action="<?= base_url('') ?>" method="POST" class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah User</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Pilih Level</label>
+                <div class="d-flex flex-row justify-content-start align-content-center mb-4">
+                    <div class="pilih-level">
+                        <label for="administrator" class="checkbox-level">
+                            <input class="d-none" type="checkbox" name="administrator" id="administrator" checked>
+                            <i class="far fa-check-square"></i>
+                            Administrator
+                        </label>
+                    </div>
+
+                    <div class="pilih-level">
+                        <label for="pegawai" class="checkbox-level active">
+                            <input class="d-none" type="checkbox" name="pegawai" id="pegawai">
+                            <i class="far fa-square"></i>
+                            Pegawai
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" placeholder="Username ...">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="XyHwupo01A" disabled>
+                </div>
+                <hr class="mb-5">
+                <div class="form-group">
+                    <label>Cari Pegawai</label>
+                    <input type="text" id="cari_pegawai" class="form-control" placeholder="Search ...">
+                </div>
+
+                <div class="row">
+                    <div class="col-5 pr-4">
+                        <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
+                    </div>
+                    <div class="col-7 pl-4 border-left">
+                        <strong>Nama Lengkap</strong>
+                        <p class="text-muted">
+
+                        </p>
+
+                        <strong>NIP Lama</strong>
+                        <p class="text-muted">
+
+                        </p>
+
+                        <strong>Email</strong>
+                        <p class="text-muted"></p>
+
+                        <strong>Telepon</strong>
+                        <p class="text-muted">
+
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- MODAL TAMBAH ROLE -->
+<div class="modal fade" style="padding-top: 13%;" id="modal-tambah-role">
+    <div class="modal-dialog">
+        <form action="<?= base_url('') ?>" method="POST" class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Level</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nama Level</label>
+                    <select name="role" class="form-control" style="border-radius: 5px;">
+                        <option>Pegawai</option>
+                        <option>Administrasi</option>
+                        <option>Regular User</option>
+                        <option>Admin Kepegawaian</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- jQuery -->
+
+<script src="<?= base_url('plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('/js/jquery-ui.min.js') ?>"></script>
+<!-- AUTOFILL PEGAWAI -->
+<script>
+    $(document).ready(function() {
+        $("#cari_pegawai").autocomplete({
+            minLength: 2,
+            source: '<?php echo site_url('masterUser/get_autofillPegawai/?') ?>',
+            focus: function(event, ui) {
+                $("#cari_pegawai").val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $("#cari_pegawai").val(ui.item.label);
+                return false;
+            }
+        })
+        console.log(ui.item.label)
+    });
+</script>
 <script>
     const openRole = document.querySelector('#openRole');
     const cancel = document.querySelector('#cancel');
@@ -216,4 +362,20 @@
         oldRole.classList.toggle('d-none');
     })
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('input[type="checkbox"]').change(function() {
+            if ($(this).prop('checked') == true) {
+                $(this).parent().toggleClass('active')
+                $(this).siblings().removeClass().addClass('far fa-check-square')
+            } else if ($(this).prop('checked') == false) {
+                $(this).parent().toggleClass('active')
+                $(this).siblings().removeClass().addClass('far fa-square')
+            }
+        })
+    })
+</script>
+
 <?= $this->endSection(); ?>

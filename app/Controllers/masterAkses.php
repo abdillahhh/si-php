@@ -42,8 +42,8 @@ class masterAkses extends BaseController
                 $level_id = $list_user_level[$i]['level_id'];
             }
         }
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($level_id);
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($level_id);
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($level_id, $user['id_user']);
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($level_id, $user['id_user']);
         if (password_verify($password, $user['password'])) {
             if ($user['is_active'] == 'Y') {
                 $data = [
@@ -71,8 +71,8 @@ class masterAkses extends BaseController
     {
         $id = $this->request->getVar('id');
 
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($id);
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($id);
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($id, session('user_id'));
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($id, session('user_id'));
 
         $data1 = [
             'log' => TRUE,

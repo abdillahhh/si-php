@@ -50,9 +50,9 @@ class masterSistem extends BaseController
 
     public function editKelolaLevel($level_id)
     {
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenuLevel($level_id);
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenuLevel($level_id, session('user_id'));
 
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenuLevel($level_id);
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenuLevel($level_id, session('user_id'));
 
 
         $data = [
@@ -70,9 +70,9 @@ class masterSistem extends BaseController
 
     public function updateKelolaLevel($level_id)
     {
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($level_id);
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($level_id, session('user_id'));
 
-        $list_level_menu = $this->masterAksesMenuModel->getMenuByLevel($level_id);
+        $list_level_menu = $this->masterAksesMenuModel->getMenuByLevel($level_id, session('user_id'));
 
         for ($i = 0; $i < count($list_menu); $i++) {
 
@@ -92,7 +92,7 @@ class masterSistem extends BaseController
         }
 
 
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($level_id);
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($level_id, session('user_id'));
         $list_level_submenu = $this->masterAksesSubmenuModel->getSubmenuByLevel($level_id);
 
         for ($i = 0; $i < count($list_submenu); $i++) {
@@ -148,8 +148,8 @@ class masterSistem extends BaseController
         }
 
 
-        $list_menu_baru = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'));
-        $list_submenu_baru = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'));
+        $list_menu_baru = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'), session('user_id'));
+        $list_submenu_baru = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'), session('user_id'));
 
 
         $data1 = [
@@ -195,8 +195,8 @@ class masterSistem extends BaseController
             ]);
         }
 
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'));
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'));
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'), session('user_id'));
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'), session('user_id'));
 
 
         $data1 = [
@@ -250,7 +250,7 @@ class masterSistem extends BaseController
         ]);
 
 
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'));
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'), session('user_id'));
 
         $data1 = [
             'log' => TRUE,
@@ -293,7 +293,7 @@ class masterSistem extends BaseController
         }
 
 
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'));
+        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu(session('level_id'), session('user_id'));
 
         $data1 = [
             'log' => TRUE,
@@ -326,7 +326,7 @@ class masterSistem extends BaseController
             'menu' => 'Sistem',
             'dataSubmenu' =>  $dataSubmenu->paginate($itemsCount, 'dataSubmenu'),
             'pager' => $dataSubmenu->pager,
-            'subMenu' => 'Kelola Sub Menu',
+            'subMenu' => 'Kelola Submenu',
             'list_submenu' => session('list_submenu'),
             'list_menu' => $this->masterMenuModel->getListMenu()
         ];
@@ -345,7 +345,7 @@ class masterSistem extends BaseController
         ]);
 
 
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'));
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'), session('user_id'));
 
         $data1 = [
             'log' => TRUE,
@@ -389,7 +389,7 @@ class masterSistem extends BaseController
             ]);
         }
 
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'));
+        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu(session('level_id'), session('user_id'));
 
         $data1 = [
             'log' => TRUE,
