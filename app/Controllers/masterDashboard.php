@@ -19,7 +19,7 @@ class masterDashboard extends BaseController
         $event_data = $this->masterCalendarModel->getEvents();
         foreach ($event_data as $row) {
             $events[] = array(
-                'title' => $row['judul_kegiatan'],
+                //'title' => $row['judul_kegiatan'],
                 'start' => $row['tgl_kegiatan'],
                 'backgroundColor' => '#E2D7E1',
                 'borderColor' => '#E2D7E1',

@@ -28,7 +28,8 @@
                     <div class="row">
                         <div class="col-md-6 py-1">
                             <div class="input-group input-group-md" style="width: 250px">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
+                                <input type="text" name="table_search" class="form-control float-right"
+                                    placeholder="Search" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
                                         <i class="fas fa-search"></i>
@@ -56,8 +57,12 @@
                                     <option>Belum</option>
                                 </select>
 
-                                <button type="button" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-download"></i></button>
-                                <button type="button" data-toggle="modal" data-target="#modal-tambah" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</button>
+                                <button type="button" class="btn btn-info tombol mr-2"
+                                    style="background-color: #3c4b64; border:none;"><i
+                                        class="fas fa-download"></i></button>
+                                <button type="button" data-toggle="modal" data-target="#modal-tambah"
+                                    class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i
+                                        class="fas fa-plus mr-2"></i> Tambah</button>
                             </div>
                         </form>
                     </div>
@@ -85,40 +90,44 @@
                                 </thead>
                                 <tbody>
                                     <?php if ($list_laporan_harian != NULL) : ?>
-                                        <?php foreach ($list_laporan_harian as $list) : ?>
-                                            <tr>
-                                                <td><?= $list['id']; ?></td>
-                                                <td><?= $list['tgl_kegiatan']; ?></td>
-                                                <?php $laporan = $list['uraian_kegiatan']; ?>
-                                                <?php $data = json_decode($laporan); ?>
-                                                <?php $list_uraian = $data->uraian; ?>
-                                                <td><?php foreach ($list_uraian as $uraian) : ?>
-                                                        <?= $uraian; ?>
-                                                        <br>
-                                                    <?php endforeach; ?>
-                                                </td>
-                                                <?php $list_jumlah = $data->jumlah; ?>
-                                                <td><?php foreach ($list_jumlah as $jumlah) : ?>
-                                                        <?= $jumlah; ?>
-                                                        <br>
-                                                    <?php endforeach; ?>
-                                                </td>
-                                                <?php $list_satuan2 = $data->satuan; ?>
-                                                <td><?php foreach ($list_satuan2 as $satuan) : ?>
-                                                        <?= $satuan; ?>
-                                                        <br>
-                                                    <?php endforeach; ?>
-                                                </td>
-                                                <td>
-                                                    <button type="button" id="btn-detail" class="btn btn-info btn-xs tombol" style="background-color: #E18939; border:none;" data-toggle="modal" data-target="#modal-detail">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button type="button" id="btn-edit" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;" data-toggle="modal" data-target="#modal-edit">
-                                                        <i class="fas fa-pen"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                    <?php foreach ($list_laporan_harian as $list) : ?>
+                                    <tr>
+                                        <td><?= $list['id']; ?></td>
+                                        <td><?= $list['tgl_kegiatan']; ?></td>
+                                        <?php $laporan = $list['uraian_kegiatan']; ?>
+                                        <?php $data = json_decode($laporan); ?>
+                                        <?php $list_uraian = $data->uraian; ?>
+                                        <td><?php foreach ($list_uraian as $uraian) : ?>
+                                            <?= $uraian; ?>
+                                            <br>
+                                            <?php endforeach; ?>
+                                        </td>
+                                        <?php $list_jumlah = $data->jumlah; ?>
+                                        <td><?php foreach ($list_jumlah as $jumlah) : ?>
+                                            <?= $jumlah; ?>
+                                            <br>
+                                            <?php endforeach; ?>
+                                        </td>
+                                        <?php $list_satuan2 = $data->satuan; ?>
+                                        <td><?php foreach ($list_satuan2 as $satuan) : ?>
+                                            <?= $satuan; ?>
+                                            <br>
+                                            <?php endforeach; ?>
+                                        </td>
+                                        <td>
+                                            <button type="button" id="btn-detail" class="btn btn-info btn-xs tombol"
+                                                style="background-color: #E18939; border:none;" data-toggle="modal"
+                                                data-target="#modal-detail">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button type="button" id="btn-edit" class="btn btn-info btn-xs tombol"
+                                                style="background-color: #2D95C9; border:none;" data-toggle="modal"
+                                                data-target="#modal-edit">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
                                     <?php endif ?>
 
                                 </tbody>
@@ -163,7 +172,8 @@
 <!-- MODAL TAMBAH KEGIATAN -->
 <div class="modal fade" id="modal-tambah">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
-        <form action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content" enctype="multipart/form-data">
+        <form action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content"
+            enctype="multipart/form-data">
             <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
             <div class="modal-header">
                 <h4 class="modal-title">Tambah Laporan Kegiatan</h4>
@@ -193,7 +203,8 @@
                             <div class="row"><strong>Uraian Kegiatan</strong></div>
                             <div class="row px-1">
                                 <div class="form-group">
-                                    <textarea class="form-control" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..."></textarea>
+                                    <textarea class="form-control" name="field_uraian[]" rows="3"
+                                        placeholder="Masukkan Uraian Kegiatan ..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +212,8 @@
                             <div class="row"><strong>Jumlah</strong></div>
                             <div class="row px-1">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="field_jumlah[]" placeholder="Jumlah ...">
+                                    <input type="number" class="form-control" name="field_jumlah[]"
+                                        placeholder="Jumlah ...">
                                 </div>
                             </div>
                         </div>
@@ -211,9 +223,10 @@
                                 <div class="input-group ">
                                     <select class=" form-control" name="field_satuan[]">
                                         <?php if ($list_satuan != NULL) : ?>
-                                            <?php foreach ($list_satuan as $satuan) : ?>
-                                                <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?></option>
-                                            <?php endforeach; ?>
+                                        <?php foreach ($list_satuan as $satuan) : ?>
+                                        <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?>
+                                        </option>
+                                        <?php endforeach; ?>
                                         <?php endif; ?>
                                     </select>
                                 </div>
@@ -223,7 +236,8 @@
                             <div class="row"><strong>Hasil Kegiatan</strong></div>
                             <div class="row px-1">
                                 <div class="form-group">
-                                    <textarea class="form-control" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..."></textarea>
+                                    <textarea class="form-control" name="field_hasil[]" rows="3"
+                                        placeholder="Masukkan Hasil Kegiatan ..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +245,8 @@
                             <div class="row"><strong>Bukti Dukung</strong></div>
                             <div class="row w-100">
                                 <div class="form-group w-100">
-                                    <input class="form-control" type="file" name="field_bukti1[]" id="formFileMultiple" multiple />
+                                    <input class="form-control" type="file" name="field_bukti1[]" id="formFileMultiple"
+                                        multiple />
                                 </div>
                             </div>
                         </div>
@@ -252,7 +267,8 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                <button type="submit" class="btn btn-info tombol"
+                    style="background-color: #3c4b64; border:none;">Simpan</button>
             </div>
         </form>
         <!-- /.modal-content -->
@@ -276,7 +292,8 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Update</button>
+                <button type="submit" class="btn btn-info tombol"
+                    style="background-color: #3c4b64; border:none;">Update</button>
             </div>
         </form>
         <!-- /.modal-content -->
@@ -299,7 +316,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-4 d-flex flex-column justify-content-center align-items-center" style="max-height: 300px;">
+                                <div class="col-md-4 d-flex flex-column justify-content-center align-items-center"
+                                    style="max-height: 300px;">
                                     <i id="detail_icon_status" style="font-size: 150px;"></i>
                                     <span style="font-size: 40px;" id="detail_status"></span>
                                 </div>
@@ -318,7 +336,10 @@
                                             <div class="float-right">
                                                 <strong class="">Waktu Pengerjaan</strong>
                                                 <div class="mt-2">
-                                                    <span class="badge badge-secondary py-1 px-3 mr-2" id="detail_waktu_mulai"></span> s/d <span class="badge badge-secondary py-1 px-3 ml-2" id="detail_waktu_selesai"></span>
+                                                    <span class="badge badge-secondary py-1 px-3 mr-2"
+                                                        id="detail_waktu_mulai"></span> s/d <span
+                                                        class="badge badge-secondary py-1 px-3 ml-2"
+                                                        id="detail_waktu_selesai"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -362,81 +383,82 @@
 <script src="<?= base_url('Plugins/dropzone/min/dropzone.min.js') ?>"></script>
 
 <script>
-    //Mengambil Data edit dengan menggunakan Jquery
-    $(document).on('click', '#btn-edit', function() {
-        const bukti_dukung = $.parseHTML($(this).data('bukti_dukung'))
+//Mengambil Data edit dengan menggunakan Jquery
+$(document).on('click', '#btn-edit', function() {
+    const bukti_dukung = $.parseHTML($(this).data('bukti_dukung'))
 
-        $('#id_kegiatan').val($(this).data('id_kegiatan'));
-        $('#butir_kegiatan').val($(this).data('butir_kegiatan'));
-        $('#tgl_kegiatan').val($(this).data('tgl_kegiatan'));
-        $('#waktu_mulai').val($(this).data('waktu_mulai'));
-        $('#waktu_selesai').val($(this).data('waktu_selesai'));
-        $('#uraian_kegiatan').val($(this).data('uraian_kegiatan'));
-        $('#kd_target').val($(this).data('kd_target'));
-        $('#hasil_kegiatan').val($(this).data('hasil_kegiatan'));
-        $('#bukti_dukung2').summernote('code', $(this).data('bukti_dukung'));
-        $('#status').val($(this).data('status'));
-        if ($(this).data('kd_target') == 1) {
-            jikaJamEdit()
-        } else {
-            jikaLainnyaEdit()
-        }
-    })
+    $('#id_kegiatan').val($(this).data('id_kegiatan'));
+    $('#butir_kegiatan').val($(this).data('butir_kegiatan'));
+    $('#tgl_kegiatan').val($(this).data('tgl_kegiatan'));
+    $('#waktu_mulai').val($(this).data('waktu_mulai'));
+    $('#waktu_selesai').val($(this).data('waktu_selesai'));
+    $('#uraian_kegiatan').val($(this).data('uraian_kegiatan'));
+    $('#kd_target').val($(this).data('kd_target'));
+    $('#hasil_kegiatan').val($(this).data('hasil_kegiatan'));
+    $('#bukti_dukung2').summernote('code', $(this).data('bukti_dukung'));
+    $('#status').val($(this).data('status'));
+    if ($(this).data('kd_target') == 1) {
+        jikaJamEdit()
+    } else {
+        jikaLainnyaEdit()
+    }
+})
 </script>
 <script>
-    //Mengambil Data detail dengan menggunakan Jquery
-    $(document).on('click', '#btn-detail', function() {
-        const detail_bukti_dukung = $.parseHTML($(this).data('detail_bukti_dukung'))
+//Mengambil Data detail dengan menggunakan Jquery
+$(document).on('click', '#btn-detail', function() {
+    const detail_bukti_dukung = $.parseHTML($(this).data('detail_bukti_dukung'))
 
-        $('#id_kegiatan').val($(this).data('detail_id_kegiatan'));
-        $('#detail_butir_kegiatan').text($(this).data('detail_butir_kegiatan'));
-        $('#detail_tgl_kegiatan').text($(this).data('detail_tgl_kegiatan'));
-        $('#detail_waktu_mulai').text($(this).data('detail_waktu_mulai'));
-        $('#detail_waktu_selesai').text($(this).data('detail_waktu_selesai'));
-        $('#detail_uraian_kegiatan').text($(this).data('detail_uraian_kegiatan'));
-        $('#detail_nama_target').text($(this).data('detail_nama_target'));
-        $('#detail_hasil_kegiatan').text($(this).data('detail_hasil_kegiatan'));
-        $('#detail_bukti_dukung').html($(this).data('detail_bukti_dukung'));
-        $('#detail_status').text($(this).data('detail_status')).removeClass().addClass($(this).data('detail_class_span'));
-        $('#detail_icon_status').removeClass().addClass($(this).data('detail_class_icon'));
-    })
+    $('#id_kegiatan').val($(this).data('detail_id_kegiatan'));
+    $('#detail_butir_kegiatan').text($(this).data('detail_butir_kegiatan'));
+    $('#detail_tgl_kegiatan').text($(this).data('detail_tgl_kegiatan'));
+    $('#detail_waktu_mulai').text($(this).data('detail_waktu_mulai'));
+    $('#detail_waktu_selesai').text($(this).data('detail_waktu_selesai'));
+    $('#detail_uraian_kegiatan').text($(this).data('detail_uraian_kegiatan'));
+    $('#detail_nama_target').text($(this).data('detail_nama_target'));
+    $('#detail_hasil_kegiatan').text($(this).data('detail_hasil_kegiatan'));
+    $('#detail_bukti_dukung').html($(this).data('detail_bukti_dukung'));
+    $('#detail_status').text($(this).data('detail_status')).removeClass().addClass($(this).data(
+        'detail_class_span'));
+    $('#detail_icon_status').removeClass().addClass($(this).data('detail_class_icon'));
+})
 </script>
 <script>
-    var date = new Date();
-    var currentDate = date.toISOString().slice(0, 10);
-    document.getElementById('hari-ini').value = currentDate;
-    document.getElementById('hari-ini-2').value = currentDate;
-    $(document).ready(function() {
-        jalankanSummernote()
-    })
+var date = new Date();
+var currentDate = date.toISOString().slice(0, 10);
+document.getElementById('hari-ini').value = currentDate;
+document.getElementById('hari-ini-2').value = currentDate;
+$(document).ready(function() {
+    jalankanSummernote()
+})
 
-    function jalankanSummernote() {
-        // Summernote
-        $('[id^="bukti_dukung"]').each(function() {
-            $(this).summernote({
-                placeholder: 'Link/list bukti kegiatan',
-                height: 120,
-                style: false,
-                toolbar: [
-                    ['para', ['ul', 'ol']],
-                    ['insert', ['link', 'picture', 'video', 'file']],
-                ]
-            });
-        })
-    };
+function jalankanSummernote() {
+    // Summernote
+    $('[id^="bukti_dukung"]').each(function() {
+        $(this).summernote({
+            placeholder: 'Link/list bukti kegiatan',
+            height: 120,
+            style: false,
+            toolbar: [
+                ['para', ['ul', 'ol']],
+                ['insert', ['link', 'picture', 'video', 'file']],
+            ]
+        });
+    })
+};
 </script>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
 
-        $(document).on("click", '#hapus-baris', function() {
-            $(this).parent().remove()
-        })
+    $(document).on("click", '#hapus-baris', function() {
+        $(this).parent().remove()
+    })
 
 
-        $('[id^="tambah-baris"]').click(function() {
-            let noBaris = $('#lama').children().length + $('#baru').children().length + 1;
-            $('#baru').append(`
+    $('[id^="tambah-baris"]').click(function() {
+        let noBaris = $('#lama').children().length + $('#baru').children().length + 1;
+        $('#baru').append(`
         <div class="row mt-4 rounded position-relative pt-2 bg-gray-light">
                         <span id="hapus-baris" type="button" class="delete-kegiatan"><i class="fas fa-times"></i></span>
                         <div class="col-1 baris-kegiatan">
@@ -491,9 +513,9 @@
                         </div>
                     </div>
         `)
-            jalankanSummernote()
-        })
+        jalankanSummernote()
     })
+})
 </script>
 
 <?= $this->endSection(); ?>
