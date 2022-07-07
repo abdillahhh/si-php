@@ -26,10 +26,14 @@
   <link rel="stylesheet" href="<?= base_url('/plugins/summernote/summernote-bs4.min.css') ?>" />
   <!-- fullCalendar -->
   <link rel="stylesheet" href="<?= base_url('/plugins/fullcalendar/main.css') ?>" />
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="<?= base_url('/plugins/dropzone/min/dropzone.min.css') ?>" />
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="<?= base_url('/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>">
   <!-- custom css -->
   <link rel="stylesheet" href="<?= base_url('/css/custom.css') ?>" />
+  <link rel="stylesheet" href="<?= base_url('/css/trix.css') ?>" />
+  <script src="<?= base_url('/js/trix.js') ?>"></script>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="<?= base_url('/images/bps.png') ?>">
@@ -137,9 +141,8 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #3c4b64;">
       <!-- Brand Logo -->
-      <a href=" <?= base_url('/dashboard') ?>" class="brand-link" style="border: none">
-        <img src="<?= base_url('images/BPS.png') ?>" alt="Logo BPS" class="brand-image image-circle" style="opacity: 0.8" />
-        <span class="brand-text font-weight-light">SIPHP</span>
+      <a href=" <?= base_url('/dashboard') ?>" class="brand-link w-100 d-flex justify-content-center align-content-center" style="border: none">
+        <span class="brand-text font-weight-light"><img src="<?= base_url('images/BPS.png') ?>" class="mt-3" alt="Logo BPS" style="width: 100px;" /></span>
       </a>
 
       <!-- Sidebar -->
@@ -248,10 +251,6 @@
     <script src="<?= base_url('/dist/js/demo.js') ?>"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="<?= base_url('/dist/js/pages/dashboard.js') ?>"></script>
-    <!-- fullCalendar 2.2.5 -->
-    <script src="<?= base_url('/plugins/moment/moment.min.js') ?>"></script>
-    <script src="<?= base_url('/plugins/fullcalendar/main.js') ?>"></script>
-    <script src="<?= base_url('/js/kalender.js') ?>"></script>
 
     <!-- OPTIONAL SCRIPTS -->
     <script src="<?= base_url('/plugins/chart.js/Chart.min.js') ?>"></script>

@@ -117,7 +117,7 @@
                                     <option>User</option>
                                     <option>Super Admin</option>
                                 </select>
-                                <a href="" type="button" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</a>
+                                <button id="btn-tambah" type="button" class="btn btn-info tombol" data-toggle="modal" data-target="#modal-tambah" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</button>
                             </div>
                         </form>
                     </div>
@@ -139,32 +139,30 @@
                                         <thead>
                                             <tr>
                                                 <th>NO.</th>
-                                                <th>USERNAME</th>
-                                                <th>ROLE</th>
+                                                <th>NAMA PEGAWAI</th>
+                                                <th>BIDANG</th>
                                                 <th>AKSI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1.</td>
-                                                <td>John Doe</td>
-                                                <td>
-                                                    Administrasi
-                                                </td>
-                                                <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2.</td>
-                                                <td>David M. Adams</td>
-                                                <td>
-                                                    Regular User
-                                                </td>
-                                                <td>
-                                                    <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
-                                                </td>
-                                            </tr>
+                                            <?php if ($list_pegawai != NULL) : ?>
+                                                <?php foreach ($list_pegawai as $pegawai) : ?>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td><?= $pegawai['nama_pegawai']; ?></td>
+                                                        <td>
+                                                            <?php foreach ($list_bidang as $bidang) : ?>
+                                                                <?php if ($bidang['kd_es3'] == $pegawai['es3_kd']) {
+                                                                    echo $bidang['deskripsi'];
+                                                                } ?>
+                                                            <?php endforeach; ?>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" type="button" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -204,6 +202,126 @@
         </div>
     </section>
 </div>
+
+<!-- MODAL TAMBAH PEGAWAI -->
+<div class="modal fade" id="modal-tambah">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <form action="<?= base_url('/savePegawai') ?>" method="POST" class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Pegawai</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>NIP Lama</label>
+                            <input type="text" name="nip_lama" class="form-control" placeholder="NIP Lama ...">
+                        </div>
+                        <div class="form-group">
+                            <label>NIP Baru</label>
+                            <input type="text" name="nip_baru" class="form-control" placeholder="NIP Baru ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Pegawai</label>
+                            <input type="text" name="nama_pegawai" class="form-control" placeholder="Nama Pegawai ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Golongan</label>
+                            <select name="gol_kd" class="form-control mr-2" style="border-radius: 5px;">
+                                <?php foreach ($list_golongan as $golongan) : ?>
+                                    <option value="<?= $golongan['kd_gol']; ?>"><?= $golongan['golongan']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tahun Tamat</label>
+                            <input type="month" name="tmt" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Jabatan</label>
+                            <select name="jabatan_kd" class="form-control mr-2" style="border-radius: 5px;">
+                                <?php foreach ($list_jabatan as $jabatan) : ?>
+                                    <option value="<?= $jabatan['id_jabatan']; ?>"><?= $jabatan['nama_jabatan']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Keterangan Jabatan</label>
+                            <textarea name="ket_jabatan" rows='5' class="form-control" placeholder="Keterangan Jabatan ..."></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Pendidikan</label>
+                            <select name="pendidikan_kd" class="form-control mr-2" style="border-radius: 5px;">
+                                <?php foreach ($list_pendidikan as $pendidikan) : ?>
+                                    <option value="<?= $pendidikan['kd_pendidikan']; ?>"><?= $pendidikan['tk_pendidikan']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tahun Pendidikan</label>
+                            <input type="text" name="tahun_pdd" class="form-control" placeholder="Masukkan Tahun Pendidikan ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Jenis Kelamin</label>
+                            <select name="jk" class="form-control mr-2" style="border-radius: 5px;">
+                                <option value="1">Laki-laki</option>
+                                <option value="2">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Lahir</label>
+                            <input type="date" name="tgl_lahir" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Satker</label>
+                            <select name="satker_kd" class="form-control mr-2" style="border-radius: 5px;">
+                                <?php foreach ($list_satker as $satker) : ?>
+                                    <option value="<?= $satker['kd_satker']; ?>"><?= $satker['satker']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Es3</label>
+                            <select name="es3_kd" class="form-control mr-2" style="border-radius: 5px;">
+                                <?php foreach ($list_bidang as $bidang) : ?>
+                                    <option value="<?= $bidang['kd_es3']; ?>"><?= $bidang['deskripsi']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Es4</label>
+                            <select name="es4_kd" class="form-control mr-2" style="border-radius: 5px;">
+                                <?php foreach ($list_seksi as $seksi) : ?>
+                                    <option value="<?= $seksi['kd_es4']; ?>"><?= $seksi['deskripsi']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fungsional</label>
+                            <select name="fungsional_kd" class="form-control mr-2" style="border-radius: 5px;">
+                                <?php foreach ($list_fungsional as $fungsional) : ?>
+                                    <option value="<?= $fungsional['kd_fungsional']; ?>"><?= $fungsional['jabatan_fungsional']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <script>
     $(document).on('click', '#openInputan', function() {

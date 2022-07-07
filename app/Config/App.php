@@ -27,7 +27,6 @@ class App extends BaseConfig
     // public $baseURL = 'http://localhost/siphp/';
     public $baseURL = BASE;
 
-
     /**
      * --------------------------------------------------------------------------
      * Index File

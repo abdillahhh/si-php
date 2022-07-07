@@ -159,7 +159,8 @@ class masterSistem extends BaseController
             'list_user_level' => session('list_user_level'),
             'list_menu'  => $list_menu_baru,
             'list_submenu' => $list_submenu_baru,
-            'fullname' => session('fullname')
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
         ];
         session()->set($data1);
 
@@ -206,7 +207,8 @@ class masterSistem extends BaseController
             'list_user_level' => session('list_user_level'),
             'list_menu'  => $list_menu,
             'list_submenu' => $list_submenu,
-            'fullname' => session('fullname')
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
         ];
         session()->set($data1);
 
@@ -259,7 +261,8 @@ class masterSistem extends BaseController
             'list_user_level' => session('list_user_level'),
             'list_menu'  => $list_menu,
             'list_submenu' => session('list_submenu'),
-            'fullname' => session('fullname')
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
         ];
         session()->set($data1);
 
@@ -302,7 +305,8 @@ class masterSistem extends BaseController
             'list_user_level' => session('list_user_level'),
             'list_menu'  => $list_menu,
             'list_submenu' => session('list_submenu'),
-            'fullname' => session('fullname')
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
         ];
         session()->set($data1);
 
@@ -326,7 +330,7 @@ class masterSistem extends BaseController
             'menu' => 'Sistem',
             'dataSubmenu' =>  $dataSubmenu->paginate($itemsCount, 'dataSubmenu'),
             'pager' => $dataSubmenu->pager,
-            'subMenu' => 'Kelola Sub Menu',
+            'subMenu' => 'Kelola Submenu',
             'list_submenu' => session('list_submenu'),
             'list_menu' => $this->masterMenuModel->getListMenu()
         ];
@@ -354,7 +358,8 @@ class masterSistem extends BaseController
             'list_user_level' => session('list_user_level'),
             'list_menu'  => session('list_menu'),
             'list_submenu' => $list_submenu,
-            'fullname' => session('fullname')
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
         ];
         session()->set($data1);
 
@@ -398,7 +403,8 @@ class masterSistem extends BaseController
             'list_user_level' => session('list_user_level'),
             'list_menu'  => session('list_menu'),
             'list_submenu' => $list_submenu,
-            'fullname' => session('fullname')
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
         ];
         session()->set($data1);
 

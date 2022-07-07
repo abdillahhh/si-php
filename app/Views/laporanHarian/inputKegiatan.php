@@ -25,17 +25,31 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary py-5 px-3">
-                        <form action="" method="POST" class="card-body box-profile">
+                        <form action="<?= base_url('/saveLaporanHarian') ?>" method="POST" class="card-body box-profile">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="float-left">
-                                        <label for="tanggal">Tanggal</label>
+                                        <label for="tgl_kegiatan">Judul Kegiatan</label>
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input type="date" class="form-control" name="tanggal" />
+                                            <input type="text" class="form-control" name="judul_kegiatan" placeholder="Judul Kegiatan ..." />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="float-left">
+                                        <label for="tgl_kegiatan">Tanggal</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="date" class="form-control" name="tgl_kegiatan" />
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +68,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="btn" style="background-color: #3c4b64; color: white;">Mulai</span>
                                                 </div>
-                                                <input type="text" name="mulai" class="form-control datetimepicker-input" data-target="#timepicker" />
+                                                <input type="text" name="waktu_mulai" class="form-control datetimepicker-input" data-target="#timepicker" />
                                                 <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
                                                     <div class="input-group-text">
                                                         <i class="far fa-clock"></i>
@@ -75,7 +89,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="btn" style="background-color: #3c4b64; color: white;">Selesai</span>
                                                 </div>
-                                                <input type="text" name="selesai" class="form-control datetimepicker-input" data-target="#timepicker2" />
+                                                <input type="text" name="waktu_selesai" class="form-control datetimepicker-input" data-target="#timepicker2" />
                                                 <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
                                                     <div class="input-group-text">
                                                         <i class="far fa-clock"></i>
@@ -98,6 +112,24 @@
                                     <!-- textarea -->
                                     <div class="form-group">
                                         <textarea class="form-control" name="uraian_kegiatan" rows="3" placeholder="Masukkan Uraian Kegiatan ..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="float-left">
+                                        <label for="target">Target</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <!-- textarea -->
+                                    <div class="form-group">
+                                        <select name="kd_target" class="form-control">
+                                            <option value="" selected disabled>- Pilih Target -</option>
+                                            <?php foreach ($list_target as $list) : ?>
+                                                <option value="<?= $list['id']; ?>"><?= $list['nama_target']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -136,10 +168,10 @@
                                 <div class="col-md-10">
                                     <!-- select -->
                                     <div class="form-group">
-                                        <select class="form-control">
-                                            <option>Selesai</option>
-                                            <option>Proses</option>
-                                            <option>Belum</option>
+                                        <select name="status" class="form-control">
+                                            <option value="S">Selesai</option>
+                                            <option value="P">Proses</option>
+                                            <option value="B">Belum</option>
                                         </select>
                                     </div>
                                 </div>
@@ -173,7 +205,7 @@
             style: false,
             toolbar: [
                 ['para', ['ul', 'ol']],
-                ['insert', ['link']],
+                ['insert', ['link', 'file']],
             ]
         });
     });

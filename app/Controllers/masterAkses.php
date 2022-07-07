@@ -28,6 +28,8 @@ class masterAkses extends BaseController
         $user = $this->masterUserModel->getUser($username);
 
 
+
+
         if ($user == NULL) {
             session()->setFlashdata('pesan', 'username anda salah');
             return redirect()->to('/');
@@ -53,9 +55,11 @@ class masterAkses extends BaseController
                     'list_user_level' => $list_user_level,
                     'list_menu'  => $list_menu,
                     'list_submenu' => $list_submenu,
-                    'fullname' => $user['fullname']
+                    'fullname' => $user['fullname'],
+                    'data_user' => $user
                 ];
             }
+        
 
 
 
@@ -81,7 +85,9 @@ class masterAkses extends BaseController
             'list_user_level' => session('list_user_level'),
             'list_menu'  => $list_menu,
             'list_submenu' => $list_submenu,
-            'fullname' => session('fullname')
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
+
         ];
 
         session()->set($data1);
