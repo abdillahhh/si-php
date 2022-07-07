@@ -417,8 +417,8 @@
 
 <!-- jQuery -->
 
-<script src="<?= base_url('/plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('/js/jquery-ui.min.js') ?>"></script>
+<script src="<?= base_url('Plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('js/jquery-ui.min.js') ?>"></script>
 <!-- AUTOFILL PEGAWAI -->
 <script>
     $(document).ready(function() {

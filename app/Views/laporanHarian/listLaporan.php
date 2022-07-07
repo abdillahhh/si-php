@@ -355,11 +355,11 @@
 
 
 <!-- Bootstrap 4 -->
-<script src="<?= base_url('/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('Plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <!-- Summernote -->
-<script src="<?= base_url('/plugins/summernote/summernote-bs4.min.js') ?>"></script>
+<script src="<?= base_url('Plugins/summernote/summernote-bs4.min.js') ?>"></script>
 <!-- dropzonejs -->
-<script src="<?= base_url('/plugins/dropzone/min/dropzone.min.js') ?>"></script>
+<script src="<?= base_url('Plugins/dropzone/min/dropzone.min.js') ?>"></script>
 
 <script>
     //Mengambil Data edit dengan menggunakan Jquery

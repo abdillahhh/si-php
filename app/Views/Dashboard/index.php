@@ -155,10 +155,10 @@
   </div>
 
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="<?= base_url('/dist/js/pages/dashboard.js') ?>"></script>
+  <script src="<?= base_url('dist/js/pages/dashboard.js') ?>"></script>
   <!-- fullCalendar 2.2.5 -->
-  <script src="<?= base_url('/plugins/moment/moment.min.js') ?>"></script>
-  <script src="<?= base_url('/plugins/fullcalendar/main.js') ?>"></script>
+  <script src="<?= base_url('Plugins/moment/moment.min.js') ?>"></script>
+  <script src="<?= base_url('Plugins/fullcalendar/main.js') ?>"></script>
 
   <!-- KALENDER -->
   <script>

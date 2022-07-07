@@ -25,15 +25,15 @@
   <!-- summernote -->
   <link rel="stylesheet" href="<?= base_url('plugins/summernote/summernote-bs4.min.css') ?>" />
   <!-- fullCalendar -->
-  <link rel="stylesheet" href="<?= base_url('/plugins/fullcalendar/main.css') ?>" />
+  <link rel="stylesheet" href="<?= base_url('Plugins/fullcalendar/main.css') ?>" />
   <!-- dropzonejs -->
-  <link rel="stylesheet" href="<?= base_url('/plugins/dropzone/min/dropzone.min.css') ?>" />
+  <link rel="stylesheet" href="<?= base_url('Plugins/dropzone/min/dropzone.min.css') ?>" />
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="<?= base_url('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>">
   <!-- custom css -->
-  <link rel="stylesheet" href="<?= base_url('/css/custom.css') ?>" />
-  <link rel="stylesheet" href="<?= base_url('/css/trix.css') ?>" />
-  <script src="<?= base_url('/js/trix.js') ?>"></script>
+  <link rel="stylesheet" href="<?= base_url('css/custom.css') ?>" />
+  <link rel="stylesheet" href="<?= base_url('css/trix.css') ?>" />
+  <script src="<?= base_url('js/trix.js') ?>"></script>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="<?= base_url('images/bps.png') ?>">
@@ -117,7 +117,7 @@
           <a class="nav-link" data-toggle="dropdown" href="#"><?= session('fullname'); ?><i class="right fas fa-angle-down" style="margin-left: 10px"></i> </a>
 
           <div class="dropdown-menu dropdown-menu-md">
-            <a href="<?= base_url('/profile') ?>" class="dropdown-item">
+            <a href="<?= base_url('Profile') ?>" class="dropdown-item">
               <i class="fas fa-user mr-2"></i> Profile
             </a>
             <div class="dropdown-divider"></div>
@@ -141,7 +141,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #3c4b64;">
       <!-- Brand Logo -->
-      <a href=" <?= base_url('/dashboard') ?>" class="brand-link w-100 d-flex justify-content-center align-content-center" style="border: none">
+      <a href=" <?= base_url('dashboard') ?>" class="brand-link w-100 d-flex justify-content-center align-content-center" style="border: none">
         <span class="brand-text font-weight-light"><img src="<?= base_url('images/BPS.png') ?>" class="mt-3" alt="Logo BPS" style="width: 100px;" /></span>
       </a>
 
@@ -250,17 +250,17 @@
     <!-- AdminLTE for demo purposes -->
     <script src="<?= base_url('dist/js/demo.js') ?>"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<<<<<<< HEAD
-    <script src="<?= base_url('/dist/js/pages/dashboard.js') ?>"></script>
-=======
-    <script src="<?= base_url('dist/js/pages/dashboard.js') ?>"></script>
->>>>>>> 2500f7fe935efdc1403aabd100c4b35e8ab380b7
+    <<<<<<< HEAD <script src="<?= base_url('dist/js/pages/dashboard.js') ?>">
+      </script>
+      =======
+      <script src="<?= base_url('dist/js/pages/dashboard.js') ?>"></script>
+      >>>>>>> 2500f7fe935efdc1403aabd100c4b35e8ab380b7
 
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="<?= base_url('plugins/chart.js/Chart.min.js') ?>"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="<?= base_url('dist/js/pages/dashboard3.js') ?>"></script>
-    <script src="<?= base_url('/js/waktu.js') ?>"></script>
+      <!-- OPTIONAL SCRIPTS -->
+      <script src="<?= base_url('plugins/chart.js/Chart.min.js') ?>"></script>
+      <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+      <script src="<?= base_url('dist/js/pages/dashboard3.js') ?>"></script>
+      <script src="<?= base_url('js/waktu.js') ?>"></script>
 </body>
 
 </html>
