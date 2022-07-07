@@ -44,6 +44,7 @@ class masterLaporanHarian extends BaseController
         return view('laporanHarian/inputKegiatan', $data);
     }
 
+
     public function saveLaporanHarian()
     {
         $tanggal = $this->request->getVar('tanggal');

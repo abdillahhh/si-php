@@ -273,7 +273,6 @@
                 </button>
             </div>
             <div class="modal-body px-5 py-3">
-
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
