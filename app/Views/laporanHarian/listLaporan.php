@@ -254,9 +254,10 @@
                                 <div class="input-group  w-100">
                                     <select class=" form-control  w-100" name="field_satuan[]" required>
                                         <?php if ($list_satuan != NULL) : ?>
-                                            <?php foreach ($list_satuan as $satuan) : ?>
-                                                <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?></option>
-                                            <?php endforeach; ?>
+                                        <?php foreach ($list_satuan as $satuan) : ?>
+                                        <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?>
+                                        </option>
+                                        <?php endforeach; ?>
                                         <?php endif; ?>
                                     </select>
                                 </div>
