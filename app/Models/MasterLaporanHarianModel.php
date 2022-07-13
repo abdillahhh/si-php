@@ -21,4 +21,62 @@ class MasterLaporanHarianModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function getAllByUser($user_id)
+    {
+
+        return $this
+            ->table($this->table)
+            ->where('user_id', $user_id);
+    }
+
+
+    public function getTotalByUser($user_id)
+    {
+        return $this
+            ->table($this->table)
+            ->where('user_id', $user_id)
+            ->get()
+            ->getResultArray();
+    }
+    public function getAllYear($user_id)
+    {
+        return $this
+            ->table($this->table)
+            ->select('tgl_kegiatan')
+            ->where('user_id', $user_id)
+            ->get()
+            ->getResultArray();
+    }
+
+
+    public function getLaporan($user_id, $laporan_id)
+    {
+        return $this
+            ->table($this->table)
+            ->select('*')
+            ->where('user_id', $user_id)
+            ->where('id', $laporan_id)
+            ->first();
+    }
+
+    public function getMaxDate($user_id)
+    {
+        return $this
+            ->table($this->table)
+            ->select('tgl_kegiatan')
+            ->orderBy('tgl_kegiatan', 'DESC')
+            ->where('user_id', $user_id)
+            ->first();
+    }
+
+
+    public function search($user_id, $keyword)
+    {
+        d($keyword);
+        return $this
+            ->table($this->table)
+            ->where('user_id', $user_id)
+            ->where('tgl_kegiatan', $keyword);
+    }
 }

@@ -57,7 +57,7 @@
                             <hr>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="exampleInputFile" value="<?= $data_profil_user['image']; ?>" disabled />
+                                    <input type="file" class="custom-file-input" id="exampleInputFile" value="<?= $data_profil_user['image']; ?>" accept=".png, .jpg, .jpeg" disabled />
                                     <label class="custom-file-label" for="exampleInputFile"><?= $data_profil_user['image']; ?></label>
                                 </div>
                             </div>
@@ -193,21 +193,27 @@
 <!-- MODAL UBAH PASSWORD -->
 <div class="modal fade" style="padding-top: 11%;" id="modal-ubah-password">
     <div class="modal-dialog">
-        <form action="" method="POST" class="modal-content">
+        <form action="<?= base_url('/gantiPasswordByUser'); ?>" method="POST" class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Ubah Password</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <input type="hidden" name="user_id" id="user_id" value="<?= session('user_id'); ?>">
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Password ...">
+                    <label>Password Lama</label>
+                    <input type="password" name="password_lama" class="form-control" placeholder="Password lama...">
                 </div>
                 <div class="form-group">
-                    <label>Token</label>
-                    <input type="text" name="token" class="form-control" placeholder="Token ...">
+                    <label>Password Baru</label>
+                    <input type="password" id="password_baru" name="password_baru" class="form-control" placeholder="Password baru ...">
+                </div>
+                <div class="form-group">
+                    <label>Konfirmasi Password Baru</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Konfirmasi password ...">
+                    <span id='message'></span>
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
@@ -220,6 +226,13 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script>
+    $(function() {
+        bsCustomFileInput.init();
+    });
+</script>
 
 <script>
     $(document).on('input', "#username", function() {
@@ -248,6 +261,15 @@
         }
         $('#button').toggleClass('d-none');
     })
+</script>
+
+<script>
+    $('#password_baru, #confirm_password').on('keyup', function() {
+        if ($('#password_baru').val() == $('#confirm_password').val()) {
+            $('#message').html('Password baru cocok').css('color', 'green');
+        } else
+            $('#message').html('Password baru belum cocok').css('color', 'red');
+    });
 </script>
 
 <?= $this->endSection(); ?>

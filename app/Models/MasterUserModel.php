@@ -9,7 +9,7 @@ class MasterUserModel extends Model
     protected $useTimestamps = true;
     protected $useSoftDeletes = true;
     protected $table = 'tbl_user';
-    protected $allowedFields = ['username', 'fullname', 'email', 'password', 'token', 'level_id', 'image', 'nip_lama_user',  'is_active'];
+    protected $allowedFields = ['username', 'fullname', 'email', 'password', 'token', 'image', 'nip_lama_user',  'is_active'];
 
     public function get_data_login($username, $tbl)
     {
@@ -31,7 +31,7 @@ class MasterUserModel extends Model
     {
         return $this
             ->table('tbl_user')
-            ->where('id_user', $user_id)
+            ->where('id', $user_id)
             ->first();
     }
 

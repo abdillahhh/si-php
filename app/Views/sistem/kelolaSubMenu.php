@@ -71,7 +71,11 @@
                                 </thead>
                                 <tbody>
 
-                                    <?php foreach ($dataSubmenu as $list) : ?>
+                                    <?php
+                                    $page = isset($_GET['page_dataSubmenu']) ? $_GET['page_dataSubmenu'] : 1;
+                                    $no = 1 + ($itemsCount * ($page - 1));
+                                    foreach ($dataSubmenu as $list) : ?>
+                                        <?php $no++ ?>
                                         <tr>
                                             <td><?= $list['nama_submenu']; ?></td>
                                             <td><?= $list['link']; ?></td>
@@ -99,7 +103,16 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <?= $pager->links('dataSubmenu', 'custom_simple'); ?>
+                        <!-- PAGINATION -->
+                        <div class="card-footer clearfix">
+                            <div class="row py-2">
+                                <div class="col-md-6">
+                                    <i class="text-sm text-gray">Menampilkan <?= 1 + ($itemsCount * ($page - 1)) ?> - <?= $no - 1 ?> data dari <?= $total ?></i>
+                                </div>
+                                <?= $pager->links('dataSubmenu', 'custom_simple'); ?>
+                            </div>
+                        </div>
+
                     </div>
                     <!-- /.card -->
                 </div>
@@ -206,7 +219,7 @@
 </div>
 
 <!-- SweetAlert2 -->
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <script>
     //Mengambil Data edit dengan menggunakan Jquery
     $(document).on('click', '#btn-edit', function() {

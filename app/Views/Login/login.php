@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 test2">
-                        <img src="<?= base_url('images/1.png') ?>" class="card-img" style="object-fit: cover;" height="100%">
+                        <img src="<?= base_url('/images/1.png') ?>" class="card-img" style="object-fit: cover;" height="100%">
                     </div>
                 </div>
             </div>
@@ -158,46 +158,40 @@
 
 
     <!-- Bootstrap 4 -->
-    <<<<<<< HEAD <script src="<?= base_url('Plugins/bootstrap/js/bootstrap.bundle.min.js') ?>">
-        </script>
-        <!-- jQuery -->
-        <script src="<?= base_url('Plugins/jquery/jquery.min.js') ?>"></script>
-        =======
-        <script src="<?= base_url('plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-        <!-- jQuery -->
-        <script src="<?= base_url('plugins/jquery/jquery.min.js') ?>"></script>
-        >>>>>>> 2500f7fe935efdc1403aabd100c4b35e8ab380b7
-        <script>
-            $(".toggle-password").click(function() {
-                $(this).toggleClass("fa-eye fa-eye-slash");
-                input = $(this).parent().find("input");
-                if (input.attr("type") == "password") {
-                    input.attr("type", "text");
-                } else {
-                    input.attr("type", "password");
-                }
-            });
-        </script>
+    <script src="<?= base_url('/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+    <!-- jQuery -->
+    <script src="<?= base_url('/plugins/jquery/jquery.min.js') ?>"></script>
+    <script>
+        $(".toggle-password").click(function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            input = $(this).parent().find("input");
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+    </script>
 
-        <script>
-            const togglePassword = document.querySelector("#togglePassword");
-            const password = document.querySelector("#password");
+    <script>
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#password");
 
-            togglePassword.addEventListener("click", function() {
-                // toggle the type attribute
-                const type = password.getAttribute("type") === "password" ? "text" : "password";
-                password.setAttribute("type", type);
+        togglePassword.addEventListener("click", function() {
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
 
-                // toggle the icon
-                this.classList.remove("");
-            });
+            // toggle the icon
+            this.classList.remove("");
+        });
 
-            // prevent form submit
-            // const form = document.querySelector("form");
-            // form.addEventListener('submit', function(e) {
-            //     e.preventDefault();
-            // });
-        </script>
+        // prevent form submit
+        // const form = document.querySelector("form");
+        // form.addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        // });
+    </script>
 </body>
 
 </html>

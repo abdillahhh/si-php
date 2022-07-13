@@ -162,7 +162,7 @@
                                     <!-- KETERANGAN -->
 
                                     <?php if ($show_data_user != NULL) : ?>
-                                        <input type="hidden" name='id_user' value="<?= $show_data_user['id_user']; ?>">
+                                        <input type="hidden" name='id_user' value="<?= $show_data_user['id']; ?>">
                                         <input type="hidden" name='password' value="<?= $show_data_user['password']; ?>">
                                         <input type="hidden" name='token' value="<?= $show_data_user['token']; ?>">
                                         <div class="col-md-12">
@@ -245,7 +245,7 @@
                                                 <?php foreach ($list_user as $list) : ?>
 
                                                     <tr>
-                                                        <td><?= $list['id_user']; ?></td>
+                                                        <td><?= $list['id']; ?></td>
                                                         <td><?= $list['username']; ?></td>
                                                         <td>
                                                             <?php if ($list['is_active'] == 'Y') {
@@ -256,7 +256,7 @@
                                                             } ?>
                                                         </td>
                                                         <td>
-                                                            <a href="<?= base_url('/showDataUser/' . $list['id_user']); ?>" type="submit" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
+                                                            <a href="<?= base_url('/showDataUser/' . $list['id']); ?>" type="submit" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -417,8 +417,8 @@
 
 <!-- jQuery -->
 
-<script src="<?= base_url('Plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('js/jquery-ui.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('/js/jquery-ui.min.js') ?>"></script>
 <!-- AUTOFILL PEGAWAI -->
 <script>
     $(document).ready(function() {

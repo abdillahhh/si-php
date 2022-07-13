@@ -322,18 +322,21 @@ class masterSistem extends BaseController
     public function kelolaSubMenu()
     {
         $dataSubmenu = $this->masterSubmenuModel;
-
-        $itemsCount = 10;
+        $totalSubmenu = $this->masterSubmenuModel->getListSubmenu();
+        $itemsCount = 7;
 
         $data = [
             'title' => 'Kelola Sub Menu',
             'menu' => 'Sistem',
+            'total' => count($totalSubmenu),
             'dataSubmenu' =>  $dataSubmenu->paginate($itemsCount, 'dataSubmenu'),
+            'itemsCount' => $itemsCount,
             'pager' => $dataSubmenu->pager,
             'subMenu' => 'Kelola Submenu',
             'list_submenu' => session('list_submenu'),
             'list_menu' => $this->masterMenuModel->getListMenu()
         ];
+
         return view('sistem/kelolaSubMenu', $data);
     }
 

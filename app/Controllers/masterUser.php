@@ -33,4 +33,48 @@ class masterUser extends BaseController
 
         return view('Profile/index', $data);
     }
+
+    public function gantiPasswordByUser()
+    {
+        $user = $this->masterUserModel->getProfilUser(session('user_id'));
+
+
+        $password_lama = $this->request->getVar('password_lama');
+        $password_baru = $this->request->getVar('password_baru');
+
+        if (password_verify($password_lama, $user['password'])) {
+            $pass_baru = password_hash($password_baru, PASSWORD_DEFAULT);
+
+            $data = [
+                'username' => $user['username'],
+                'fullname' => $user['fullname'],
+                'email' => $user['email'],
+                'password' => $pass_baru,
+                'token' => '',
+                'image' => $user['image'],
+                'nip_lama_user' => $user['nip_lama_user'],
+                'is_active' => $user['is_active'],
+            ];
+            //  d($data);
+
+            //$this->masterUserModel->update(intval(session('user_id')), $data);
+
+            $this->masterUserModel->save([
+                'id' => intval(session('user_id')),
+                'username' => $user['username'],
+                'fullname' => $user['fullname'],
+                'email' => $user['email'],
+                'password' => $pass_baru,
+                'token' => '',
+                'image' => $user['image'],
+                'nip_lama_user' => $user['nip_lama_user'],
+                'is_active' => $user['is_active'],
+            ]);
+        } else {
+            return redirect()->to('/dashboard');
+        }
+
+
+        return redirect()->to('/profile');
+    }
 }

@@ -37,30 +37,33 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 
 //Routes Ke views dan controller Akses
-
 $routes->get('/', 'masterAkses::index');
-
-//routes Akses
+//routes Akses Aplikasi
 $routes->post('/login', 'masterAkses::open');
 //routes Logout
 $routes->get('/logout', 'masterAkses::logout');
-
 //Routes Ke views dan controller Dashboard
 $routes->get('/dashboard', 'masterDashboard::index');
-
+//routes untuk membuka detail di dashboard
+$routes->get('/showDetailLaporanHarianOnDashboard/(:segment)', 'masterDashboard::showDetailLaporanHarianOnDashboard/$1');
 //Routes Ke views dan controller Dashboard
-$routes->get('/profile', 'masterUser::profile'); //selanjutnya akan dilakukan perbaikan untuk mengirimkan (:segment) berupa id
-
+$routes->get('/profile', 'masterUser::profile');
+//Routes ke ganti password user
+$routes->post('/gantiPasswordByUser', 'masterUser::gantiPasswordByUser');
 //Routes Ke views dan controller list Laporan dan Input Kegiatan
 $routes->get('/listLaporan', 'masterLaporanHarian::listLaporan');
 $routes->get('/inputKegiatan', 'masterLaporanHarian::inputKegiatan');
 $routes->get('/detailKegiatan', 'masterLaporanHarian::detailKegiatan');
-
 //Routes ke save laporan harian dan controller save laporan harian
 $routes->post('/saveLaporanHarian', 'masterLaporanHarian::saveLaporanHarian');
-
 //Routes ke save laporan harian dan controller save laporan harian
 $routes->post('/updateLaporanHarian', 'masterLaporanHarian::updateLaporanHarian');
+//routes ke edit laporan
+$routes->get('/showEditLaporanHarian/(:segment)', 'masterLaporanHarian::showEditLaporanHarian/$1');
+//routes ke detail laporan
+$routes->get('/showDetailLaporanHarian/(:segment)', 'masterLaporanHarian::showDetailLaporanHarian/$1');
+//Routes hapus Bukti Dukung
+$routes->post('/hapusBuktiDukung', 'masterLaporanHarian::hapusBuktiDukung');
 
 
 //Routes Ke views dan controller Kelola Master
