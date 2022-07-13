@@ -448,13 +448,13 @@
   <!-- /.modal -->
 
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="<?= base_url('/dist/js/pages/dashboard.js') ?>"></script>
+  <script src="<?= base_url('dist/js/pages/dashboard.js') ?>"></script>
 
   <!-- fullCalendar 2.2.5 -->
-  <script src="<?= base_url('/plugins/moment/moment.min.js') ?>"></script>
-  <script src="<?= base_url('/plugins/fullcalendar/main.js') ?>"></script>
-  <script src="<?= base_url('/dist/js/pages/dashboard3.js') ?>"></script>
-  <script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+  <script src="<?= base_url('plugins/moment/moment.min.js') ?>"></script>
+  <script src="<?= base_url('plugins/fullcalendar/main.js') ?>"></script>
+  <script src="<?= base_url('dist/js/pages/dashboard3.js') ?>"></script>
+  <script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
   <script>
     $(function() {
       bsCustomFileInput.init();
@@ -676,7 +676,7 @@
     }
   </script>
 
-  <script src="<?= base_url('/js/tanggal.js') ?>"></script>
+  <script src="<?= base_url('js/tanggal.js') ?>"></script>
   <script>
     $(document).on('click', '#btn-uncheck', function() {
       console.log($(this).data('date_click'))

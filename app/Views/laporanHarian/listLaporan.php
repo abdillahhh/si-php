@@ -254,10 +254,10 @@
                                 <div class="input-group  w-100">
                                     <select class=" form-control  w-100" name="field_satuan[]" required>
                                         <?php if ($list_satuan != NULL) : ?>
-                                        <?php foreach ($list_satuan as $satuan) : ?>
-                                        <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?>
-                                        </option>
-                                        <?php endforeach; ?>
+                                            <?php foreach ($list_satuan as $satuan) : ?>
+                                                <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?>
+                                                </option>
+                                            <?php endforeach; ?>
                                         <?php endif; ?>
                                     </select>
                                 </div>
@@ -584,13 +584,13 @@
 
 
 <!-- Summernote -->
-<script src="<?= base_url('/plugins/summernote/summernote-bs4.min.js') ?>"></script>
+<script src="<?= base_url('plugins/summernote/summernote-bs4.min.js') ?>"></script>
 <!-- dropzonejs -->
-<script src="<?= base_url('/plugins/dropzone/min/dropzone.min.js') ?>"></script>
-<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('plugins/dropzone/min/dropzone.min.js') ?>"></script>
+<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
 <!-- jquery-validation -->
-<script src="<?= base_url('/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
-<script src="<?= base_url('/plugins/jquery-validation/additional-methods.min.js') ?>"></script>
+<script src="<?= base_url('plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('plugins/jquery-validation/additional-methods.min.js') ?>"></script>
 
 <script>
     $(function() {
@@ -601,7 +601,7 @@
 
 </script>
 
-<script src="<?= base_url('/js/tanggal.js') ?>"></script>
+<script src="<?= base_url('js/tanggal.js') ?>"></script>
 <script>
     $(document).ready(function() {
         $("#modal-edit").modal("show");

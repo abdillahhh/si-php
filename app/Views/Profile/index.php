@@ -30,7 +30,7 @@
 
                             <div class="text-center">
 
-                                <img class="profile-user-img img-fluid" src="<?= base_url('/images/profil/' . $data_profil_user['image']) ?>" alt="User profile picture">
+                                <img class="profile-user-img img-fluid" src="<?= base_url('images/profil/' . $data_profil_user['image']) ?>" alt="User profile picture">
                             </div>
 
                             <h3 class="profile-username text-center"><strong id="username-lengkap"><?= $data_profil_user['username']; ?></strong> <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button></h3>
@@ -227,7 +227,7 @@
 </div>
 <!-- /.modal -->
 
-<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
 <script>
     $(function() {
         bsCustomFileInput.init();
