@@ -519,7 +519,7 @@
         let textarea = $(this)
         setTimeout(function() {
           textarea.next().addClass('d-none')
-        }, 200)
+        }, 400)
       })
 
       $(document).on('click', '.option-kegiatan', function() {
