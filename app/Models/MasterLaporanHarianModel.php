@@ -27,7 +27,8 @@ class MasterLaporanHarianModel extends Model
 
         return $this
             ->table($this->table)
-            ->where('user_id', $user_id);
+            ->where('user_id', $user_id)
+            ->orderBy('tgl_kegiatan', 'ASC');
     }
 
 
@@ -36,6 +37,7 @@ class MasterLaporanHarianModel extends Model
         return $this
             ->table($this->table)
             ->where('user_id', $user_id)
+            ->orderBy('tgl_kegiatan', 'ASC')
             ->get()
             ->getResultArray();
     }

@@ -374,9 +374,10 @@ class masterDashboard extends BaseController
             'total_oktober' => $kegiatan_oktober_ini,
             'total_november' => $kegiatan_november_ini,
             'total_desember' => $kegiatan_desember_ini,
+            'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
 
         ];
-        // dd($data);
+        //dd($data);
         return view('Dashboard/index', $data);
     }
 
@@ -722,10 +723,10 @@ class masterDashboard extends BaseController
             $tahun_tersedia = NULL;
         }
 
-        $list_laporan_harian = $this->masterLaporanHarianModel->getAllByUser(session('user_id'));
+
         $total = $this->masterLaporanHarianModel->getTotalByUser(session('user_id'));
         $itemsCount = 10;
-        $laporan_harian_tertentu = $this->masterLaporanHarianModel->getLaporan(session('user_id'), $laporan_id);
+
         $tanggal_input_terakhir = $total[count($total) - 1]['tgl_kegiatan'];
 
 
@@ -736,10 +737,10 @@ class masterDashboard extends BaseController
             'menu' => 'Dashboard',
             'subMenu' => '',
             'total' => count($total),
-            'list_laporan_harian' => $list_laporan_harian->paginate($itemsCount, 'list_laporan_harian'),
-            'pager' => $list_laporan_harian->pager,
+            'list_laporan_harian' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->paginate($itemsCount, 'list_laporan_harian'),
+            'pager' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->pager,
             'itemsCount' => $itemsCount,
-            'laporan_harian_tertentu' => $laporan_harian_tertentu,
+            'laporan_harian_tertentu' => $this->masterLaporanHarianModel->getLaporan(session('user_id'), $laporan_id),
             'list_satuan' => $this->masterSatuanModel->getAll(),
             'modal_edit' => '',
             'modal_detail' => 'modal-detail',
@@ -765,6 +766,7 @@ class masterDashboard extends BaseController
             'total_oktober' => $kegiatan_oktober_ini,
             'total_november' => $kegiatan_november_ini,
             'total_desember' => $kegiatan_desember_ini,
+            'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
 
         ];
         // dd($data);

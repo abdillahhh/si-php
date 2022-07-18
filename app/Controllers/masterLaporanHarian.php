@@ -39,32 +39,18 @@ class masterLaporanHarian extends BaseController
         } else {
             $tahun_tersedia = NULL;
         }
-
-      
-
-        $list_laporan_harian = $this->masterLaporanHarianModel->getAllByUser(session('user_id'));
-
-
-        $total = $this->masterLaporanHarianModel->getTotalByUser(session('user_id'));
-
-
         $keyword = $this->request->getVar('keyword');
-
-
         $itemsCount = 10;
-
-
-
         $tanggal_input_terakhir = $this->masterLaporanHarianModel->getMaxDate(session('user_id'));
 
         $data = [
             'title' => 'List Laporan',
             'menu' => 'Laporan Harian',
             'subMenu' => 'Daftar Laporan',
-            'total' => count($total),
+            'total' => count($this->masterLaporanHarianModel->getTotalByUser(session('user_id'))),
             'list_laporan_harian' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->paginate($itemsCount, 'list_laporan_harian'),
-            'list_full_laporan_harian' => $total,
-            'pager' => $list_laporan_harian->pager,
+            'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
+            'pager' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->pager,
             'itemsCount' => $itemsCount,
             'list_satuan' => $this->masterSatuanModel->getAll(),
             'modal_edit' => '',
@@ -129,6 +115,8 @@ class masterLaporanHarian extends BaseController
             'tgl_kegiatan' => $tanggal,
             'uraian_kegiatan' => $json_laporan,
         ]);
+        session()->setFlashdata('pesan', 'Kegiatan Berhasil Ditambahkan');
+        session()->setFlashdata('icon', 'success');
         return redirect()->to('/listLaporan');
     }
 
@@ -167,10 +155,8 @@ class masterLaporanHarian extends BaseController
             $tahun_tersedia = NULL;
         }
 
-        $list_laporan_harian = $this->masterLaporanHarianModel->getAllByUser(session('user_id'));
-        $total = $this->masterLaporanHarianModel->getTotalByUser(session('user_id'));
+
         $itemsCount = 10;
-        $laporan_harian_tertentu = $this->masterLaporanHarianModel->getLaporan(session('user_id'), $laporan_id);
 
         $tanggal_input_terakhir = $this->masterLaporanHarianModel->getMaxDate(session('user_id'));
 
@@ -178,11 +164,11 @@ class masterLaporanHarian extends BaseController
             'title' => 'List Laporan',
             'menu' => 'Laporan Harian',
             'subMenu' => 'Daftar Laporan',
-            'total' => count($total),
-            'list_laporan_harian' => $list_laporan_harian->paginate($itemsCount, 'list_laporan_harian'),
-            'pager' => $list_laporan_harian->pager,
+            'total' => count($this->masterLaporanHarianModel->getTotalByUser(session('user_id'))),
+            'list_laporan_harian' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->paginate($itemsCount, 'list_laporan_harian'),
+            'pager' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->pager,
             'itemsCount' => $itemsCount,
-            'laporan_harian_tertentu' => $laporan_harian_tertentu,
+            'laporan_harian_tertentu' => $this->masterLaporanHarianModel->getLaporan(session('user_id'), $laporan_id),
             'list_satuan' => $this->masterSatuanModel->getAll(),
             'modal_edit' => 'modal-edit',
             'modal_detail' => '',
@@ -269,8 +255,8 @@ class masterLaporanHarian extends BaseController
 
         for ($i = 0; $i < count($field_bukti); $i++) {
             for ($j = 0; $j < count($field_bukti[$i]); $j++) {
-                if ($this->request->getVar('field_bukti_lama' . $i + 1) != null) {
-                    $field_bukti_baru[$i] = $this->request->getVar('field_bukti_lama' . $i + 1);
+                if ($this->request->getVar('field_bukti_lama' . ($i + 1)) != null) {
+                    $field_bukti_baru[$i] = $this->request->getVar('field_bukti_lama' . ($i + 1));
                 } else {
                     $field_bukti_baru[$i] = [];
                 }
@@ -327,6 +313,8 @@ class masterLaporanHarian extends BaseController
             'tgl_kegiatan' => $tanggal,
             'uraian_kegiatan' => $encode_laporan,
         ]);
+        session()->setFlashdata('pesan', 'Kegiatan Berhasil Diupdate');
+        session()->setFlashdata('icon', 'success');
         return redirect()->to('/listLaporan');
     }
 
@@ -353,20 +341,18 @@ class masterLaporanHarian extends BaseController
             $tahun_tersedia = NULL;
         }
 
-        $list_laporan_harian = $this->masterLaporanHarianModel->getAllByUser(session('user_id'));
-        $total = $this->masterLaporanHarianModel->getTotalByUser(session('user_id'));
+
         $itemsCount = 10;
-        $laporan_harian_tertentu = $this->masterLaporanHarianModel->getLaporan(session('user_id'), $laporan_id);
         $tanggal_input_terakhir = $this->masterLaporanHarianModel->getMaxDate(session('user_id'));
         $data = [
             'title' => 'List Laporan',
             'menu' => 'Laporan Harian',
             'subMenu' => 'Daftar Laporan',
-            'total' => count($total),
-            'list_laporan_harian' => $list_laporan_harian->paginate($itemsCount, 'list_laporan_harian'),
-            'pager' => $list_laporan_harian->pager,
+            'total' => count($this->masterLaporanHarianModel->getTotalByUser(session('user_id'))),
+            'list_laporan_harian' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->paginate($itemsCount, 'list_laporan_harian'),
+            'pager' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->pager,
             'itemsCount' => $itemsCount,
-            'laporan_harian_tertentu' => $laporan_harian_tertentu,
+            'laporan_harian_tertentu' => $this->masterLaporanHarianModel->getLaporan(session('user_id'), $laporan_id),
             'list_satuan' => $this->masterSatuanModel->getAll(),
             'modal_edit' => '',
             'modal_detail' => 'modal-detail',

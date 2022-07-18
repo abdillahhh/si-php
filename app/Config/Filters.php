@@ -34,7 +34,7 @@ class Filters extends BaseConfig
      */
     public $globals = [
         'before' => [
-            'authFilter'  => ['except' => ['/', '/login', 'login/*']]
+            'authFilter'  => ['except' => ['/', '/login', 'login/*', '/gantiPasswordDefault']]
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
@@ -42,7 +42,7 @@ class Filters extends BaseConfig
 
         'after' => [
             //'toolbar',
-            'authFilter'  => ['except' => ['/logout', '/logout/*', '/dashboard', '/dashboard/*', '/profile', '/profile/*', '/listLaporan', '/listLaporan/*', '/inputKegiatan', '/inputKegiatan/*', '/detailKegiatan', '/detailKegiatan/*', '/masterUser', '/masterUser/*', '/masterPegawai', '/masterPegawai/*', '/masterKegiatan', '/masterKegiatan/*', '/tambahUser', '/tambahUser/*',  '/kelolaLevel', '/kelolaLevel/*', '/kelolaMenu', '/kelolaMenu/*', '/kelolaSubMenu', '/kelolaSubMenu/*',  '/updateMenu', '/updateSubmenu', '/saveMenu', '/savesubmenu', '/editKelolaLevel/*', '/updateKelolaLevel/*', '/saveLevel', '/updateNamaLevel', '/switchLevel', '/saveLaporanHarian', '/updateLaporanHarian', '/showDataUser/*', '/savePegawai', '/showEditLaporanHarian/*', '/hapusBuktiDukung', '/showDetailLaporanHarian/*', '/showDetailLaporanHarianOnDashboard/*', '/gantiPasswordByUser']],
+            'authFilter'  => ['except' => ['/logout', '/logout/*', '/dashboard', '/dashboard/*', '/profile', '/profile/*', '/listLaporan', '/listLaporan/*', '/inputKegiatan', '/inputKegiatan/*', '/detailKegiatan', '/detailKegiatan/*', '/masterUser', '/masterUser/*', '/masterPegawai', '/masterPegawai/*', '/masterKegiatan', '/masterKegiatan/*', '/tambahUser', '/tambahUser/*',  '/kelolaLevel', '/kelolaLevel/*', '/kelolaMenu', '/kelolaMenu/*', '/kelolaSubMenu', '/kelolaSubMenu/*',  '/updateMenu', '/updateSubmenu', '/saveMenu', '/savesubmenu', '/editKelolaLevel/*', '/updateKelolaLevel/*', '/saveLevel', '/updateNamaLevel', '/switchLevel', '/saveLaporanHarian', '/updateLaporanHarian', '/showDataUser/*', '/savePegawai', '/showEditLaporanHarian/*', '/hapusBuktiDukung', '/showDetailLaporanHarian/*', '/showDetailLaporanHarianOnDashboard/*', '/gantiPasswordByUser', '/showEditPegawai/*', '/updatePegawai', '/showDetailPegawai/*']],
             // 'honeypot',
             // 'secureheaders',
         ],

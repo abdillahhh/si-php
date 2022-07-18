@@ -18,7 +18,11 @@ class masterAkses extends BaseController
 
     public function index()
     {
-        return view('Login/login');
+        $alert = false;
+        $data = [
+            'alert' => $alert,
+        ];
+        return view('Login/login', $data);
     }
 
     public function open()
@@ -28,10 +32,13 @@ class masterAkses extends BaseController
         $user = $this->masterUserModel->getUser($username);
 
 
+        $pass_default =  password_hash('123456', PASSWORD_DEFAULT);
+
 
 
         if ($user == NULL) {
-            session()->setFlashdata('pesan', 'username anda salah');
+            session()->setFlashdata('pesan', 'Username Anda Salah');
+            session()->setFlashdata('icon', 'error');
             return redirect()->to('/');
         }
 
@@ -47,6 +54,17 @@ class masterAkses extends BaseController
         $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($level_id, $user['id']);
         $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($level_id, $user['id']);
         if (password_verify($password, $user['password'])) {
+
+            if (password_verify($password, $pass_default)) {
+                $alert = false;
+                $data = [
+                    'alert' => $alert,
+                    'data_user' => $user
+                ];
+                return view('Login/gantiPassword', $data);
+            }
+
+
             if ($user['is_active'] == 'Y') {
                 $data = [
                     'log' => TRUE,
@@ -67,7 +85,8 @@ class masterAkses extends BaseController
             session()->setFlashdata('pesan', 'berhasil login');
             return redirect()->to('/dashboard');
         }
-        session()->setFlashdata('pesan', 'password salah');
+        session()->setFlashdata('pesan', 'Password salah');
+        session()->setFlashdata('icon', 'error');
         return redirect()->to('/');
     }
 
@@ -100,7 +119,46 @@ class masterAkses extends BaseController
     {
         $session = session();
         $session->destroy();
-        session()->setFlashdata('pesan', 'berhasil Logout');
+        session()->setFlashdata('pesan', 'Berhasil Logout');
+        session()->setFlashdata('icon', 'success');
         return redirect()->to('/');
+    }
+
+
+    public function gantiPasswordDefault()
+    {
+        $user_id = $this->request->getVar('user_id');
+        $pass_baru = $this->request->getVar('password_baru');
+        $confirm_pass = $this->request->getVar('confirm_password');
+        $user = $this->masterUserModel->getProfilUser($user_id);
+        if ($pass_baru == $confirm_pass) {
+            $lower_pass = strtolower($pass_baru);
+            $pass_baru_hash = password_hash($lower_pass, PASSWORD_DEFAULT);
+
+            $this->masterUserModel->save([
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'fullname' => $user['fullname'],
+                'email' => $user['email'],
+                'password' => $pass_baru_hash,
+                'token' => '',
+                'image' => $user['image'],
+                'nip_lama_user' => $user['nip_lama_user'],
+                'is_active' => $user['is_active'],
+            ]);
+            ///alert berhasil ubah password
+            session()->setFlashdata('pesan', 'Berhasil Ubah Password');
+            session()->setFlashdata('icon', 'success');
+            return redirect()->to('/');
+        } else {
+            //alert gagal ubah password 
+            $alert = true;
+            $data = [
+                'alert' => $alert,
+                'data_user' => $user
+            ];
+
+            return view('Login/gantiPassword', $data);
+        }
     }
 }

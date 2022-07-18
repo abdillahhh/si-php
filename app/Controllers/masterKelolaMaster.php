@@ -86,7 +86,15 @@ class masterKelolaMaster extends BaseController
 
     public function masterPegawai()
     {
-        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        $keyword = $this->request->getVar('keyword');
+
+        if ($keyword) {
+            $list_pegawai = $this->masterPegawaiModel->search($keyword);
+        } else {
+            $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        }
+
+
         $list_bidang = $this->masterEs3Model->getAllBidang();
         $list_golongan = $this->masterGolonganModel->getAllGolongan();
         $list_jabatan = $this->masterJabatanModel->getAllJabatan();
@@ -95,10 +103,14 @@ class masterKelolaMaster extends BaseController
         $list_seksi = $this->masterEs4Model->getAllSeksi();
         $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
 
+        $data_user = $this->masterUserModel->getAllUser();
+
+
         $data = [
             'title' => 'Master Pegawai',
             'menu' => 'Kelola Master',
             'subMenu' => 'Master Pegawai',
+            'list_user' => $data_user,
             'list_pegawai' => $list_pegawai,
             'list_bidang' => $list_bidang,
             'list_golongan' => $list_golongan,
@@ -106,10 +118,17 @@ class masterKelolaMaster extends BaseController
             'list_pendidikan' => $list_pendidikan,
             'list_satker' => $list_satker,
             'list_seksi' => $list_seksi,
-            'list_fungsional' => $list_fungsional
+            'list_fungsional' => $list_fungsional,
+            'pegawai_tertentu' => null,
+            'modal_edit' => '',
+            'modal_detail' => '',
+            'detail_pegawai' => null,
+            'image_pegawai' => null,
+            'keyword' => $keyword
+
 
         ];
-        //dd($data);
+       // dd($data);
         return view('kelolaMaster/masterPegawai', $data);
     }
 
@@ -136,6 +155,121 @@ class masterKelolaMaster extends BaseController
 
         return redirect()->to('/masterPegawai');
     }
+
+
+    public function showEditPegawai($id_pegawai)
+    {
+
+        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        $list_bidang = $this->masterEs3Model->getAllBidang();
+        $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        $list_jabatan = $this->masterJabatanModel->getAllJabatan();
+        $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        $list_satker = $this->masterSatkerModel->getAllSatker();
+        $list_seksi = $this->masterEs4Model->getAllSeksi();
+        $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+
+        $data_user = $this->masterUserModel->getAllUser();
+
+        $data = [
+            'title' => 'Master Pegawai',
+            'menu' => 'Kelola Master',
+            'subMenu' => 'Master Pegawai',
+            'list_user' => $data_user,
+            'list_pegawai' => $list_pegawai,
+            'list_bidang' => $list_bidang,
+            'list_golongan' => $list_golongan,
+            'list_jabatan' => $list_jabatan,
+            'list_pendidikan' => $list_pendidikan,
+            'list_satker' => $list_satker,
+            'list_seksi' => $list_seksi,
+            'list_fungsional' => $list_fungsional,
+            'pegawai_tertentu' => $this->masterPegawaiModel->getPegawaiById($id_pegawai),
+            'modal_edit' => 'modal-edit',
+            'modal_detail' => '',
+            'detail_pegawai' => null,
+            'image_pegawai' => null,
+            'keyword' => ''
+
+
+        ];
+        //dd($data);
+        return view('kelolaMaster/masterPegawai', $data);
+    }
+
+    public function updatePegawai()
+    {
+        $id = $this->request->getVar('id_pegawai_tertentu');
+
+
+        $this->masterPegawaiModel->save([
+            'id' => intval($id),
+            'nip_lama' => $this->request->getVar('nip_lama'),
+            'nip_baru' => $this->request->getVar('nip_baru'),
+            'nama_pegawai' => $this->request->getVar('nama_pegawai'),
+            'gol_kd' => $this->request->getVar('gol_kd'),
+            'tmt' => $this->request->getVar('tmt'),
+            'jabatan_kd' => $this->request->getVar('jabatan_kd'),
+            'ket_jabatan' => $this->request->getVar('ket_jabatan'),
+            'pendidikan_kd' => $this->request->getVar('pendidikan_kd'),
+            'tahun_pdd' => $this->request->getVar('tahun_pdd'),
+            'jk' => $this->request->getVar('jk'),
+            'tgl_lahir' => $this->request->getVar('tgl_lahir'),
+            'satker_kd' => $this->request->getVar('satker_kd'),
+            'es3_kd' => $this->request->getVar('es3_kd'),
+            'es4_kd' => $this->request->getVar('es4_kd'),
+            'fungsional_kd' => $this->request->getVar('fungsional_kd'),
+
+        ]);
+
+        return redirect()->to('/masterPegawai');
+    }
+
+
+    public function showDetailPegawai($id_pegawai)
+    {
+
+        $detail_pegawai = $this->masterPegawaiModel->getDetailPegawaiById($id_pegawai);
+        $image_pegawai = $this->masterUserModel->getImage($detail_pegawai['nip_lama']);
+        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        $list_bidang = $this->masterEs3Model->getAllBidang();
+        $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        $list_jabatan = $this->masterJabatanModel->getAllJabatan();
+        $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        $list_satker = $this->masterSatkerModel->getAllSatker();
+        $list_seksi = $this->masterEs4Model->getAllSeksi();
+        $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+        $data_user = $this->masterUserModel->getAllUser();
+
+        $data = [
+            'title' => 'Master Pegawai',
+            'menu' => 'Kelola Master',
+            'subMenu' => 'Master Pegawai',
+            'list_user' => $data_user,
+            'list_pegawai' => $list_pegawai,
+            'list_bidang' => $list_bidang,
+            'list_golongan' => $list_golongan,
+            'list_jabatan' => $list_jabatan,
+            'list_pendidikan' => $list_pendidikan,
+            'list_satker' => $list_satker,
+            'list_seksi' => $list_seksi,
+            'list_fungsional' => $list_fungsional,
+            'pegawai_tertentu' => null,
+            'detail_pegawai' => $detail_pegawai,
+            'image_pegawai' => $image_pegawai,
+            'modal_edit' => '',
+            'modal_detail' => 'modal-detail',
+            'keyword' => ''
+
+
+        ];
+        // dd($data);
+        return view('kelolaMaster/masterPegawai', $data);
+    }
+
+
+
+
 
     public function masterKegiatan()
     {

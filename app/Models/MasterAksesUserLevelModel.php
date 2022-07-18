@@ -12,17 +12,6 @@ class MasterAksesUserLevelModel extends Model
     protected $allowedFields = ['user_id', 'level_id'];
 
 
-    // public function getAll()
-    // {
-    //     return $this
-    //         ->table($this->table)
-    //         ->select('tbl_akses_user_level.*,user_level.nama_level, tbl_user.*')
-    //         ->join('user_level', 'tbl_akses_user_level.level_id = user_level.id')
-    //         ->join('tbl_user', 'tbl_user.id_user = tbl_akses_user_level.user_id')
-    //         ->get()
-    //         ->getResultArray();
-    // }
-
     public function getUserLevel($user_id)
     {
         return $this

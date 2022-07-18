@@ -27,9 +27,19 @@
             <div class="card card-primary card-outline" style="border: #3c4b64;">
                 <div class="card-body box-profile">
                     <div class="row">
+                        <form method="" action="" class="col-md-5 py-1">
+                            <div class="float-left">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus mr-2"></i> Tambah</button>
+                                    <button type="button" class="btn btn-info tombol ml-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-download"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="col-md-1">
+                        </div>
                         <div class="col-md-6 py-1">
-                            <div class="input-group input-group-md" style="width: 250px">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
+                            <div class="input-group input-group-md float-right" style="width: 250px">
+                                <input type="text" name="table_search" class="form-control float-left" placeholder="Search" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
                                         <i class="fas fa-search"></i>
@@ -37,16 +47,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1">
-                        </div>
-                        <form method="" action="" class="col-md-5 py-1">
-                            <div class="float-right">
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-download"></i></button>
-                                    <button type="button" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus mr-2"></i> Tambah</button>
-                                </div>
-                            </div>
-                        </form>
+
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -240,7 +242,7 @@
     <!-- /.modal -->
 </div>
 <!-- SweetAlert2 -->
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <script>
     // Mengambil Data edit dengan menggunakan Jquery
     $(document).on('click', '#btn-edit', function() {

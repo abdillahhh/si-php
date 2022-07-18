@@ -40,6 +40,8 @@ $routes->set404Override();
 $routes->get('/', 'masterAkses::index');
 //routes Akses Aplikasi
 $routes->post('/login', 'masterAkses::open');
+// routes Ke ganti Password default
+$routes->post('/gantiPasswordDefault', 'masterAkses::gantiPasswordDefault');
 //routes Logout
 $routes->get('/logout', 'masterAkses::logout');
 //Routes Ke views dan controller Dashboard
@@ -75,9 +77,14 @@ $routes->get('/masterUser/get_autofillPegawai', 'masterKelolaMaster::get_autofil
 $routes->get('/showDataUser/(:segment)', 'masterKelolaMaster::showDataUser/$1');
 //Routes Ke views dan controller Kelola Master Tambah
 $routes->get('/tambahUser', 'masterKelolaMaster::tambahUser');
-
 //rotes ke save data pegawai baru
 $routes->post('/savePegawai', 'masterKelolaMaster::savePegawai');
+//routes ke update pegawai
+$routes->post('/updatePegawai', 'masterKelolaMaster::updatePegawai');
+//routes ke views edit pegawai
+$routes->get('/showEditPegawai/(:segment)', 'masterKelolaMaster::showEditPegawai/$1');
+//routes ke views detail pegawai
+$routes->get('/showDetailPegawai/(:segment)', 'masterKelolaMaster::showDetailPegawai/$1');
 
 //Routes Ke views dan controller Sistem
 $routes->get('/kelolaLevel', 'masterSistem::kelolaLevel');

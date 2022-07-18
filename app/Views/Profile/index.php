@@ -30,7 +30,7 @@
 
                             <div class="text-center">
 
-                                <img class="profile-user-img img-fluid" src="<?= base_url('images/profil/' . $data_profil_user['image']) ?>" alt="User profile picture">
+                                <img class="profile-user-img img-fluid" src="<?= base_url('/images/profil/' . $data_profil_user['image']) ?>" alt="User profile picture">
                             </div>
 
                             <h3 class="profile-username text-center"><strong id="username-lengkap"><?= $data_profil_user['username']; ?></strong> <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button></h3>
@@ -62,11 +62,18 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="d-none" id="button">
-                                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
-                                <button type="button" id="batal" class="btn btn-danger" style=" border:none;">Batal</button>
-                                <button type="button" class="btn btn-info" style="border: none;" data-toggle="modal" data-target="#modal-ubah-password">Ubah Password</button>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="d-none" id="button">
+                                        <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                                        <button type="button" id="batal" class="btn btn-danger" style=" border:none;">Batal</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <button type="button" id="btn-ubah-password" class="btn btn-secondary float-right" style="border: none;" data-toggle="modal" data-target="#modal-ubah-password" disabled>Ubah Password</button>
+                                </div>
                             </div>
+
 
                         </form>
                         <!-- /.card-body -->
@@ -86,7 +93,7 @@
                                 <div class="col-md-6">
                                     <div class="row mb-3" style="background-color: #ebebeb;">
                                         <div class="col-12 py-1">
-                                            <i>title here</i>
+                                            <i>Informasi Dasar</i>
                                         </div>
                                     </div>
                                     <strong>NIP Lama</strong>
@@ -128,12 +135,11 @@
                                     <p class="text-muted"> <?= $data_pegawai_user['tahun_pdd']; ?></p>
                                     <hr>
 
-                                    <strong>Tahun tamat</strong>
-                                    <p class="text-muted"> <?= $data_pegawai_user['tmt']; ?></p>
+
 
                                     <div class="row mt-4 mb-3" style="background-color: #ebebeb;">
                                         <div class="col-12 py-1">
-                                            <i>title here</i>
+                                            <i>Posisi Jabatan</i>
                                         </div>
                                     </div>
 
@@ -152,31 +158,34 @@
 
                                     <strong>Jabatan fungsional</strong>
                                     <p class="text-muted"> <?= $data_pegawai_user['jabatan_fungsional']; ?></p>
-                                    <hr>
 
-                                    <strong>Kode fungsional</strong>
-                                    <p class="text-muted"> <?= $data_pegawai_user['fungsional_kd']; ?></p>
+
+                                    <strong>Tahun Mulai Terhitung</strong>
+                                    <p class="text-muted"> <?= $data_pegawai_user['tmt']; ?></p>
 
                                     <div class="row mt-4 mb-3" style="background-color: #ebebeb;">
                                         <div class="col-12 py-1">
-                                            <i>title here</i>
+                                            <i>Unit Kerja</i>
                                         </div>
                                     </div>
-
-                                    <strong>Kode Satker</strong>
-                                    <p class="text-muted"> <?= $data_pegawai_user['satker_kd']; ?></p>
-                                    <hr>
-                                    <strong>Satker</strong>
 
                                     <p class="text-muted"> <?= $data_pegawai_user['satker']; ?></p>
                                     <hr>
 
-                                    <strong>Kode es3</strong>
-                                    <p class="text-muted"> <?= $data_pegawai_user['es3_kd']; ?></p>
+                                    <strong>Bagian/fungsi</strong>
+                                    <?php foreach ($list_bidang as $bidang) : ?>
+                                        <?php if ($data_pegawai_user['es3_kd'] == $bidang['kd_es3']) : ?>
+                                            <p class="text-muted"> <?= $bidang['deskripsi']; ?></p>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
                                     <hr>
 
-                                    <strong>Kode es4</strong>
-                                    <p class="text-muted"> <?= $data_pegawai_user['es4_kd']; ?></p>
+                                    <strong>Seksi</strong>
+                                    <?php foreach ($list_seksi as $seksi) : ?>
+                                        <?php if ($data_pegawai_user['es4_kd'] == $seksi['kd_es4']) : ?>
+                                            <p class="text-muted"> <?= $seksi['deskripsi']; ?></p>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -191,7 +200,7 @@
     </section>
 </div>
 <!-- MODAL UBAH PASSWORD -->
-<div class="modal fade" style="padding-top: 11%;" id="modal-ubah-password">
+<div class="modal fade" style="padding-top: 8%;" id="modal-ubah-password">
     <div class="modal-dialog">
         <form action="<?= base_url('/gantiPasswordByUser'); ?>" method="POST" class="modal-content">
             <div class="modal-header">
@@ -204,15 +213,24 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Password Lama</label>
-                    <input type="password" name="password_lama" class="form-control" placeholder="Password lama...">
+                    <div class="password">
+                        <input type="password" name="password_lama" class="form-control" placeholder="Password lama...">
+                        <i name="eye" class="fas fa-eye pw-eye" id="togglePassword"></i>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Password Baru</label>
-                    <input type="password" id="password_baru" name="password_baru" class="form-control" placeholder="Password baru ...">
+                    <div class="password">
+                        <input type="password" id="password_baru" name="password_baru" class="form-control" placeholder="Password baru ...">
+                        <i name="eye" class="fas fa-eye pw-eye" id="togglePassword"></i>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Konfirmasi Password Baru</label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Konfirmasi password ...">
+                    <div class="password">
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Konfirmasi password ...">
+                        <i name="eye" class="fas fa-eye pw-eye" id="togglePassword"></i>
+                    </div>
                     <span id='message'></span>
                 </div>
             </div>
@@ -227,10 +245,35 @@
 </div>
 <!-- /.modal -->
 
-<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<!-- Toastr -->
+<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
 <script>
     $(function() {
         bsCustomFileInput.init();
+    });
+
+    $(document).ready(function() {
+        <?php if (session()->getFlashdata('pesan')) { ?>
+            Swal.fire({
+                title: "<?= session()->getFlashdata('pesan') ?>",
+                icon: "<?= session()->getFlashdata('icon') ?>",
+                showConfirmButton: true,
+            });
+        <?php } ?>
+    });
+</script>
+
+<script>
+    $(document).on('click', "#togglePassword", function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        input = $(this).parent().find("input");
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
     });
 </script>
 
@@ -247,6 +290,13 @@
             $('input').prop('disabled', false);
         } else {
             $('input').prop('disabled', true);
+        }
+        if ($('#btn-ubah-password').is(':disabled')) {
+            $('#btn-ubah-password').prop('disabled', false);
+            $('#btn-ubah-password').removeClass('btn-secondary').addClass('btn-info');
+        } else {
+            $('#btn-ubah-password').prop('disabled', true);
+            $('#btn-ubah-password').removeClass('btn-info ').addClass('btn-secondary');
         }
         $('#button').toggleClass('d-none');
     })

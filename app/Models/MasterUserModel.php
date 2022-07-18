@@ -42,4 +42,14 @@ class MasterUserModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function getImage($nip_lama)
+    {
+        return $this
+            ->table('tbl_user')
+            ->select('image')
+            ->select('username')
+            ->where('nip_lama_user', $nip_lama)
+            ->first();
+    }
 }

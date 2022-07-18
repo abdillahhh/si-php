@@ -1,11 +1,10 @@
 <?= $this->extend('layout/template'); ?>
 
+
 <?= $this->section('content'); ?>
 
+
 <!-- Content Wrapper. Contains page content -->
-
-
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -127,11 +126,11 @@
                                         foreach ($laporan_digunakan as $list) : ?>
                                             <tr>
                                                 <td><?= $no++; ?></td>
-                                                <td><?= $list['tgl_kegiatan']; ?></td>
+                                                <td id="tgl-kegiatan-tabel"><?= $list['tgl_kegiatan']; ?></td>
                                                 <?php $laporan = $list['uraian_kegiatan']; ?>
                                                 <?php $data = json_decode($laporan); ?>
                                                 <?php $list_uraian = $data->uraian; ?>
-                                                <td class="p-2">
+                                                <td>
                                                     <?php foreach ($list_uraian as $uraian) : ?>
                                                         <div class="p-2 mb-1 rounded-sm card-laporan">
                                                             <?= $uraian; ?>
@@ -204,7 +203,7 @@
 
 <!-- MODAL TAMBAH KEGIATAN -->
 <div class="modal fade" id="modal-tambah">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl ">
+    <div class="modal-dialog  modal-xl ">
         <form id="form-tambah" action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content" enctype="multipart/form-data">
             <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
             <div class="modal-header">
@@ -233,10 +232,28 @@
                             <div class="row">1</div>
                         </div>
                         <div class="col-xl-4 baris-kegiatan">
+
                             <div class="row"><strong>Uraian Kegiatan</strong></div>
                             <div class="row px-1  w-100">
-                                <div class="form-group  w-100">
-                                    <textarea class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
+                                <?php if ($list_full_laporan_harian != null) : ?>
+                                    <?php foreach ($list_full_laporan_harian as $list) : ?>
+                                        <?php $laporan = $list['uraian_kegiatan']; ?>
+                                        <?php $data = json_decode($laporan); ?>
+                                        <?php $list_uraian = $data->uraian; ?>
+                                        <?php foreach ($list_uraian as $uraian) : ?>
+                                            <?php $list_uraian_unik[] = $uraian; ?>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <div class="form-group w-100 position-relative">
+                                    <textarea id="kegiatan-input" class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
+                                    <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                                        <?php if ($list_full_laporan_harian != null) : ?>
+                                            <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?>
+                                                <option class="option-kegiatan border-bottom d-none"><?= $uraian; ?></option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +261,7 @@
                             <div class="row"><strong>Jumlah</strong></div>
                             <div class="row px-1  w-100">
                                 <div class="form-group  w-100">
-                                    <input type="number" class="form-control  w-100" name="field_jumlah[]" min="1" required>
+                                    <input type="number" class="form-control  w-100" name="field_jumlah[]" min="1" value="1" required>
                                 </div>
                             </div>
                         </div>
@@ -255,8 +272,7 @@
                                     <select class=" form-control  w-100" name="field_satuan[]" required>
                                         <?php if ($list_satuan != NULL) : ?>
                                             <?php foreach ($list_satuan as $satuan) : ?>
-                                                <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?>
-                                                </option>
+                                                <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?></option>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
                                     </select>
@@ -265,9 +281,14 @@
                         </div>
                         <div class="col-xl-2 baris-kegiatan">
                             <div class="row"><strong>Hasil Kegiatan</strong></div>
+
                             <div class="row px-1  w-100">
-                                <div class="form-group  w-100">
+                                <div class="form-group  w-100 position-relative">
                                     <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
+                                    <!-- <textarea id="kegiatan-input" class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea> -->
+                                    <!-- <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                                        <option class="option-kegiatan border-bottom d-none">Option 1</option>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -290,9 +311,6 @@
                                         </p>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group w-100">
-                                    <input class="form-control" type="file" name="field_bukti1[]" id="formFileMultiple" multiple />
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -310,7 +328,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer justify-content-between position-relative">
                 <button id="btn-close-modal-tambah2" type="button" class="btn btn-default">Tutup</button>
                 <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
             </div>
@@ -336,7 +354,7 @@
                 <div class="row">
                     <div class="col-12 p-0">
                         <div class="form-group">
-                            <p>tanggal Kegiatan
+                            <p>Tanggal Kegiatan
                             </p>
                             <h2 class="mb-3" id="tanggal-edit"></h2>
                             <?php if ($laporan_harian_tertentu != NULL) : ?>
@@ -364,9 +382,17 @@
                                 <div class="col-xl-4 baris-kegiatan">
                                     <div class="row"><strong>Uraian Kegiatan</strong></div>
                                     <div class="row px-1 w-100">
-                                        <div class="form-group w-100">
-                                            <textarea class="form-control w-100" name="field_uraian[]" rows="3" required><?= $list_uraian[$i]; ?></textarea>
+                                        <div class="form-group w-100 position-relative">
+                                            <textarea id="kegiatan-input" class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required><?= $list_uraian[$i]; ?></textarea>
+                                            <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                                                <?php if ($list_full_laporan_harian != null) : ?>
+                                                    <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?>
+                                                        <option class="option-kegiatan border-bottom d-none"><?= $uraian; ?></option>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="col-xl-1 baris-kegiatan">
@@ -400,8 +426,12 @@
                                     <?php $list_hasil = $data->hasil; ?>
                                     <div class="row"><strong>Hasil Kegiatan</strong></div>
                                     <div class="row px-1 w-100">
-                                        <div class="form-group w-100">
-                                            <textarea class="form-control w-100" name="field_hasil[]" rows="3" required><?= $list_hasil[$i]; ?></textarea>
+                                        <div class="form-group  w-100 position-relative">
+                                            <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
+                                            <!-- <textarea id="kegiatan-input" class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea> -->
+                                            <!-- <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                                        <option class="option-kegiatan border-bottom d-none">Option 1</option>
+                                    </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -418,14 +448,23 @@
                                                         <button class="btn-silang" type="button" id="btn-edit-hapus" data-toggle="modal" data-target="#modal-edit-hapus" data-id_laporan_tertentu="<?= $laporan_harian_tertentu['id']; ?>" data-posisi_array="<?= $i; ?>" data-posisi_dalam_array="<?= $a; ?>" data-nama_bukti_dukung="<?= $list_bukti_dukung[$i][$a]; ?>" data-tanggal_hapus="<?= $laporan_harian_tertentu['tgl_kegiatan']; ?>"><i class="fas fa-times" style="color: #80772d;"></i></button>
                                                     <?php endif; ?>
                                                 </div>
+                                                <?php if (count($list_bukti_dukung[$i]) == 1) : ?>
+                                                    <p class="file-tip2 d-none">
+                                                        Untuk Menghapus
+                                                        <br> <br>
+                                                        <strong> <?= $list_bukti_dukung[$i][$a]; ?> </strong>
+                                                        <br> <br>
+                                                        Silahkan Tambah bukti dukung baru
+                                                    </p>
+                                                <?php endif; ?>
 
                                             <?php endfor; ?>
 
                                             <div class="input-group w-100">
                                                 <div class="custom-file w-100">
-                                                    <input type="file" id="field_bukti_edit<?= $i + 1; ?>" name="field_bukti<?= $i + 1; ?>[]" class="custom-file-input w-100" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip" multiple />
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                                     <div id="resp<?= $i + 1; ?>"></div>
+                                                    <input type="file" name="field_bukti<?= $i + 1; ?>[]" class="custom-file-input w-100" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip" multiple />
+                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                                     <p class="file-tip d-none">
                                                         <strong class="mt-2 d-flex align-items-center">
                                                             <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
@@ -437,8 +476,8 @@
                                                         </strong>
                                                     </p>
                                                 </div>
+
                                             </div>
-                                            <!-- <input class="form-control" type="file" name="field_bukti<?= $i + 1; ?>[]" id="formFileMultiple" multiple /> -->
                                         </div>
                                     </div>
                                 </div>
@@ -486,7 +525,8 @@
                         <p>Tanggal Kegiatan
                         </p>
                         <?php if ($laporan_harian_tertentu != NULL) : ?>
-                            <h1> <?= $laporan_harian_tertentu['tgl_kegiatan']; ?></h1>
+                            <h2 class="mb-1" id="tanggal-detail"></h2>
+                            <input type="date" id="tanggal-kegiatan-detail" class="d-none" value="<?= $laporan_harian_tertentu['tgl_kegiatan']; ?>">
                             <p>Last Modified : <?= $laporan_harian_tertentu['updated_at'];; ?></p>
                         <?php endif; ?>
                     </div>
@@ -551,8 +591,8 @@
 </div>
 
 <!-- MODAL HAPUS BUKTI DUKUNG -->
-<div class="modal fade" id="modal-edit-hapus" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+<div class="modal fade" id="modal-edit-hapus" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-md" style="top: 18%;">
         <form action="<?= base_url('/hapusBuktiDukung') ?>" method="POST">
             <div class="modal-content">
                 <div class="modal-header pt-3" style="border: none;">
@@ -563,18 +603,20 @@
                 <div class="modal-body px-5 py-3 ">
                     <div class="row mb-2">
                         <div class="col-md-12 p-0 d-flex flex-column justify-content-center align-content-center">
-                            <i class="fas fa-exclamation-circle fa-2x text-red"></i>
+                            <span class="w-100 d-flex justify-content-center align-items-center mb-4">
+                                <i class="fas fa-exclamation-circle fa-7x text-red"></i>
+                            </span>
                             <input type="hidden" id="id_laporan_tertentu" name="id_laporan_tertentu">
                             <input type="hidden" name="posisi_array" id="posisi_array">
                             <input type="hidden" name="tanggal_hapus" id="tanggal_hapus">
                             <input type="hidden" name="posisi_dalam_array" id="posisi_dalam_array">
-                            <h2 class=" mb-3" id="">Yakin Hapus Bukti Dukung?</h2>
-                            <p id="nama_bukti_dukung"></p>
+                            <h3 class=" mb-3 text-center" id="">Yakin Hapus Bukti Dukung?</h3>
+                            <i id="nama_bukti_dukung" class="text-center"></i>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                <div class="modal-footer justify-content-center border-0">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-danger">Hapus</button>
                 </div>
             </div>
@@ -583,39 +625,129 @@
 </div>
 
 
-<!-- Summernote -->
-<script src="<?= base_url('plugins/summernote/summernote-bs4.min.js') ?>"></script>
-<!-- dropzonejs -->
-<script src="<?= base_url('plugins/dropzone/min/dropzone.min.js') ?>"></script>
-<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
-<!-- jquery-validation -->
-<script src="<?= base_url('plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
-<script src="<?= base_url('plugins/jquery-validation/additional-methods.min.js') ?>"></script>
 
+
+
+
+
+
+<!-- dropzonejs -->
+<script src="<?= base_url('/plugins/dropzone/min/dropzone.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<!-- jquery-validation -->
+<script src="<?= base_url('/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/jquery-validation/additional-methods.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<!-- Toastr -->
+<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
+
+
+
+
+<script>
+    <?php if (session()->getFlashdata('pesan')) { ?>
+        Swal.fire({
+            title: "<?= session()->getFlashdata('pesan') ?>",
+            icon: "<?= session()->getFlashdata('icon') ?>",
+            showConfirmButton: true,
+        });
+    <?php } ?>
+</script>
 <script>
     $(function() {
         bsCustomFileInput.init();
     });
+
+    $(document).ready(function() {
+
+        let tglTabel = document.querySelectorAll('#tgl-kegiatan-tabel')
+        for (i = 0; i <= tglTabel.length; i++) {
+            tglTabel[i].innerHTML = ubahFormatTanggal2(tglTabel[i].textContent);
+        }
+    })
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('keyup', '#kegiatan-input', function() {
+            $(this).next().removeClass('d-none')
+            for (i = 0; i <= $(this).next().children().length; i++) {
+                if ($(this).next().children().eq(i).text().toLowerCase().match($(this).val().toLowerCase()) !== null) {
+                    $(this).next().children().eq(i).removeClass('d-none')
+                } else {
+                    $(this).next().children().eq(i).addClass('d-none')
+                }
+            }
+        })
+
+        $(document).on('blur', '#kegiatan-input', function() {
+            let textarea = $(this)
+            setTimeout(function() {
+                textarea.next().addClass('d-none')
+            }, 200)
+        })
+
+        $(document).on('click', '.option-kegiatan', function() {
+            $(this).parent().prev().val($(this).text())
+            $(this).parent().addClass('d-none')
+        })
+    })
 </script>
 
 
+<script>
+    var Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+    });
+    $(document).on('input', '#formFileMultiple', function() {
+        if (this.files[0].size > 500000) { // ini untuk ukuran 500 Kb
+            Toast.fire({
+                icon: "warning",
+                title: "Ukuran File Melebihi 200Kb!",
+            });
+            this.value = "";
+            return false;
+        };
+        var pathFile = this.value;
+        var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.pdf|\.xlsx|\.docx|\.ppt|\.txt|\.rar|\.zip)$/i;
+        if (!ekstensiOk.exec(pathFile)) {
+            Toast.fire({
+                icon: "warning",
+                title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip",
+            });
+            this.value = "";
+            return false;
+        }
+    })
 </script>
 
-<script src="<?= base_url('js/tanggal.js') ?>"></script>
+<script src="<?= base_url('/js/tanggal.js') ?>"></script>
 <script>
     $(document).ready(function() {
         $("#modal-edit").modal("show");
         $("#modal-detail").modal("show");
 
         $(document).on("click", "#hapus-baris", function() {
-            $(this).parent().remove();
+            if ($(this).parent().parent().attr('id') == 'baru') {
+                $(this).parent().remove();
+                $('#baru').children().find('#hapus-baris').addClass('d-none')
+                $('#baru').children().last().find('#hapus-baris').removeClass('d-none')
+            }
+            if ($(this).parent().parent().attr('id') == 'baru2') {
+                $(this).parent().remove();
+                $('#baru2').children().find('#hapus-baris').addClass('d-none')
+                $('#baru2').children().last().find('#hapus-baris').removeClass('d-none')
+            }
         });
 
         function appendBaris(modal, noBaris) {
             $(modal).append(
                 `
         <div class="row mt-4 rounded position-relative pt-2 kegiatan-baru">
-                    <span id="hapus-baris" type="button" class="delete-kegiatan"><i class="fas fa-times"></i></span>
+                    <span id="hapus-baris" type="button" class="delete-kegiatan d-none"><i class="fas fa-times"></i></span>
                     <div class="col-xl-1 baris-kegiatan">
                         <div class="row"><strong>NO</strong></div>
                         <div class="row">` +
@@ -625,8 +757,15 @@
                     <div class="col-xl-4 baris-kegiatan">
                         <div class="row"><strong>Uraian Kegiatan</strong></div>
                         <div class="row px-1 w-100">
-                            <div class="form-group w-100">
-                                <textarea class="form-control w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
+                            <div class="form-group w-100 position-relative">
+                                    <textarea id="kegiatan-input" class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
+                                    <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                                    <?php if ($list_full_laporan_harian != null) : ?>
+                                        <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?>
+                                            <option class="option-kegiatan border-bottom d-none"><?= $uraian; ?></option>
+                                        <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -634,7 +773,7 @@
                         <div class="row"><strong>Jumlah</strong></div>
                         <div class="row px-1 w-100">
                             <div class="form-group w-100">
-                                <input type="number" min="1" class="form-control w-100" name="field_jumlah[]" required>
+                                <input type="number" min="1" value="1" class="form-control w-100" name="field_jumlah[]" required>
                             </div>
                         </div>
                     </div>
@@ -654,10 +793,11 @@
                     </div>
                     <div class="col-xl-2 baris-kegiatan">
                         <div class="row"><strong>Hasil Kegiatan</strong></div>
-                        <div class="row px-1 w-100">
-                            <div class="form-group w-100">
-                                <textarea class="form-control w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
-                            </div>
+                        <div class="row px-1  w-100">
+                                <div class="form-group  w-100 position-relative">
+                                <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
+                               
+                                </div>
                         </div>
                     </div>
                     <div class="col-xl-2 baris-kegiatan mb-2">
@@ -693,30 +833,48 @@
             let noBaris = $("#lama").children().length + $("#baru").children().length + 1;
             appendBaris("#baru", noBaris);
             bsCustomFileInput.init();
+            $('#baru').children().find('#hapus-baris').addClass('d-none')
+            $('#baru').children().last().find('#hapus-baris').removeClass('d-none')
         });
 
         $('[id^="tambah-baris2"]').click(function() {
             let noBaris2 = $("#lama2").children().length + $("#baru2").children().length + 1;
             appendBaris("#baru2", noBaris2);
             bsCustomFileInput.init();
+            $('#baru2').children().find('#hapus-baris').addClass('d-none')
+            $('#baru2').children().last().find('#hapus-baris').removeClass('d-none')
         });
     });
 </script>
 <script>
     var date = new Date();
-    var currentDate = date.toISOString().slice(0, 10);
+
+    var currentDate = '<?php
+
+                        use CodeIgniter\I18n\Time;
+
+                        $myTime = Time::today('Asia/Jakarta');
+                        echo $myTime->toLocalizedString('yyyy-MM-dd');
+                        ?>';
     document.getElementById('hari-ini').value = currentDate;
 
     $('#tanggal-tambah').html(ubahFormatTanggal(currentDate))
     $('#tanggal-edit').html(ubahFormatTanggal($('#tanggal-kegiatan').val()))
+    $('#tanggal-detail').html(ubahFormatTanggal($('#tanggal-kegiatan-detail').val()))
 </script>
 
 <script>
-    $(document).on("mouseover", '#formFileMultiple', function() {
+    $(document).on("mouseover", '.custom-file-input', function() {
         $(this).next().next().removeClass('d-none')
     })
-    $(document).on("mouseout", '#formFileMultiple', function() {
+    $(document).on("mouseout", '.custom-file-input', function() {
         $(this).next().next().addClass('d-none')
+    })
+    $(document).on("mouseover", '.file-list', function() {
+        $(this).next('.file-tip2').removeClass('d-none')
+    })
+    $(document).on("mouseout", '.file-list', function() {
+        $(this).next('.file-tip2').addClass('d-none')
     })
 </script>
 

@@ -50,9 +50,10 @@ class masterSistem extends BaseController
 
     public function editKelolaLevel($level_id)
     {
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenuLevel($level_id, session('user_id'));
+        $list_menu = $this->masterUserLevelModel->getAksesMenuLevel($level_id);
 
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenuLevel($level_id, session('user_id'));
+
+        $list_submenu = $this->masterUserLevelModel->getAksesSubmenuLevel($level_id);
 
 
         $data = [
@@ -65,14 +66,15 @@ class masterSistem extends BaseController
             'list_menu' => $list_menu,
             'list_submenu' => $list_submenu
         ];
+        // dd($data);
         return view('sistem/kelolaLevel', $data);
     }
 
     public function updateKelolaLevel($level_id)
     {
-        $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($level_id, session('user_id'));
+        $list_menu = $this->masterUserLevelModel->getAksesMenu($level_id);
 
-        $list_level_menu = $this->masterAksesMenuModel->getMenuByLevel($level_id, session('user_id'));
+        $list_level_menu = $this->masterAksesMenuModel->getMenuByLevel($level_id);
 
         for ($i = 0; $i < count($list_menu); $i++) {
 
@@ -92,7 +94,7 @@ class masterSistem extends BaseController
         }
 
 
-        $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($level_id, session('user_id'));
+        $list_submenu = $this->masterUserLevelModel->getAksesSubmenu($level_id);
         $list_level_submenu = $this->masterAksesSubmenuModel->getSubmenuByLevel($level_id);
 
         for ($i = 0; $i < count($list_submenu); $i++) {
@@ -217,10 +219,28 @@ class masterSistem extends BaseController
 
     public function updateNamaLevel()
     {
+        $id = $this->request->getVar('id_level');
+        $nama_level = $this->request->getVar('nama_level');
+
         $this->masterUserLevelModel->save([
-            'id' => $this->request->getVar('id'),
-            'nama_level' => $this->request->getVar('nama_level')
+            'id' => intval($id),
+            'nama_level' => $nama_level
         ]);
+
+        $list_user_level = $this->masterAksesUserLevelModel->getUserLevel(session('user_id'));
+
+        $data1 = [
+            'log' => TRUE,
+            'user_id' => session('user_id'),
+            'level_id' => session('level_id'),
+            'list_user_level' => $list_user_level,
+            'list_menu'  => session('list_menu'),
+            'list_submenu' => session('list_submenu'),
+            'fullname' => session('fullname'),
+            'data_user' => session('data_user')
+        ];
+        session()->set($data1);
+
         return redirect()->to('/kelolaLevel');
     }
 

@@ -4,16 +4,23 @@ namespace App\Controllers;
 
 use App\Models\MasterUserModel;
 use App\Models\MasterPegawaiModel;
+use App\Models\MasterEs3Model;
+use App\Models\MasterEs4Model;
 
 class masterUser extends BaseController
 {
     protected $masterUserModel;
     protected $masterPegawaiModel;
+    protected $masterEs3Model;
+    protected $masterEs4Model;
+
 
     public function __construct()
     {
         $this->masterUserModel = new masterUserModel();
         $this->masterPegawaiModel = new masterPegawaiModel();
+        $this->masterEs3Model = new MasterEs3Model();
+        $this->masterEs4Model = new MasterEs4Model();
     }
 
     public function profile()
@@ -27,7 +34,9 @@ class masterUser extends BaseController
             'subMenu' => '',
             'list_level' => session('list_user_level'),
             'data_profil_user' => $data_profil_user,
-            'data_pegawai_user' => $data_pegawai_user
+            'data_pegawai_user' => $data_pegawai_user,
+            'list_bidang' => $this->masterEs3Model->getAllBidang(),
+            'list_seksi' => $this->masterEs4Model->getAllSeksi()
         ];
         //dd($data);
 
@@ -42,22 +51,12 @@ class masterUser extends BaseController
         $password_lama = $this->request->getVar('password_lama');
         $password_baru = $this->request->getVar('password_baru');
 
+
         if (password_verify($password_lama, $user['password'])) {
-            $pass_baru = password_hash($password_baru, PASSWORD_DEFAULT);
 
-            $data = [
-                'username' => $user['username'],
-                'fullname' => $user['fullname'],
-                'email' => $user['email'],
-                'password' => $pass_baru,
-                'token' => '',
-                'image' => $user['image'],
-                'nip_lama_user' => $user['nip_lama_user'],
-                'is_active' => $user['is_active'],
-            ];
-            //  d($data);
+            $lower_pass = strtolower($password_baru);
+            $pass_baru = password_hash($lower_pass, PASSWORD_DEFAULT);
 
-            //$this->masterUserModel->update(intval(session('user_id')), $data);
 
             $this->masterUserModel->save([
                 'id' => intval(session('user_id')),
@@ -70,6 +69,8 @@ class masterUser extends BaseController
                 'nip_lama_user' => $user['nip_lama_user'],
                 'is_active' => $user['is_active'],
             ]);
+            session()->setFlashdata('pesan', 'Ganti Password Berhasil');
+            session()->setFlashdata('icon', 'success');
         } else {
             return redirect()->to('/dashboard');
         }
