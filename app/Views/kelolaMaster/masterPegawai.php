@@ -84,7 +84,7 @@
                                                             <?php if ($list_user != null) : ?>
                                                                 <?php foreach ($list_user as $user) : ?>
                                                                     <?php if ($pegawai['nip_lama'] == $user['nip_lama_user']) : ?>
-                                                                        <img class="" style="width: 90px;" src="<?= base_url('/images/' . $user['image']) ?>" alt="">
+                                                                        <img class="" style="width: 90px;" src="<?= base_url('images/' . $user['image']) ?>" alt="">
                                                                     <?php endif; ?>
                                                                 <?php endforeach; ?>
                                                             <?php endif; ?>
@@ -490,7 +490,7 @@
                     <div class="row">
                         <div class="col-md-2 text-center border-right">
                             <?php if ($image_pegawai != null) : ?>
-                                <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/' . $image_pegawai['image']) ?>" alt="">
+                                <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/' . $image_pegawai['image']) ?>" alt="">
                                 <br>
                                 <label for="username">Username Akun :</label>
                                 <p><?= $image_pegawai['username']; ?></p>

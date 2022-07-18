@@ -632,14 +632,14 @@
 
 
 <!-- dropzonejs -->
-<script src="<?= base_url('/plugins/dropzone/min/dropzone.min.js') ?>"></script>
-<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('plugins/dropzone/min/dropzone.min.js') ?>"></script>
+<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
 <!-- jquery-validation -->
-<script src="<?= base_url('/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
-<script src="<?= base_url('/plugins/jquery-validation/additional-methods.min.js') ?>"></script>
-<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('plugins/jquery-validation/additional-methods.min.js') ?>"></script>
+<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <!-- Toastr -->
-<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
+<script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
 
 
 
@@ -724,7 +724,7 @@
     })
 </script>
 
-<script src="<?= base_url('/js/tanggal.js') ?>"></script>
+<script src="<?= base_url('js/tanggal.js') ?>"></script>
 <script>
     $(document).ready(function() {
         $("#modal-edit").modal("show");

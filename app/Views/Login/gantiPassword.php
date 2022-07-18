@@ -9,15 +9,15 @@
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="<?= base_url('/plugins/fontawesome-free/css/all.min.css') ?>" />
+        <link rel="stylesheet" href="<?= base_url('plugins/fontawesome-free/css/all.min.css') ?>" />
         <!-- Theme style -->
-        <link rel="stylesheet" href="<?= base_url('/dist/css/adminlte.min.css') ?>" />
+        <link rel="stylesheet" href="<?= base_url('dist/css/adminlte.min.css') ?>" />
         <!-- SweetAlert2 -->
-        <link rel="stylesheet" href="<?= base_url('/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>">
+        <link rel="stylesheet" href="<?= base_url('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>">
         <!-- Toastr -->
-        <link rel="stylesheet" href="<?= base_url('/plugins/toastr/toastr.min.css') ?>" />
+        <link rel="stylesheet" href="<?= base_url('plugins/toastr/toastr.min.css') ?>" />
 
-        <link rel="icon" type="image/x-icon" href="<?= base_url('/images/bps.png') ?>">
+        <link rel="icon" type="image/x-icon" href="<?= base_url('images/bps.png') ?>">
         <style>
             .password {
                 position: relative;
@@ -70,12 +70,12 @@
 
 
         <!-- Bootstrap 4 -->
-        <script src="<?= base_url('/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+        <script src="<?= base_url('plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
         <!-- jQuery -->
-        <script src="<?= base_url('/plugins/jquery/jquery.min.js') ?>"></script>
-        <script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+        <script src="<?= base_url('plugins/jquery/jquery.min.js') ?>"></script>
+        <script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
         <!-- Toastr -->
-        <script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
+        <script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
         <script>
             $(document).on('click', "#togglePassword", function() {
                 $(this).toggleClass("fa-eye fa-eye-slash");
