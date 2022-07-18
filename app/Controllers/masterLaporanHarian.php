@@ -174,7 +174,8 @@ class masterLaporanHarian extends BaseController
             'modal_detail' => '',
             'tanggal_input_terakhir' => $tanggal_input_terakhir,
             'tahun_tersedia' => $tahun_tersedia,
-            'keyword' => $keyword
+            'keyword' => $keyword,
+            'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
 
         ];
         //dd($data);
@@ -358,7 +359,8 @@ class masterLaporanHarian extends BaseController
             'modal_detail' => 'modal-detail',
             'tanggal_input_terakhir' => $tanggal_input_terakhir,
             'tahun_tersedia' => $tahun_tersedia,
-            'keyword' => $keyword
+            'keyword' => $keyword,
+            'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
         ];
         // dd($data);
         return view('laporanHarian/listLaporan', $data);
