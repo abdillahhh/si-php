@@ -94,7 +94,7 @@
                                                                 <?php endforeach; ?>
                                                             <?php endif; ?>
                                                             <?php if ($ada_akun === false) : ?>
-                                                                <img style="width: 90px;" src="<?= base_url('/images/profil/default.jpg') ?>" alt="">
+                                                                <img style="width: 90px;" src="<?= base_url('images/profil/default.jpg') ?>" alt="">
                                                             <?php endif; ?>
                                                         </td>
                                                         <td><?= $pegawai['nama_pegawai']; ?></td>

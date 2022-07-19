@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">Username</h2>
@@ -72,7 +72,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
                                     <?php if ($show_data_user != NULL) : ?>
                                         <input type="hidden" name='image' value="<?= $show_data_user['image']; ?>">
                                     <?php endif; ?>
@@ -313,7 +313,7 @@
 
                 <div class="row">
                     <div class="col-5 pr-4">
-                        <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
+                        <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
                     </div>
                     <div class="col-7 pl-4 border-left">
                         <strong>Nama Lengkap</strong>
@@ -384,8 +384,8 @@
 
 <!-- jQuery -->
 <!-- 
-<script src="<?= base_url('/plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('/js/jquery-ui.min.js') ?>"></script> -->
+<script src="<?= base_url('plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('js/jquery-ui.min.js') ?>"></script> -->
 <!-- AUTOFILL PEGAWAI -->
 <script>
     $(document).ready(function() {

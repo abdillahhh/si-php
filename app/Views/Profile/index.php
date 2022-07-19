@@ -257,10 +257,10 @@
 </div>
 <!-- /.modal -->
 
-<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
-<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <!-- Toastr -->
-<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
+<script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
 <script>
     $(function() {
         bsCustomFileInput.init();
