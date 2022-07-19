@@ -57,3 +57,28 @@ function allowSubMenu($level_id, $id_parent, $id_submenu)
         }
     }
 }
+
+// function fotoprofil($niplama, $images = null)
+// {
+//     $src1 = "https://community.bps.go.id/images/avatar/" . $niplama . ".jpg";
+//     $src2 = "https://community.bps.go.id/images/avatar/" . str_replace("3400", "", $niplama) . ".jpg";
+//     $src3 = "https://community.bps.go.id/images/avatar/" . $niplama . ".JPG";
+//     $src4 = "https://community.bps.go.id/images/avatar/" . str_replace("3400", "", $niplama) . ".JPG";
+//     $src5 = "https://community.bps.go.id/images/avatar/" . $images;
+//     $src = "https://community.bps.go.id/images/avatar/" . $images;
+//     if ($images != null) {
+//         return $src;
+//     } elseif (@getimagesize($src2)) {
+//         return $src2;
+//     } elseif (@getimagesize($src1)) {
+//         return $src1;
+//     } elseif (@getimagesize($src3)) {
+//         return $src3;
+//     } elseif (@getimagesize($src4)) {
+//         return $src4;
+//     } elseif (@getimagesize($src5)) {
+//         return $src5;
+//     } else {
+//         return base_url('/images/profil/default.jpg');
+//     }
+// }

@@ -59,7 +59,8 @@ class MasterLaporanHarianModel extends Model
             ->select('*')
             ->where('user_id', $user_id)
             ->where('id', $laporan_id)
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
     public function getMaxDate($user_id)
@@ -69,7 +70,8 @@ class MasterLaporanHarianModel extends Model
             ->select('tgl_kegiatan')
             ->orderBy('tgl_kegiatan', 'DESC')
             ->where('user_id', $user_id)
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
 

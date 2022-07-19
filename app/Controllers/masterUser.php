@@ -38,7 +38,7 @@ class masterUser extends BaseController
             'list_bidang' => $this->masterEs3Model->getAllBidang(),
             'list_seksi' => $this->masterEs4Model->getAllSeksi()
         ];
-        //dd($data);
+        // dd($data);
 
         return view('Profile/index', $data);
     }
@@ -76,6 +76,52 @@ class masterUser extends BaseController
         }
 
 
+        return redirect()->to('/profile');
+    }
+    public function updateProfileByUser()
+    {
+        $id_user = $this->request->getVar('id_profile_user');
+        $password = $this->request->getVar('password_user');
+        $token = $this->request->getVar('token');
+        $nip_lama_user = $this->request->getVar('nip_lama_user');
+        $is_active = $this->request->getVar('is_active');
+        $username = $this->request->getVar('username');
+        $nama_lengkap = $this->request->getVar('nama');
+        $email = $this->request->getVar('email');
+        $image_user_baru = $this->request->getFile('image_user_baru');
+        $image_user_lama = $this->request->getVar('image_user_lama');
+
+        d($image_user_baru);
+        d($image_user_lama);
+
+        $data_user = session('data_user');
+        $nip_lama = $data_user['nip_lama_user'];
+        $dirname = 'images/profil/' . $nip_lama;
+
+        if (!file_exists($dirname)) {
+
+            if ($image_user_baru->getError() == 4) {
+                $nama_image = $image_user_lama;
+            } else {
+                $ekstensi = $image_user_baru->getExtension();
+                $nama_image = ($nip_lama . '.' . $ekstensi);
+                $image_user_baru->move('images/profil/', $nama_image);
+                if ($image_user_lama != 'default.png') {
+                    unlink('images/profil/' . $image_user_lama);
+                }
+            }
+        }
+        $this->masterUserModel->save([
+            'id' => $id_user,
+            'username' => $username,
+            'fullname' => $nama_lengkap,
+            'email' => $email,
+            'password' => $password,
+            'token' => $token,
+            'image' => $nama_image,
+            'nip_lama_user' => $nip_lama_user,
+            'is_active' => $is_active,
+        ]);
         return redirect()->to('/profile');
     }
 }

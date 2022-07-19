@@ -24,7 +24,8 @@ class MasterUserModel extends Model
         return $this
             ->table('tbl_user')
             ->where('username', $username)
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
     public function getProfilUser($user_id)
@@ -32,7 +33,8 @@ class MasterUserModel extends Model
         return $this
             ->table('tbl_user')
             ->where('id', $user_id)
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
     public function getAllUser()
@@ -50,6 +52,7 @@ class MasterUserModel extends Model
             ->select('image')
             ->select('username')
             ->where('nip_lama_user', $nip_lama)
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 }

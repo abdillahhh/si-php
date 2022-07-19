@@ -147,7 +147,8 @@ class masterAkses extends BaseController
                 'is_active' => $user['is_active'],
             ]);
             ///alert berhasil ubah password
-            session()->setFlashdata('pesan', 'Berhasil Ubah Password');
+            session()->setFlashdata('pesan', 'Password berhasil diubah!');
+            session()->setFlashdata('pesan_text', 'Silahkan login kembali');
             session()->setFlashdata('icon', 'success');
             return redirect()->to('/');
         } else {

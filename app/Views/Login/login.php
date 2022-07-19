@@ -12,11 +12,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="<?= base_url('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>">
     <!-- Toastr -->
-    <link rel="stylesheet" href="<?= base_url('plugins/toastr/toastr.min.css') ?>" />
-    <link rel="stylesheet" href="<?= base_url('plugins/fontawesome-free/css/all.min.css') ?>" />
-    <link rel="icon" type="image/x-icon" href="<?= base_url('images/bps.png') ?>">
+    <link rel="stylesheet" href="<?= base_url('/plugins/toastr/toastr.min.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('/plugins/fontawesome-free/css/all.min.css') ?>" />
+    <link rel="icon" type="image/x-icon" href="<?= base_url('/images/bps.png') ?>">
     <title>Login</title>
 
     <style>
@@ -189,19 +189,19 @@
                 </form>
             </div>
             <div class="col-sm-6 test2">
-                <img src="<?= base_url('images/1.png') ?>" class="card-img" style="object-fit: cover;" height="100%">
+                <img src="<?= base_url('/images/1.png') ?>" class="card-img" style="object-fit: cover;" height="100%">
             </div>
         </div>
     </div>
 
 
     <!-- Bootstrap 4 -->
-    <script src="<?= base_url('plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= base_url('/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
     <!-- jQuery -->
-    <script src="<?= base_url('plugins/jquery/jquery.min.js') ?>"></script>
-    <script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+    <script src="<?= base_url('/plugins/jquery/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
     <!-- Toastr -->
-    <script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
+    <script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
     <script>
         $(document).on('click', "#togglePassword", function() {
             $(this).toggleClass("fa-eye fa-eye-slash");
@@ -217,6 +217,7 @@
             <?php if (session()->getFlashdata('pesan')) { ?>
                 Swal.fire({
                     title: "<?= session()->getFlashdata('pesan') ?>",
+                    text: "<?= session()->getFlashdata('pesan_text') ?>",
                     icon: "<?= session()->getFlashdata('icon') ?>",
                     showConfirmButton: true,
                 });

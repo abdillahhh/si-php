@@ -50,8 +50,12 @@ $routes->get('/dashboard', 'masterDashboard::index');
 $routes->get('/showDetailLaporanHarianOnDashboard/(:segment)', 'masterDashboard::showDetailLaporanHarianOnDashboard/$1');
 //Routes Ke views dan controller Dashboard
 $routes->get('/profile', 'masterUser::profile');
+//routes ke update data user by user
+$routes->post('/updateProfileByUser', 'masterUser::updateProfileByUser');
 //Routes ke ganti password user
 $routes->post('/gantiPasswordByUser', 'masterUser::gantiPasswordByUser');
+
+
 //Routes Ke views dan controller list Laporan dan Input Kegiatan
 $routes->get('/listLaporan', 'masterLaporanHarian::listLaporan');
 $routes->get('/inputKegiatan', 'masterLaporanHarian::inputKegiatan');

@@ -39,8 +39,15 @@
                                     echo '<button type="button" id="btn-modal-tambah" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i>Tambah</button>';
                                 } ?>
 
-
-                                <select name="bulan" class="form-control mr-2 bulan" style="border-radius: 5px;">
+                                <select name="tahun" class="form-control tahun" style="border-radius: 5px;">
+                                    <option value="">--PILIH TAHUN--</option>
+                                    <?php if ($tahun_tersedia != null) : ?>
+                                        <?php foreach ($tahun_tersedia as $tahun) : ?>
+                                            <option value="<?= $tahun; ?>"><?= $tahun; ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                                <select name="bulan" class="form-control ml-2 bulan" style="border-radius: 5px;">
                                     <option value="">--PILIH BULAN--</option>
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
@@ -55,30 +62,18 @@
                                     <option value="12">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <select name="tahun" class="form-control tahun" style="border-radius: 5px;">
-                                    <option value="">--PILIH TAHUN--</option>
-                                    <?php if ($tahun_tersedia != null) : ?>
-                                        <?php foreach ($tahun_tersedia as $tahun) : ?>
-                                            <option value="<?= $tahun; ?>"><?= $tahun; ?></option>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </select>
+
                             </div>
                         </form>
 
                         <div class="col-md-1">
                         </div>
                         <div class="col-md-6 py-1">
-                            <form action="" method="get">
-                                <div class="input-group input-group-md float-right" style="width: 250px">
-                                    <input type="text" name="keyword" class="form-control float-right auto_search" value="<?= $keyword ? $keyword : ""; ?>" placeholder="Search" onkeypress="return event.keyCode != 13" />
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default" id="btn-search">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
+                            <div>
+                                <div id="tabelData_filter" class="input-group input-group-md float-right" style="width: 250px">
+                                    <input type="search" id="pencarian" name="keyword" class="form-control float-right auto_search" placeholder="Search ..." />
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -92,7 +87,7 @@
                 <div class="col-12">
                     <div class="card">
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body table-responsive p-0 overflow-hidden">
                             <!-- tabel lama -->
                             <table class="table table-hover " id="tabelData">
                                 <thead>
@@ -111,19 +106,10 @@
                                     <?php
                                     $start = 0;
                                     $no = 1;
-                                    $page = 1;
-                                    if ($list_laporan_harian != NULL) : ?>
+                                    if ($list_full_laporan_harian != NULL) : ?>
                                         <?php
-                                        $start = 1;
-                                        $page = isset($_GET['page_list_laporan_harian']) ? $_GET['page_list_laporan_harian'] : 1;
-                                        $no = 1 + ($itemsCount * ($page - 1));
-                                        if ($keyword == null) {
-                                            $laporan_digunakan = $list_laporan_harian;
-                                        } else {
-                                            $laporan_digunakan = $list_full_laporan_harian;
-                                        }
 
-                                        foreach ($laporan_digunakan as $list) : ?>
+                                        foreach ($list_full_laporan_harian as $list) : ?>
                                             <tr>
                                                 <td><?= $no++; ?></td>
                                                 <td id="tgl-kegiatan-tabel"><?= $list['tgl_kegiatan']; ?></td>
@@ -180,17 +166,7 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <!-- PAGINATION -->
-                        <div class="card-footer clearfix">
-                            <div class="row py-2">
-                                <div class="col-md-6">
 
-                                    <i class="text-sm text-gray">Menampilkan <?= $start + ($itemsCount * ($page - 1)) ?> - <?= $no - 1 ?> data dari <?= $total ?> entry</i>
-                                </div>
-                                <?= $pager->links('list_laporan_harian', 'custom_simple'); ?>
-
-                            </div>
-                        </div>
                     </div>
                     <!-- /.card -->
                 </div>
@@ -632,14 +608,14 @@
 
 
 <!-- dropzonejs -->
-<script src="<?= base_url('plugins/dropzone/min/dropzone.min.js') ?>"></script>
-<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/dropzone/min/dropzone.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
 <!-- jquery-validation -->
-<script src="<?= base_url('plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
-<script src="<?= base_url('plugins/jquery-validation/additional-methods.min.js') ?>"></script>
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/jquery-validation/additional-methods.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <!-- Toastr -->
-<script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
 
 
 
@@ -706,7 +682,7 @@
         if (this.files[0].size > 500000) { // ini untuk ukuran 500 Kb
             Toast.fire({
                 icon: "warning",
-                title: "Ukuran File Melebihi 200Kb!",
+                title: "Ukuran File Melebihi 500Kb!",
             });
             this.value = "";
             return false;
@@ -724,7 +700,7 @@
     })
 </script>
 
-<script src="<?= base_url('js/tanggal.js') ?>"></script>
+<script src="<?= base_url('/js/tanggal.js') ?>"></script>
 <script>
     $(document).ready(function() {
         $("#modal-edit").modal("show");
@@ -904,19 +880,16 @@
     })
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-
 <script type="text/javascript">
     $('#tabelData').DataTable({
-        "paging": false,
+        "paging": true,
         "lengthChange": false,
         "searching": true,
         "responsive": true,
         'ordering': false,
-        "info": false,
-        "autoWidth": false
+        "info": true,
+        "autoWidth": false,
+        "pageLength": 30
 
     });
 
@@ -950,9 +923,16 @@
     })
 
 
-    $(document).ready(function() {
-        console.log()
-        $('#tabelData_wrapper').children().first().addClass('d-none')
+
+    $('#tabelData_wrapper').children().first().addClass('d-none')
+    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
+    $('.dataTables_info').addClass('text-sm text-gray py-2')
+    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
+
+    $(document).on('keyup', '#pencarian', function() {
+        $('#tabelData').DataTable().search(
+            $('.auto_search').val()
+        ).draw();
     })
 </script>
 <?= $this->endSection(); ?>

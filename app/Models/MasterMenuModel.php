@@ -17,7 +17,8 @@ class MasterMenuModel extends Model
             ->table($this->table)
             ->select('id')
             ->orderBy('id', 'DESC')
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
     public function getListMenu()

@@ -26,11 +26,23 @@
                 <div class="col-md-4">
                     <!-- Profile Image -->
                     <div class="card card-primary">
-                        <form action="" method="POST" enctype="multipart/form-data" class="card-body box-profile">
+                        <form action="<?= base_url('/updateProfileByUser'); ?>" method="POST" enctype="multipart/form-data" class="card-body box-profile">
+
+                            <input type="hidden" name="id_profile_user" value="<?= $data_profil_user['id']; ?>">
+                            <input type="hidden" name="password_user" value="<?= $data_profil_user['password']; ?>">
+                            <input type="hidden" name="token" value="<?= $data_profil_user['token']; ?>">
+                            <input type="hidden" name="nip_lama_user" value="<?= $data_profil_user['nip_lama_user']; ?>">
+                            <input type="hidden" name="is_active" value="<?= $data_profil_user['is_active']; ?>">
+                            <input type="hidden" name="image_user_lama" value="<?= $data_profil_user['image']; ?>">
+
 
                             <div class="text-center">
-
-                                <img class="profile-user-img img-fluid" src="<?= base_url('images/profil/' . $data_profil_user['image']) ?>" alt="User profile picture">
+                                <?php if ($data_profil_user['image'] == 'default.png') {
+                                    $foto_profil_user = '/images/profil/default.jpg';
+                                } else {
+                                    $foto_profil_user = '/images/profil/' . $data_profil_user['image'];
+                                } ?>
+                                <img class="profile-user-img img-fluid" src="<?= base_url($foto_profil_user) ?>" alt="User profile picture">
                             </div>
 
                             <h3 class="profile-username text-center"><strong id="username-lengkap"><?= $data_profil_user['username']; ?></strong> <button type="button" id="enableEdit" class="btn btn-info btn-xs tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-pen"></i></button></h3>
@@ -57,8 +69,8 @@
                             <hr>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="exampleInputFile" value="<?= $data_profil_user['image']; ?>" accept=".png, .jpg, .jpeg" disabled />
-                                    <label class="custom-file-label" for="exampleInputFile"><?= $data_profil_user['image']; ?></label>
+                                    <input name="image_user_baru" type="file" class="custom-file-input" id="image_user_baru" value="<?= $data_profil_user['image']; ?>" accept=".png, .jpg, .jpeg" disabled />
+                                    <label class="custom-file-label" for="image_user"><?= $data_profil_user['image']; ?></label>
                                 </div>
                             </div>
                             <hr>
@@ -245,10 +257,10 @@
 </div>
 <!-- /.modal -->
 
-<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <!-- Toastr -->
-<script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
 <script>
     $(function() {
         bsCustomFileInput.init();
@@ -320,6 +332,52 @@
         } else
             $('#message').html('Password baru belum cocok').css('color', 'red');
     });
+</script>
+
+<script>
+    var Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+    });
+    $(document).on('input', '#image_user', function() {
+        if (this.files[0].size > 500000) { // ini untuk ukuran 500 Kb
+            Toast.fire({
+                icon: "warning",
+                title: "Ukuran File Melebihi 500Kb!",
+            });
+            this.value = "";
+            return false;
+        };
+        var pathFile = this.value;
+        var ekstensiOk = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!ekstensiOk.exec(pathFile)) {
+            Toast.fire({
+                icon: "warning",
+                title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg",
+            });
+            this.value = "";
+            return false;
+        }
+    })
+</script>
+
+<script>
+    function previewImg() {
+        const profile = document.querySelector('#image_profile');
+        const profileLabel = document.querySelector('.form-control')
+        const imgPreview = document.querySelector('.img-preview')
+
+        profileLabel.textContent = profile.files[0].name;
+
+        const fileProfile = new FileReader();
+        fileProfile.readAsDataURL(profile.files[0]);
+
+        fileProfile.onload = function(e) {
+            imgPreview.src = e.target.result;
+        }
+    }
 </script>
 
 <?= $this->endSection(); ?>

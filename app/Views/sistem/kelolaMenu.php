@@ -39,12 +39,7 @@
                         </div>
                         <div class="col-md-6 py-1">
                             <div class="input-group input-group-md float-right" style="width: 250px">
-                                <input type="text" name="table_search" class="form-control float-left" placeholder="Search" />
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
+                                <input type="text" id="pencarian" name="table_search" class="form-control float-left" placeholder="Search ..." />
                             </div>
                         </div>
 
@@ -60,8 +55,8 @@
                 <div class="col-12">
                     <div class="card">
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
+                        <div class="card-body table-responsive p-0 overflow-hidden">
+                            <table class="table table-hover text-nowrap" id="tabelData">
                                 <thead>
                                     <tr>
                                         <th>NAMA MENU</th>
@@ -100,33 +95,6 @@
 
                                 </tbody>
                             </table>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p>Menampilkan 6 data dari 33</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="pagination pagination-sm m-0 float-right">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">&laquo;</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">&raquo;</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- /.card -->
@@ -242,7 +210,7 @@
     <!-- /.modal -->
 </div>
 <!-- SweetAlert2 -->
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <script>
     // Mengambil Data edit dengan menggunakan Jquery
     $(document).on('click', '#btn-edit', function() {
@@ -272,5 +240,32 @@
             });
         <?php } ?>
     });
+</script>
+
+<script type="text/javascript">
+    $('#tabelData').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        'ordering': false,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "pageLength": 10
+
+    });
+
+
+    $('#tabelData_wrapper').children().first().addClass('d-none')
+
+    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
+    $('.dataTables_info').addClass('text-sm text-gray py-2')
+    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
+
+    $(document).on('keyup', '#pencarian', function() {
+        $('#tabelData').DataTable().search(
+            $(this).val()
+        ).draw();
+    })
 </script>
 <?= $this->endSection(); ?>

@@ -45,18 +45,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <form action="" method="get" class="input-group input-group-md pt-3 px-4" style="width: 250px">
-                                    <input type="search" value="<?= $keyword ? $keyword : ""; ?>" name="keyword" class="form-control float-right" placeholder="Search" />
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </form>
+                                <div class="input-group input-group-md pt-3 px-4" style="width: 250px">
+                                    <input type="search" id="pencarian" name="keyword" class="form-control float-right" placeholder="Search ..." />
+                                </div>
 
                                 <!-- /.card-header -->
-                                <div class="card-body table-responsive px-4">
-                                    <table class="table table-hover text-nowrap">
+                                <div class="card-body table-responsive px-0">
+                                    <table class="table table-hover text-nowrap" id="tabelData">
                                         <thead>
                                             <tr>
                                                 <th>NO.</th>
@@ -76,17 +71,30 @@
                                         </thead>
                                         <tbody>
                                             <?php $no = 1 ?>
+                                            <?php $ada_akun = false; ?>
                                             <?php if ($list_pegawai != null) : ?>
                                                 <?php foreach ($list_pegawai as $pegawai) : ?>
                                                     <tr>
                                                         <td><?= $no++; ?></td>
-                                                        <td class="text-center">
+                                                        <td id="gambarTabel" class="text-center">
                                                             <?php if ($list_user != null) : ?>
                                                                 <?php foreach ($list_user as $user) : ?>
-                                                                    <?php if ($pegawai['nip_lama'] == $user['nip_lama_user']) : ?>
-                                                                        <img class="" style="width: 90px;" src="<?= base_url('images/' . $user['image']) ?>" alt="">
+                                                                    <?php if ($pegawai['nip_lama'] === $user['nip_lama_user']) : ?>
+                                                                        <?php $ada_akun = true ?>
+                                                                        <?php if ($user['image'] === 'default.png') {
+                                                                            $image_pegawai_user = '/images/profil/default.jpg';
+                                                                        } else {
+                                                                            $image_pegawai_user = '/images/profil/' . $user['image'];
+                                                                        } ?>
+                                                                        <img style="width: 90px;" src="<?= base_url($image_pegawai_user) ?>" alt="">
+                                                                        <?php break; ?>
+                                                                    <?php else : ?>
+                                                                        <?php $ada_akun = false; ?>
                                                                     <?php endif; ?>
                                                                 <?php endforeach; ?>
+                                                            <?php endif; ?>
+                                                            <?php if ($ada_akun === false) : ?>
+                                                                <img style="width: 90px;" src="<?= base_url('/images/profil/default.jpg') ?>" alt="">
                                                             <?php endif; ?>
                                                         </td>
                                                         <td><?= $pegawai['nama_pegawai']; ?></td>
@@ -126,32 +134,7 @@
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
-                                <div class="card-footer clearfix">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p>Menampilkan 6 data dari 33</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <ul class="pagination pagination-sm m-0 float-right">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">&laquo;</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">1</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">2</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">3</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">&raquo;</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                             <!-- /.card -->
                         </div>
@@ -485,17 +468,22 @@
                     <span aria-hidden="true">&times;</span>
                 </a>
             </div>
-            <?php if ($detail_pegawai != null) : ?>
-                <div class="modal-body px-5 py-3">
-                    <div class="row">
-                        <div class="col-md-2 text-center border-right">
+            <div class="modal-body px-5 py-3">
+                <div class="row">
+                    <div class="col-md-2 text-center border-right">
+                        <?php if ($detail_pegawai != null) : ?>
                             <?php if ($image_pegawai != null) : ?>
-                                <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/' . $image_pegawai['image']) ?>" alt="">
+                                <?php if ($image_pegawai['image'] == 'default.png') {
+                                    $image_pegawai_detail = '/images/profil/default.jpg';
+                                } else {
+                                    $image_pegawai_detail = '/images/profil/' . $image_pegawai['image'];
+                                } ?>
+                                <img class="img-fluid" style="width: 100%;" src="<?= base_url($image_pegawai_detail) ?>" alt="">
                                 <br>
                                 <label for="username">Username Akun :</label>
                                 <p><?= $image_pegawai['username']; ?></p>
-                        </div>
-                    <?php endif; ?>
+                            <?php endif; ?>
+                    </div>
                     <div class="col-md-5 p-2">
                         <h2 class="font-weight-bold"><?= $detail_pegawai['nama_pegawai']; ?></h2>
                         <hr>
@@ -595,11 +583,11 @@
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
-                    </div>
-                    <hr>
-
                 </div>
-            <?php endif; ?>
+                <hr>
+
+            </div>
+        <?php endif; ?>
         </div>
 
     </div>
@@ -618,6 +606,33 @@
     $(document).ready(function() {
         $("#modal-edit").modal("show");
         $("#modal-detail").modal("show");
+    })
+</script>
+
+
+
+<script type="text/javascript">
+    $('#tabelData').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        'ordering': false,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "pageLength": 30
+
+    });
+
+    $('#tabelData_wrapper').children().first().addClass('d-none')
+    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
+    $('.dataTables_info').addClass('text-sm text-gray py-2')
+    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
+
+    $(document).on('keyup', '#pencarian', function() {
+        $('#tabelData').DataTable().search(
+            $(this).val()
+        ).draw();
     })
 </script>
 

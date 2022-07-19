@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">Username</h2>
@@ -72,7 +72,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
                                     <?php if ($show_data_user != NULL) : ?>
                                         <input type="hidden" name='image' value="<?= $show_data_user['image']; ?>">
                                     <?php endif; ?>
@@ -185,13 +185,12 @@
                                             <strong>Status Akun</strong>
                                             <input type="hidden" name='is_active' value="<?= $show_data_user['is_active']; ?>">
                                             <div>
-                                                <span class="badge badge-success px-2">
-                                                    <?php if ($show_data_user['is_active'] == 'Y') {
-                                                        echo 'Aktif';
-                                                    } else {
-                                                        echo "Tidak Aktif";
-                                                    } ?>
-                                                </span>
+                                                <?php if ($show_data_user['is_active'] == 'Y') : ?>
+                                                    <span class="badge badge-success px-2">active</span>
+                                                <?php else : ?>
+                                                    <span class="badge badge-danger px-2">non-active</span>
+                                                <?php endif; ?>
+
                                             </div>
                                         </div>
                                     <?php endif; ?>
@@ -207,45 +206,40 @@
                         </div>
                         <form class="col-md-6">
                             <div class="input-group">
-                                <select class="form-control mr-2" style="border-radius: 5px;">
-                                    <option selected disabled>- Pilih Role -</option>
-                                    <option>Admin</option>
-                                    <option>User</option>
-                                    <option>Super Admin</option>
+                                <select class="form-control filter mr-2" style="border-radius: 5px;">
+                                    <option selected disabled>- Status Akun -</option>
+                                    <option value="active">Active</option>
+                                    <option value="non-active">Non-active</option>
                                 </select>
                                 <button type="button" data-toggle="modal" data-target="#modal-tambah-user" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i> Tambah</button>
                             </div>
                         </form>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div class="card">
-                                <form class="input-group input-group-md pt-3 px-4" style="width: 250px">
-                                    <input type="search" name="table_search" class="form-control float-right" placeholder="Search" />
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </form>
+                                <div class="input-group input-group-md pt-3 px-4" style="width: 250px">
+                                    <input type="search" id="pencarian" name="table_search" class="form-control float-right" placeholder="Search ..." />
+                                </div>
 
                                 <form action="/showDataUser" method="POST">
                                     <!-- /.card-header -->
-                                    <div class="card-body table-responsive px-4">
-                                        <table class="table table-hover text-nowrap">
+                                    <div class="card-body table-responsive px-0 overflow-hidden">
+                                        <table class="table table-hover text-nowrap" id="tabelData">
                                             <thead>
                                                 <tr>
-                                                    <th>NO.</th>
+                                                    <th class="text-center">NO.</th>
                                                     <th>USERNAME</th>
                                                     <th>STATUS AKUN</th>
                                                     <th>AKSI</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php $no = 1; ?>
                                                 <?php foreach ($list_user as $list) : ?>
 
                                                     <tr>
-                                                        <td><?= $list['id']; ?></td>
+                                                        <td class="text-center"><?= $no++ ?></td>
                                                         <td><?= $list['username']; ?></td>
                                                         <td>
                                                             <?php if ($list['is_active'] == 'Y') {
@@ -256,7 +250,7 @@
                                                             } ?>
                                                         </td>
                                                         <td>
-                                                            <a href="<?= base_url('/showDataUser/' . $list['id']); ?>" type="submit" class="btn btn-info btn-xs tombol pb-0" style="background-color: #E18939; border:none;"><i class="fas fa-plus"></i></a>
+                                                            <a href="<?= base_url('/showDataUser/' . $list['id']); ?>" type="submit" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-pen"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -264,33 +258,6 @@
                                         </table>
                                     </div>
                                 </form>
-                                <!-- /.card-body -->
-                                <div class="card-footer clearfix">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p>Menampilkan 6 data dari 33</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <ul class="pagination pagination-sm m-0 float-right">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">&laquo;</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">1</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">2</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">3</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">&raquo;</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <!-- /.card -->
                         </div>
@@ -346,7 +313,7 @@
 
                 <div class="row">
                     <div class="col-5 pr-4">
-                        <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
+                        <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
                     </div>
                     <div class="col-7 pl-4 border-left">
                         <strong>Nama Lengkap</strong>
@@ -416,9 +383,9 @@
 <!-- /.modal -->
 
 <!-- jQuery -->
-
-<script src="<?= base_url('plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('js/jquery-ui.min.js') ?>"></script>
+<!-- 
+<script src="<?= base_url('/plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('/js/jquery-ui.min.js') ?>"></script> -->
 <!-- AUTOFILL PEGAWAI -->
 <script>
     $(document).ready(function() {
@@ -469,5 +436,37 @@
         })
     })
 </script>
+
+<script type="text/javascript">
+    $('#tabelData').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        'ordering': false,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "pageLength": 10
+
+    });
+
+    $('.filter').on('change', function() {
+        $('#tabelData').DataTable().search(
+            $(this).val()
+        ).draw();
+    });
+
+    $('#tabelData_wrapper').children().first().addClass('d-none')
+    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
+    $('.dataTables_info').addClass('text-sm text-gray py-2')
+    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
+
+    $(document).on('keyup', '#pencarian', function() {
+        $('#tabelData').DataTable().search(
+            $(this).val()
+        ).draw();
+    })
+</script>
+
 
 <?= $this->endSection(); ?>

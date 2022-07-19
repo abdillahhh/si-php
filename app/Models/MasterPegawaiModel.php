@@ -24,7 +24,8 @@ class MasterPegawaiModel extends Model
             ->join('mst_jabatan', 'mst_jabatan.id = mst_pegawai.jabatan_kd')
             ->join('mst_es3', 'mst_es3.kd_es3 = mst_pegawai.es3_kd')
             ->join('mst_es4', 'mst_es4.kd_es4 = mst_pegawai.es4_kd')
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
     public function getDetailPegawaiById($id_pegawai)
@@ -40,13 +41,14 @@ class MasterPegawaiModel extends Model
             ->join('mst_jabatan', 'mst_jabatan.id = mst_pegawai.jabatan_kd')
             ->join('mst_es3', 'mst_es3.kd_es3 = mst_pegawai.es3_kd')
             ->join('mst_es4', 'mst_es4.kd_es4 = mst_pegawai.es4_kd')
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
     public function getAllPegawai()
     {
         return $this
-            ->table('tbl_pegawai')
+            ->table('mst_pegawai')
             ->get()
             ->getResultArray();
     }
@@ -54,9 +56,10 @@ class MasterPegawaiModel extends Model
     public function getPegawaiById($id_pegawai)
     {
         return $this
-            ->table('tbl_pegawai')
+            ->table('mst_pegawai')
             ->where('id', $id_pegawai)
-            ->first();
+            ->get()
+            ->getRowArray();
     }
 
     public function search($keyword)

@@ -48,7 +48,6 @@ class masterLaporanHarian extends BaseController
             'menu' => 'Laporan Harian',
             'subMenu' => 'Daftar Laporan',
             'total' => count($this->masterLaporanHarianModel->getTotalByUser(session('user_id'))),
-            'list_laporan_harian' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->paginate($itemsCount, 'list_laporan_harian'),
             'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
             'pager' => $this->masterLaporanHarianModel->getAllByUser(session('user_id'))->pager,
             'itemsCount' => $itemsCount,

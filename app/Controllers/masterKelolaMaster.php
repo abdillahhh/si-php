@@ -128,7 +128,7 @@ class masterKelolaMaster extends BaseController
 
 
         ];
-       // dd($data);
+        //dd($data);
         return view('kelolaMaster/masterPegawai', $data);
     }
 
@@ -231,6 +231,14 @@ class masterKelolaMaster extends BaseController
 
         $detail_pegawai = $this->masterPegawaiModel->getDetailPegawaiById($id_pegawai);
         $image_pegawai = $this->masterUserModel->getImage($detail_pegawai['nip_lama']);
+        if ($image_pegawai == null) {
+            $image_pegawai = [
+                'image' => 'default.png',
+                'username' => ''
+            ];
+        } else {
+            $image_pegawai = $image_pegawai;
+        }
         $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
         $list_bidang = $this->masterEs3Model->getAllBidang();
         $list_golongan = $this->masterGolonganModel->getAllGolongan();
@@ -263,7 +271,7 @@ class masterKelolaMaster extends BaseController
 
 
         ];
-        // dd($data);
+        //dd($data);
         return view('kelolaMaster/masterPegawai', $data);
     }
 

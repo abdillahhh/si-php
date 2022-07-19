@@ -89,7 +89,7 @@
             <!-- small box -->
             <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
               <div class="inner" style="color: #55415C; padding-left: 15px;">
-                <h3 style="font-size: 70px;">200,00</h3>
+                <h3 style="font-size: 70px;">0</h3>
 
                 <p style="font-weight: bold;">Angka Kredit</p>
               </div>
@@ -479,16 +479,16 @@
   <!-- /.modal -->
 
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="<?= base_url('dist/js/pages/dashboard.js') ?>"></script>
+  <script src="<?= base_url('/dist/js/pages/dashboard.js') ?>"></script>
 
   <!-- fullCalendar 2.2.5 -->
-  <script src="<?= base_url('plugins/moment/moment.min.js') ?>"></script>
-  <script src="<?= base_url('plugins/fullcalendar/main.js') ?>"></script>
-  <script src="<?= base_url('dist/js/pages/dashboard3.js') ?>"></script>
-  <script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
-  <script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/moment/moment.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/fullcalendar/main.js') ?>"></script>
+  <script src="<?= base_url('/dist/js/pages/dashboard3.js') ?>"></script>
+  <script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
   <!-- Toastr -->
-  <script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
   <script>
     $(function() {
       bsCustomFileInput.init();
@@ -786,7 +786,7 @@
     <?php endif; ?>
   </script>
 
-  <script src="<?= base_url('js/tanggal.js') ?>"></script>
+  <script src="<?= base_url('/js/tanggal.js') ?>"></script>
   <script>
     $(document).on('click', '#btn-uncheck', function() {
       $('#hari-ini').val($(this).data('date_click'));
@@ -823,7 +823,7 @@
     });
 
     $(document).ready(function() {
-      console.log()
+
       $('#tabelData_wrapper').children().first().addClass('d-none')
     })
   </script>
