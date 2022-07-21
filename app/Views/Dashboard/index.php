@@ -356,12 +356,17 @@
                 <div class="row w-100">
                   <div class="input-group w-100">
                     <div class="custom-file w-100 position-relative">
-                      <input type="file" class="custom-file-input w-100" name="field_bukti1[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip" required multiple />
+                      <input type="file" class="custom-file-input w-100" name="field_bukti1[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
                       <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                       <p class="file-tip d-none">
-                        jenis file : <br><br>
+                        <strong class="mt-2 d-flex align-items-center">
+                          <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
+                          Jenis file :
+                        </strong> <br>
                         .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
-                        Ukuran File Maks : 200kb
+                        <strong>
+                          Ukuran File Maks : 200kb
+                        </strong>
                       </p>
                     </div>
                   </div>
@@ -546,11 +551,11 @@
         return false;
       };
       var pathFile = this.value;
-      var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.pdf|\.xlsx|\.docx|\.ppt|\.txt|\.rar|\.zip)$/i;
+      var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.pdf|\.xlsx|\.docx|\.ppt|\.txt|\.rar|\.zip|\.csv)$/i;
       if (!ekstensiOk.exec(pathFile)) {
         Toast.fire({
           icon: "warning",
-          title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip",
+          title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv",
         });
         this.value = "";
         return false;
@@ -639,13 +644,18 @@
                                 <div class="custom-file w-100">
                                     <input type="file" class="custom-file-input w-100" name="field_bukti` +
           noBaris +
-          `[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip" required multiple />
+          `[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
                                     <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     <p class="file-tip d-none">
-                                        jenis file : <br><br>
-                                        .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
-                                        Ukuran File Maks : 200kb
-                                    </p>
+                                            <strong class="mt-2 d-flex align-items-center">
+                                                <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
+                                                Jenis file :
+                                            </strong> <br>
+                                            .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
+                                            <strong>
+                                                Ukuran File Maks : 200kb
+                                            </strong>
+                                        </p>
                                 </div>
                             </div>
                         </div>
@@ -673,6 +683,23 @@
       });
     });
   </script>
+
+  <script>
+    $(document).on("mouseover", '.custom-file-input', function() {
+      $(this).next().next().removeClass('d-none')
+    })
+    $(document).on("mouseout", '.custom-file-input', function() {
+      $(this).next().next().addClass('d-none')
+    })
+    $(document).on("mouseover", '.file-list', function() {
+      $(this).next('.file-tip2').removeClass('d-none')
+    })
+    $(document).on("mouseout", '.file-list', function() {
+      $(this).next('.file-tip2').addClass('d-none')
+    })
+  </script>
+
+
   <script>
     $(function() {
       var date = new Date();

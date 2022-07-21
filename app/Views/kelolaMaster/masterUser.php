@@ -72,8 +72,13 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
                                     <?php if ($show_data_user != NULL) : ?>
+                                        <?php if ($show_data_user['image'] === 'default.png') {
+                                            $image_user = '/images/profil/default.jpg';
+                                        } else {
+                                            $image_user = '/images/profil/' . $show_data_user['image'];
+                                        } ?>
+                                        <img class="img-fluid" style="width: 100%;" src="<?= base_url($image_user) ?>" alt="">
                                         <input type="hidden" name='image' value="<?= $show_data_user['image']; ?>">
                                     <?php endif; ?>
                                 </div>
@@ -91,29 +96,38 @@
                                         <?php endif; ?>
                                     </div>
                                     <!-- FORM -->
-                                    <form action="<?= base_url() ?>" method="POST" enctype="multipart/form-data" id="roleForm" class="row d-none">
+                                    <form action="<?= base_url('/updateRoleAktivasi') ?>" method="POST" enctype="multipart/form-data" id="roleForm" class="row d-none">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Role/level</label>
                                                 <div id="roles">
-                                                    <!-- foreach disini -->
+
                                                     <?php if ($show_list_level != NULL) : ?>
                                                         <?php for ($i = 0; $i < count($show_list_level); $i++) : ?>
-                                                            <select name="level_id<?= $i; ?>" class="form-control form-control-sm mr-2 mb-2" style="border-radius: 5px;">
-                                                                <option value="<?= $show_list_level[$i]['level_id']; ?>"><?= $show_list_level[$i]['nama_level']; ?></option>
-                                                                <?php if ($level_tersedia != NULL) : ?>
-                                                                    <?php foreach ($level_tersedia as $tersedia) : ?>
-                                                                        <option value="<?= $tersedia['id']; ?>"><?= $tersedia['nama_level']; ?></option>
-                                                                    <?php endforeach; ?>
-                                                                <?php endif; ?>
-                                                            </select>
+                                                            <div class="row">
+                                                                <div class="col-11">
+                                                                    <select name="level_show[]" class="form-control form-control-sm mr-2 mb-2" style="border-radius: 5px;">
+                                                                        <option value="<?= $show_list_level[$i]['level_id']; ?>"><?= $show_list_level[$i]['nama_level']; ?></option>
+                                                                        <?php if ($level_tersedia != NULL) : ?>
+                                                                            <?php foreach ($level_tersedia as $tersedia) : ?>
+                                                                                <option value="<?= $tersedia['id']; ?>"><?= $tersedia['nama_level']; ?></option>
+                                                                            <?php endforeach; ?>
+                                                                        <?php endif; ?>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-1">
+                                                                    <button type="button" data-toggle="modal" data-target="#modal-hapus-level" data-nama_level="<?= $show_list_level[$i]['nama_level']; ?>" data-id_level="<?= $show_list_level[$i]['id']; ?>" id="btnHapusLevel" class="btn btn-sm text-white" style="background-color: #E18939; border:none;"><i class="fas fa-times"></i></button>
+                                                                </div>
+                                                            </div>
+
                                                         <?php endfor; ?>
                                                     <?php endif; ?>
-                                                    <!-- endforeach -->
+
                                                     <div class="row">
                                                         <div class="col-12 ">
                                                             <div class="float-right">
-                                                                <button type="button" data-toggle="modal" data-target="#modal-tambah-role" class="btn btn-success btn-sm tombol" style="background-color: #3c4b64; border: none;">Tambah Role</button>
+                                                                <button type="button" data-toggle="modal" data-target="#modal-tambah-role" class="btn btn-success btn-sm tombol" data-id style="background-color: #3c4b64; border: none;">Tambah Role</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -122,6 +136,16 @@
                                             </div>
                                             <div class="form-group">
                                                 <?php if ($show_data_user != NULL) : ?>
+                                                    <input type="hidden" name="id_user_show" value="<?= $show_data_user['id']; ?>">
+                                                    <input type="hidden" name="username_show" value="<?= $show_data_user['username']; ?>">
+                                                    <input type="hidden" name="fullname_show" value="<?= $show_data_user['fullname']; ?>">
+                                                    <input type="hidden" name="email_show" value="<?= $show_data_user['email']; ?>">
+                                                    <input type="hidden" name="password_show" value="<?= $show_data_user['password']; ?>">
+                                                    <input type="hidden" name="token_show" value="<?= $show_data_user['token']; ?>">
+                                                    <input type="hidden" name="image_user_show" value="<?= $show_data_user['image']; ?>">
+                                                    <input type="hidden" name="nip_lama_user_show" value="<?= $show_data_user['nip_lama_user']; ?>">
+
+
                                                     <label for="role">Status</label>
                                                     <select name="is_active" class="form-control form-control-sm mr-2" style="border-radius: 5px;">
                                                         <option value="<?php if ($show_data_user['is_active'] == 'Y') {
@@ -154,6 +178,8 @@
 
                                     </form>
                                     <button id="openRole" class="btn btn-info btn-sm tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-pen mr-1"></i> Ubah Data</button>
+                                    <button id="btnReset" type="button" data-toggle="modal" data-target="#modal-reset-password" class="btn btn-success btn-sm tombol" data-id style="background-color: #3c4b64; border: none;">Reset Password</button>
+
                                 </div>
                             </div>
                             <hr>
@@ -162,9 +188,7 @@
                                     <!-- KETERANGAN -->
 
                                     <?php if ($show_data_user != NULL) : ?>
-                                        <input type="hidden" name='id_user' value="<?= $show_data_user['id']; ?>">
-                                        <input type="hidden" name='password' value="<?= $show_data_user['password']; ?>">
-                                        <input type="hidden" name='token' value="<?= $show_data_user['token']; ?>">
+
                                         <div class="col-md-12">
                                             <strong>Nama Lengkap</strong>
                                             <input type="hidden" name='fullname' value="<?= $show_data_user['fullname']; ?>">
@@ -190,7 +214,6 @@
                                                 <?php else : ?>
                                                     <span class="badge badge-danger px-2">non-active</span>
                                                 <?php endif; ?>
-
                                             </div>
                                         </div>
                                     <?php endif; ?>
@@ -207,7 +230,7 @@
                         <form class="col-md-6">
                             <div class="input-group">
                                 <select class="form-control filter mr-2" style="border-radius: 5px;">
-                                    <option selected disabled>- Status Akun -</option>
+                                    <option selected value="">- Status Akun -</option>
                                     <option value="active">Active</option>
                                     <option value="non-active">Non-active</option>
                                 </select>
@@ -270,75 +293,97 @@
 
 <!-- MODAL TAMBAH USER -->
 <div class="modal fade" id="modal-tambah-user">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-dialog modal-xl">
         <form action="<?= base_url('') ?>" method="POST" class="modal-content">
-            <div class="modal-header">
+            <input type="text" class="d-none" name="id_pegawai" id="id_pegawai">
+            <div class="modal-header border-0">
                 <h4 class="modal-title">Tambah User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <label>Pilih Level</label>
-                <div class="d-flex flex-row justify-content-start align-content-center mb-4">
-                    <div class="pilih-level">
-                        <label for="administrator" class="checkbox-level">
-                            <input class="d-none" type="checkbox" name="administrator" id="administrator" checked>
-                            <i class="far fa-check-square"></i>
-                            Administrator
-                        </label>
-                    </div>
-
-                    <div class="pilih-level">
-                        <label for="pegawai" class="checkbox-level active">
-                            <input class="d-none" type="checkbox" name="pegawai" id="pegawai">
-                            <i class="far fa-square"></i>
-                            Pegawai
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="username" class="form-control" placeholder="Username ...">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="XyHwupo01A" disabled>
-                </div>
-                <hr class="mb-5">
-                <div class="form-group">
-                    <label>Cari Pegawai</label>
-                    <input type="text" id="cari_pegawai" class="form-control" placeholder="Search ...">
-                </div>
-
                 <div class="row">
-                    <div class="col-5 pr-4">
-                        <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
+                    <div class="col-lg-6 px-4"><label>Pilih Level</label>
+                        <div class="d-flex flex-wrap">
+                            <?php $no = 0; ?>
+                            <?php if ($level_tersedia != NULL) : ?>
+                                <?php foreach ($level_tersedia as $tersedia) : ?>
+                                    <div class="pilih-level">
+                                        <label for="level<?= $no ?>" class="checkbox-level active">
+                                            <input class="d-none" type="checkbox" name="level" id="level<?= $no ?>">
+                                            <i class="far fa-square"></i>
+                                            <?= $tersedia['nama_level']; ?>
+                                        </label>
+                                    </div>
+                                    <?php $no++ ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Username ...">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label>Fullname</label>
+                            <input type="text" name="fullname" class="form-control" placeholder="Fullname ...">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control" placeholder="Email ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="1 2 3 4 5 6" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Is Active</label>
+                            <select id="is_active" name="is_active" class="form-control mr-2" style="border-radius: 5px;">
+                                <option value="Y">Active</option>
+                                <option value="N">Non-active</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-7 pl-4 border-left">
-                        <strong>Nama Lengkap</strong>
-                        <p class="text-muted">
 
-                        </p>
+                    <div class="col-lg-6 px-4 border-left">
 
-                        <strong>NIP Lama</strong>
-                        <p class="text-muted">
+                        <div class="form-group position-relative">
+                            <label>Cari Pegawai</label>
+                            <input type="text" id="cari_pegawai" class="form-control" placeholder="Search ...">
+                            <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                                <?php if ($list_pegawai != NULL) : ?>
+                                    <?php foreach ($list_pegawai as $pegawai) : ?>
+                                        <option data-id="<?= $pegawai['id'] ?>" data-nip_lama="<?= $pegawai['nip_lama'] ?>" data-nama_pegawai="<?= $pegawai['nama_pegawai'] ?>" class="option-kegiatan border-bottom d-none"><?= $pegawai['nama_pegawai'] ?></option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
 
-                        </p>
+                        <div class="row px-2">
+                            <!-- KETERANGAN -->
+                            <div class="col-md-12 py-2 border rounded">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img class="img-fluid rounded" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <strong>Nama Lengkap</strong>
+                                        <p id="nama_pegawai_tambah" class="text-muted">
+                                            -
+                                        </p>
 
-                        <strong>Email</strong>
-                        <p class="text-muted"></p>
-
-                        <strong>Telepon</strong>
-                        <p class="text-muted">
-
-                        </p>
-
+                                        <strong>NIP Lama</strong>
+                                        <p id="nip_lama_tambah" class="text-muted">
+                                            -
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer justify-content-between border-0">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                 <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
             </div>
@@ -352,7 +397,7 @@
 <!-- MODAL TAMBAH ROLE -->
 <div class="modal fade" style="padding-top: 13%;" id="modal-tambah-role">
     <div class="modal-dialog">
-        <form action="<?= base_url('') ?>" method="POST" class="modal-content">
+        <form action="<?= base_url('/tambahLevelUser') ?>" method="POST" class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Tambah Level</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -361,6 +406,9 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <?php if ($show_data_user != NULL) : ?>
+                        <input type="hidden" name="id_user_role" value="<?= $show_data_user['id']; ?>">
+                    <?php endif; ?>
                     <label>Nama Level</label>
                     <select name="role" class="form-control" style="border-radius: 5px;">
                         <?php if ($level_tersedia != NULL) : ?>
@@ -382,11 +430,129 @@
 </div>
 <!-- /.modal -->
 
-<!-- jQuery -->
-<!-- 
-<script src="<?= base_url('plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('js/jquery-ui.min.js') ?>"></script> -->
-<!-- AUTOFILL PEGAWAI -->
+<!-- MODAL RESET PASSWORD -->
+<div class="modal fade" style="padding-top: 10%;" id="modal-reset-password">
+    <div class="modal-dialog">
+        <form action="<?= base_url('/resetPasswordUser') ?>" method="POST" class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center flex-column">
+                <div class="form-group">
+                    <?php if ($show_data_user != NULL) : ?>
+                        <span class="w-100 d-flex justify-content-center align-items-center mb-4">
+                            <i class="fas fa-exclamation-circle fa-7x text-red"></i>
+                        </span>
+                        <input type="hidden" name="id_user_reset" value="<?= $show_data_user['id']; ?>">
+                        <input type="hidden" name="username_reset" value="<?= $show_data_user['username']; ?>">
+                        <input type="hidden" name="fullname_reset" value="<?= $show_data_user['fullname']; ?>">
+                        <input type="hidden" name="email_reset" value="<?= $show_data_user['email']; ?>">
+                        <input type="hidden" name="token_reset" value="<?= $show_data_user['token']; ?>">
+                        <input type="hidden" name="image_user_reset" value="<?= $show_data_user['image']; ?>">
+                        <input type="hidden" name="nip_lama_user_reset" value="<?= $show_data_user['nip_lama_user']; ?>">
+                        <input type="hidden" name="is_active_reset" value="<?= $show_data_user['is_active']; ?>">
+
+                        <h3 class="justify-content-center align-items-center mb-4 text-center">Reset Password</h3>
+                        <p class="justify-content-center align-items-center text-center">Yakin ingin mereset password <strong><?= $show_data_user['username']; ?>?</strong></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center border-0">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger tombol">Reset</button>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- MODAL HAPUS LEVEL -->
+<div class="modal fade" style="padding-top: 9%;" id="modal-hapus-level">
+    <div class="modal-dialog">
+        <form action="<?= base_url('/hapusLevelUser') ?>" method="POST" class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center flex-column">
+                <div class="form-group">
+                    <?php if ($show_data_user != NULL) : ?>
+                        <span class="w-100 d-flex justify-content-center align-items-center mb-4">
+                            <i class="fas fa-exclamation-circle fa-7x text-red"></i>
+                        </span>
+                        <input type="hidden" id="id_level_hapus" name="id_level_hapus">
+                        <input type="hidden" name="id_user_hapus" value="<?= $show_data_user['id']; ?>">
+                        <h3 class="justify-content-center align-items-center mb-4 text-center">Hapus Level</h3>
+                        <span class="text-center">Yakin ingin menghapus level <strong id="nama_level_hapus"></strong> milik <strong><?= $show_data_user['username']; ?>?</strong></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center border-0">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger tombol">Hapus</button>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<!-- Toastr -->
+<script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
+<script>
+    $(document).ready(function() {
+        <?php if (session()->getFlashdata('pesan')) { ?>
+            Swal.fire({
+                title: "<?= session()->getFlashdata('pesan') ?>",
+                icon: "<?= session()->getFlashdata('icon') ?>",
+                showConfirmButton: true,
+            });
+        <?php } ?>
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('keyup', '#cari_pegawai', function() {
+            $(this).next().removeClass('d-none')
+            for (i = 0; i <= $(this).next().children().length; i++) {
+                if ($(this).next().children().eq(i).text().toLowerCase().match($(this).val().toLowerCase()) !== null) {
+                    $(this).next().children().eq(i).removeClass('d-none')
+                } else {
+                    $(this).next().children().eq(i).addClass('d-none')
+                }
+            }
+        })
+
+        $(document).on('blur', '#cari_pegawai', function() {
+            let textarea = $(this)
+            setTimeout(function() {
+                textarea.next().addClass('d-none')
+            }, 400)
+        })
+
+        $(document).on('click', '.option-kegiatan', function() {
+            $('#id_pegawai').val($(this).data('id'));
+            $('#nama_pegawai_tambah').text($(this).data('nama_pegawai'));
+            $('#nip_lama_tambah').text($(this).data('nip_lama'));
+            $(this).parent().prev().val($(this).text())
+            $(this).parent().addClass('d-none')
+        })
+    })
+</script>
+
+
+
+
 <script>
     $(document).ready(function() {
         $("#cari_pegawai").autocomplete({
@@ -405,6 +571,7 @@
     });
 </script>
 <script>
+    const btnReset = document.querySelector('#btnReset');
     const openRole = document.querySelector('#openRole');
     const cancel = document.querySelector('#cancel');
     const roleForm = document.querySelector('#roleForm');
@@ -413,12 +580,14 @@
     openRole.addEventListener('click', function() {
         roleForm.classList.toggle('d-none');
         openRole.classList.toggle('d-none');
+        btnReset.classList.toggle('d-none');
         oldRole.classList.toggle('d-none');
     })
     cancel.addEventListener('click', function() {
         roleForm.classList.toggle('d-none');
         openRole.classList.toggle('d-none');
         oldRole.classList.toggle('d-none');
+        btnReset.classList.toggle('d-none');
     })
 </script>
 
@@ -465,6 +634,14 @@
         $('#tabelData').DataTable().search(
             $(this).val()
         ).draw();
+    })
+</script>
+
+<script>
+    // Mengambil Data edit dengan menggunakan Jquery
+    $(document).on('click', '#btnHapusLevel', function() {
+        $('#id_level_hapus').val($(this).data('id_level'));
+        $('#nama_level_hapus').text($(this).data('nama_level'));
     })
 </script>
 

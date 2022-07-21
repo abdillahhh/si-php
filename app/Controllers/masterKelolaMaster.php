@@ -48,18 +48,24 @@ class masterKelolaMaster extends BaseController
     public function masterUser()
     {
         $list_user = $this->masterUserModel->getAllUser();
+        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        $level_tersedia = $this->masterUserLevelModel->getAlllevel();
+
+
 
         $data = [
             'title' => 'Master User',
             'menu' => 'Kelola Master',
             'subMenu' => 'Master User',
             'list_user' => $list_user,
+            'list_pegawai' => $list_pegawai,
+            'level_tersedia' => $level_tersedia,
             'show_data_user' => NULL,
             'show_list_level' => NULL,
-            'level_tersedia' => NULL,
             'class_modal_default' => 'col-md-6',
             'class_modal_setup' => 'col-md-6 d-none'
         ];
+
         return view('kelolaMaster/masterUser', $data);
     }
 
@@ -69,12 +75,14 @@ class masterKelolaMaster extends BaseController
         $data_user = $this->masterUserModel->getProfilUser($user_id);
         $list_user_level = $this->masterAksesUserLevelModel->getUserLevel($user_id);
         $level_tersedia = $this->masterUserLevelModel->getAlllevel();
+        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
 
         $data = [
             'title' => 'Master User',
             'menu' => 'Kelola Master',
             'subMenu' => 'Master User',
             'list_user' => $list_user,
+            'list_pegawai' => $list_pegawai,
             'show_data_user' => $data_user,
             'show_list_level' => $list_user_level,
             'level_tersedia' => $level_tersedia,
@@ -82,6 +90,157 @@ class masterKelolaMaster extends BaseController
             'class_modal_setup' => 'col-md-6'
         ];
         return view('kelolaMaster/masterUser', $data);
+    }
+
+    public function updateRoleAktivasi()
+    {
+        $id_user = $this->request->getVar('id_user_show');
+        $username = $this->request->getVar('username_show');
+        $fullname = $this->request->getVar('fullname_show');
+        $email = $this->request->getVar('email_show');
+        $password = $this->request->getVar('password_show');
+        $token = $this->request->getVar('token_show');
+        $image_user = $this->request->getVar('image_user_show');
+        $nip_lama_user = $this->request->getVar('nip_lama_user_show');
+        $is_active = $this->request->getVar('is_active');
+        $level_user = $this->request->getVar('level_show');
+        $list_user_level = $this->masterAksesUserLevelModel->getUserLevel($id_user);
+
+
+        for ($i = 0; $i < count($list_user_level); $i++) {
+            $this->masterAksesUserLevelModel->save([
+                'id' => $list_user_level[$i]['id'],
+                'user_id' => $id_user,
+                'level_id' => $level_user[$i]
+            ]);
+        }
+
+
+        $this->masterUserModel->save([
+            'id' => $id_user,
+            'username' => $username,
+            'fullname' => $fullname,
+            'email' => $email,
+            'password' => $password,
+            'token' => $token,
+            'image' => $image_user,
+            'nip_lama_user' => $nip_lama_user,
+            'is_active' => $is_active,
+        ]);
+
+        if (session('user_id') == $id_user) {
+
+            $list_user_level = $this->masterAksesUserLevelModel->getUserLevel($id_user);
+
+            $data1 = [
+                'log' => TRUE,
+                'user_id' => session('user_id'),
+                'level_id' => session('level_id'),
+                'list_user_level' => $list_user_level,
+                'list_menu'  => session('list_menu'),
+                'list_submenu' => session('list_submenu'),
+                'fullname' => session('fullname'),
+                'data_user' => session('data_user')
+            ];
+            session()->set($data1);
+        }
+
+
+        return redirect()->to('/showDataUser/' . $id_user);
+    }
+
+    public function tambahLevelUser()
+    {
+        $id_user = $this->request->getVar('id_user_role');
+        $level_id = $this->request->getVar('role');
+
+        $this->masterAksesUserLevelModel->save([
+            'user_id' => $id_user,
+            'level_id' => $level_id
+        ]);
+
+
+        if (session('user_id') == $id_user) {
+
+            $list_user_level = $this->masterAksesUserLevelModel->getUserLevel($id_user);
+
+            $data1 = [
+                'log' => TRUE,
+                'user_id' => session('user_id'),
+                'level_id' => session('level_id'),
+                'list_user_level' => $list_user_level,
+                'list_menu'  => session('list_menu'),
+                'list_submenu' => session('list_submenu'),
+                'fullname' => session('fullname'),
+                'data_user' => session('data_user')
+            ];
+            session()->set($data1);
+        }
+        session()->setFlashdata('pesan', 'Tambah Level berhasil');
+        session()->setFlashdata('icon', 'success');
+
+        return redirect()->to('/showDataUser/' . $id_user);
+    }
+
+    public function resetPasswordUser()
+    {
+        $id_user = $this->request->getVar('id_user_reset');
+        $username = $this->request->getVar('username_reset');
+        $fullname = $this->request->getVar('fullname_reset');
+        $email = $this->request->getVar('email_reset');
+        $token = $this->request->getVar('token_reset');
+        $image_user = $this->request->getVar('image_user_reset');
+        $nip_lama_user = $this->request->getVar('nip_lama_user_reset');
+        $is_active = $this->request->getVar('is_active_reset');
+
+        $pass_default =  password_hash('123456', PASSWORD_DEFAULT);
+
+        $this->masterUserModel->save([
+            'id' => $id_user,
+            'username' => $username,
+            'fullname' => $fullname,
+            'email' => $email,
+            'password' => $pass_default,
+            'token' => $token,
+            'image' => $image_user,
+            'nip_lama_user' => $nip_lama_user,
+            'is_active' => $is_active,
+        ]);
+        session()->setFlashdata('pesan', 'Reset password ' . $username . ' berhasil');
+        session()->setFlashdata('icon', 'success');
+
+        return redirect()->to('/showDataUser/' . $id_user);
+    }
+
+    public function hapusLevelUser()
+    {
+        $id_akses_user_level = $this->request->getVar('id_level_hapus');
+        $id_user = $this->request->getVar('id_user_hapus');
+
+
+        $this->masterAksesUserLevelModel->delete($id_akses_user_level);
+
+        if (session('user_id') == $id_user) {
+
+            $list_user_level = $this->masterAksesUserLevelModel->getUserLevel($id_user);
+
+            $data1 = [
+                'log' => TRUE,
+                'user_id' => session('user_id'),
+                'level_id' => session('level_id'),
+                'list_user_level' => $list_user_level,
+                'list_menu'  => session('list_menu'),
+                'list_submenu' => session('list_submenu'),
+                'fullname' => session('fullname'),
+                'data_user' => session('data_user')
+            ];
+            session()->set($data1);
+        }
+
+        session()->setFlashdata('pesan', 'Hapus Level berhasil');
+        session()->setFlashdata('icon', 'success');
+
+        return redirect()->to('/showDataUser/' . $id_user);
     }
 
     public function masterPegawai()
@@ -128,7 +287,7 @@ class masterKelolaMaster extends BaseController
 
 
         ];
-        //dd($data);
+        // dd($data);
         return view('kelolaMaster/masterPegawai', $data);
     }
 

@@ -772,4 +772,15 @@ class masterDashboard extends BaseController
         // dd($data);
         return view('Dashboard/index', $data);
     }
+
+    public function dataPegawai()
+    {
+
+        $data = [
+            'subMenu' => '',
+            'menu' => 'Dashboard',
+            'title' => 'Data Pegawai',
+        ];
+        return view('Dashboard/dataPegawai', $data);
+    }
 }

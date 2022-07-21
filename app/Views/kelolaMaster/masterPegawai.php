@@ -45,8 +45,28 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="input-group input-group-md pt-3 px-4" style="width: 250px">
-                                    <input type="search" id="pencarian" name="keyword" class="form-control float-right" placeholder="Search ..." />
+                                <div class="input-group input-group-md pt-3 px-4">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <input type="search" id="pencarian" name="keyword" class="form-control float-right rounded" placeholder="Search ..." />
+
+                                        </div>
+                                        <div class="col-5">
+                                            <select id="satker" class="form-control tahun" style="border-radius: 5px;">
+                                                <option value="">--PILIH SATKER--</option>
+                                                <?php
+
+                                                use function PHPUnit\Framework\fileExists;
+
+                                                if ($list_satker != null) : ?>
+                                                    <?php foreach ($list_satker as $satker) : ?>
+                                                        <option value="<?= $satker['kd_satker']; ?>">[<?= $satker['kd_satker']; ?>] <?= $satker['satker']; ?></option>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <!-- /.card-header -->
@@ -56,6 +76,7 @@
                                             <tr>
                                                 <th>NO.</th>
                                                 <th>IMAGE</th>
+                                                <th class="d-none">SATKER</th>
                                                 <th>NAMA PEGAWAI</th>
                                                 <th>NIP LAMA</th>
                                                 <th>NIP BARU</th>
@@ -81,12 +102,16 @@
                                                                 <?php foreach ($list_user as $user) : ?>
                                                                     <?php if ($pegawai['nip_lama'] === $user['nip_lama_user']) : ?>
                                                                         <?php $ada_akun = true ?>
-                                                                        <?php if ($user['image'] === 'default.png') {
-                                                                            $image_pegawai_user = '/images/profil/default.jpg';
+                                                                        <?php $src1 =  base_url('/images/profil/' . $user['image']); ?>
+                                                                        <?php $src2 = base_url('/images/profil/default.jpg'); ?>
+
+                                                                        <?php if (file_exists($src1)) {
+                                                                            $src = $src1;
                                                                         } else {
-                                                                            $image_pegawai_user = '/images/profil/' . $user['image'];
+                                                                            $src = $src2;
                                                                         } ?>
-                                                                        <img style="width: 90px;" src="<?= base_url($image_pegawai_user) ?>" alt="">
+
+                                                                        <img style="width: 90px;" src="<?= $src ?>" alt="">
                                                                         <?php break; ?>
                                                                     <?php else : ?>
                                                                         <?php $ada_akun = false; ?>
@@ -97,6 +122,12 @@
                                                                 <img style="width: 90px;" src="<?= base_url('images/profil/default.jpg') ?>" alt="">
                                                             <?php endif; ?>
                                                         </td>
+                                                        <!-- masih optional mungkin untuk ditampilkan -->
+                                                        <?php foreach ($list_satker as $satker) : ?>
+                                                            <?php if ($pegawai['satker_kd'] == $satker['kd_satker']) : ?>
+                                                                <td class="d-none">[<?= $satker['kd_satker']; ?>] <?= $satker['satker']; ?></td>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
                                                         <td><?= $pegawai['nama_pegawai']; ?></td>
                                                         <td><?= $pegawai['nip_lama']; ?></td>
                                                         <td><?= $pegawai['nip_baru']; ?></td>
@@ -470,7 +501,7 @@
             </div>
             <div class="modal-body px-5 py-3">
                 <div class="row">
-                    <div class="col-md-2 text-center border-right">
+                    <div class="col-lg-2 text-center border-right">
                         <?php if ($detail_pegawai != null) : ?>
                             <?php if ($image_pegawai != null) : ?>
                                 <?php if ($image_pegawai['image'] == 'default.png') {
@@ -484,7 +515,7 @@
                                 <p><?= $image_pegawai['username']; ?></p>
                             <?php endif; ?>
                     </div>
-                    <div class="col-md-5 p-2">
+                    <div class="col-lg-5 p-2">
                         <h2 class="font-weight-bold"><?= $detail_pegawai['nama_pegawai']; ?></h2>
                         <hr>
                         <div class="row mb-3" style="background-color: #ebebeb;">
@@ -508,7 +539,7 @@
                         <hr>
 
                         <strong>Jenis Kelamin</strong>
-                        <p class="text-muted"> <?php if ($detail_pegawai['nama_pegawai'] == '1') {
+                        <p class="text-muted"> <?php if ($detail_pegawai['jk'] == '1') {
                                                     echo 'Laki-laki';
                                                 } else {
                                                     echo "perempuan";
@@ -531,7 +562,7 @@
                         <hr>
 
                     </div>
-                    <div class="col-md-5 p-2">
+                    <div class="col-lg-5 p-2">
                         <div class="row mt-4 mb-3" style="background-color: #ebebeb;">
                             <div class="col-12 py-1">
                                 <i>Posisi Jabatan</i>
@@ -630,6 +661,11 @@
     $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
 
     $(document).on('keyup', '#pencarian', function() {
+        $('#tabelData').DataTable().search(
+            $(this).val()
+        ).draw();
+    })
+    $(document).on('change', '#satker', function() {
         $('#tabelData').DataTable().search(
             $(this).val()
         ).draw();

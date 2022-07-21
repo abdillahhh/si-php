@@ -91,8 +91,6 @@ class masterUser extends BaseController
         $image_user_baru = $this->request->getFile('image_user_baru');
         $image_user_lama = $this->request->getVar('image_user_lama');
 
-        d($image_user_baru);
-        d($image_user_lama);
 
         $data_user = session('data_user');
         $nip_lama = $data_user['nip_lama_user'];
@@ -103,12 +101,12 @@ class masterUser extends BaseController
             if ($image_user_baru->getError() == 4) {
                 $nama_image = $image_user_lama;
             } else {
-                $ekstensi = $image_user_baru->getExtension();
-                $nama_image = ($nip_lama . '.' . $ekstensi);
-                $image_user_baru->move('images/profil/', $nama_image);
                 if ($image_user_lama != 'default.png') {
                     unlink('images/profil/' . $image_user_lama);
                 }
+                $ekstensi = $image_user_baru->getExtension();
+                $nama_image = ($nip_lama . '.' . $ekstensi);
+                $image_user_baru->move('images/profil/', $nama_image);
             }
         }
         $this->masterUserModel->save([
@@ -122,6 +120,26 @@ class masterUser extends BaseController
             'nip_lama_user' => $nip_lama_user,
             'is_active' => $is_active,
         ]);
+
+        if (session('user_id') == $id_user) {
+
+            $user = $this->masterUserModel->getUser($username);
+
+            $data1 = [
+                'log' => TRUE,
+                'user_id' => session('user_id'),
+                'level_id' => session('level_id'),
+                'list_user_level' => session('list_user_level'),
+                'list_menu'  => session('list_menu'),
+                'list_submenu' => session('list_submenu'),
+                'fullname' => $user['fullname'],
+                'data_user' => $user
+            ];
+            session()->set($data1);
+        }
+
+        session()->setFlashdata('pesan', 'Update Profile Berhasil');
+        session()->setFlashdata('icon', 'success');
         return redirect()->to('/profile');
     }
 }

@@ -76,6 +76,10 @@ class masterAkses extends BaseController
                     'fullname' => $user['fullname'],
                     'data_user' => $user
                 ];
+            } else {
+                session()->setFlashdata('pesan', 'Akun Tidak Aktif');
+                session()->setFlashdata('icon', 'error');
+                return redirect()->to('/');
             }
 
 
@@ -132,8 +136,7 @@ class masterAkses extends BaseController
         $confirm_pass = $this->request->getVar('confirm_password');
         $user = $this->masterUserModel->getProfilUser($user_id);
         if ($pass_baru == $confirm_pass) {
-            $lower_pass = strtolower($pass_baru);
-            $pass_baru_hash = password_hash($lower_pass, PASSWORD_DEFAULT);
+            $pass_baru_hash = password_hash($pass_baru, PASSWORD_DEFAULT);
 
             $this->masterUserModel->save([
                 'id' => $user['id'],

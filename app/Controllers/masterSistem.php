@@ -343,13 +343,13 @@ class masterSistem extends BaseController
     {
         $dataSubmenu = $this->masterSubmenuModel;
         $totalSubmenu = $this->masterSubmenuModel->getListSubmenu();
-        $itemsCount = 7;
+        $itemsCount = 20;
 
         $data = [
             'title' => 'Kelola Sub Menu',
             'menu' => 'Sistem',
             'total' => count($totalSubmenu),
-            'dataSubmenu' =>  $dataSubmenu->paginate($itemsCount, 'dataSubmenu'),
+            'dataSubmenu' =>  $this->masterSubmenuModel->paginate($itemsCount, 'dataSubmenu'),
             'itemsCount' => $itemsCount,
             'pager' => $dataSubmenu->pager,
             'subMenu' => 'Kelola Submenu',

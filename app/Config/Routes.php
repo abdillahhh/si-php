@@ -46,10 +46,14 @@ $routes->post('/gantiPasswordDefault', 'masterAkses::gantiPasswordDefault');
 $routes->get('/logout', 'masterAkses::logout');
 //Routes Ke views dan controller Dashboard
 $routes->get('/dashboard', 'masterDashboard::index');
+//Routes Ke views dan controller Dashboard Data Pegawai
+$routes->get('/dataPegawai', 'masterDashboard::dataPegawai');
 //routes untuk membuka detail di dashboard
 $routes->get('/showDetailLaporanHarianOnDashboard/(:segment)', 'masterDashboard::showDetailLaporanHarianOnDashboard/$1');
 //Routes Ke views dan controller Dashboard
 $routes->get('/profile', 'masterUser::profile');
+
+
 //routes ke update data user by user
 $routes->post('/updateProfileByUser', 'masterUser::updateProfileByUser');
 //Routes ke ganti password user
@@ -79,6 +83,15 @@ $routes->get('/masterKegiatan', 'masterKelolaMaster::masterKegiatan');
 $routes->get('/masterUser/get_autofillPegawai', 'masterKelolaMaster::get_autofillPegawai');
 //Routes untuk menampilkan data berdasarkan data user yang dipilih
 $routes->get('/showDataUser/(:segment)', 'masterKelolaMaster::showDataUser/$1');
+//routes update level dan aktivasi pada user
+$routes->post('/updateRoleAktivasi', 'masterKelolaMaster::updateRoleAktivasi');
+//routes update level dan tambah level user
+$routes->post('/tambahLevelUser', 'masterKelolaMaster::tambahLevelUser');
+//routes untuk reset password user
+$routes->post('/resetPasswordUser', 'masterKelolaMaster::resetPasswordUser');
+//routes untuk hapus level user
+$routes->post('/hapusLevelUser', 'masterKelolaMaster::hapusLevelUser');
+
 //Routes Ke views dan controller Kelola Master Tambah
 $routes->get('/tambahUser', 'masterKelolaMaster::tambahUser');
 //rotes ke save data pegawai baru

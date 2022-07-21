@@ -273,7 +273,7 @@
                             <div class="row w-100">
                                 <div class="input-group w-100">
                                     <div class="custom-file w-100 position-relative">
-                                        <input type="file" class="custom-file-input w-100" name="field_bukti1[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip" required multiple />
+                                        <input type="file" class="custom-file-input w-100" name="field_bukti1[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         <p class="file-tip d-none">
                                             <strong class="mt-2 d-flex align-items-center">
@@ -403,7 +403,7 @@
                                     <div class="row"><strong>Hasil Kegiatan</strong></div>
                                     <div class="row px-1 w-100">
                                         <div class="form-group  w-100 position-relative">
-                                            <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
+                                            <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required><?= $list_hasil[$i]; ?></textarea>
                                             <!-- <textarea id="kegiatan-input" class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea> -->
                                             <!-- <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
                                         <option class="option-kegiatan border-bottom d-none">Option 1</option>
@@ -446,7 +446,7 @@
                                                             <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
                                                             Jenis file :
                                                         </strong> <br>
-                                                        .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
+                                                        .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv <br><br>
                                                         <strong>
                                                             Ukuran File Maks : 200kb
                                                         </strong>
@@ -688,11 +688,11 @@
             return false;
         };
         var pathFile = this.value;
-        var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.pdf|\.xlsx|\.docx|\.ppt|\.txt|\.rar|\.zip)$/i;
+        var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.pdf|\.xlsx|\.docx|\.ppt|\.txt|\.rar|\.zip|\.csv)$/i;
         if (!ekstensiOk.exec(pathFile)) {
             Toast.fire({
                 icon: "warning",
-                title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip",
+                title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv",
             });
             this.value = "";
             return false;
@@ -783,14 +783,14 @@
                                 <div class="custom-file w-100">
                                     <input type="file" class="custom-file-input w-100" name="field_bukti` +
                 noBaris +
-                `[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip" required multiple />
+                `[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
                                     <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     <p class="file-tip d-none">
                                     <strong class="mt-2 d-flex align-items-center">
                                                 <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
                                                 Jenis file :
                                             </strong> <br>
-                                            .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
+                                            .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv<br><br>
                                             <strong>
                                                 Ukuran File Maks : 200kb
                                             </strong>
