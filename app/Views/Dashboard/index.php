@@ -104,18 +104,96 @@
       </div>
     </section>
 
+
+
     <!-- CALENDAR -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-7">
-            <div class="mb-3">
-              <div class="card">
-                <!-- THE CALENDAR -->
-                <div id="calendar"></div>
+            <?php if (session('level_id') == 1) : ?>
+              <div class="row <?= $div_card; ?>">
+                <div class="col-md-12">
+                  <div class="card p-3">
+                    <small>Menampilkan Kegiatan Milik</small>
+                    <?php if ($user_dipilih != null) : ?>
+                      <h5 class="mt-2"> <img style="width: 100px;" class="mr-3" src="<?= base_url('images/profil/' . $user_dipilih['image']) ?>" alt=""><strong><?= $user_dipilih['nama_pegawai']; ?></strong></h5>
+                    <?php endif; ?>
+                    <?php if ($user_dipilih == null) : ?>
+                      <strong>Pegawai Belum Memiliki Akun</strong>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </div>
+            <?php endif; ?>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <!-- THE CALENDAR -->
+                  <div id="calendar"></div>
+                </div>
               </div>
             </div>
           </div>
+          <?php if (session('level_id') == 1) : ?>
+            <div class="col-md-5">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h4>Daftar Pegawai</h4>
+                </div>
+                <form class="col-md-6">
+                  <div class="input-group">
+                    <!-- <select class="form-control filter mr-2" style="border-radius: 5px;">
+                      <option selected value="">- Status Akun -</option>
+                      <option value="active">Active</option>
+                      <option value="non-active">Non-active</option>
+                    </select> -->
+                  </div>
+                </form>
+              </div>
+              <div class="card">
+                <div class="input-group input-group-md pt-3 px-4" style="width: 250px">
+                  <input type="search" id="pencarian4" name="table_search" class="form-control float-right" placeholder="Search ..." />
+                </div>
+
+                <form action="/showDataUser" method="POST">
+                  <!-- /.card-header -->
+                  <div class="card-body table-responsive px-0 overflow-hidden">
+                    <table class="table table-hover text-nowrap" id="tabelData4">
+                      <thead>
+                        <tr>
+                          <th class="text-center">NO.</th>
+                          <th>NAMA</th>
+                          <th>BULAN INI</th>
+                          <!-- <th>MINGGU INI</th> -->
+                          <th>AKSI</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php $no_ke = 1; ?>
+                        <?php if ($list_pegawai != null) : ?>
+                          <?php foreach ($list_pegawai as $pegawai) : ?>
+                            <tr>
+                              <td class="text-center"><?= $no_ke; ?></td>
+                              <td><?= $pegawai['nama_pegawai']; ?></td>
+                              <td>
+                                <?= $jml_perbulan_pegawai[($no_ke - 1)]; ?>
+                              </td>
+                              <?php $no_ke++ ?>
+                              <!-- <td>25</td> -->
+                              <td>
+                                <a href="<?= base_url('/showKegiatanPegawai/' . $pegawai['nip_lama']); ?>" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-search-plus"></i></a>
+                              </td>
+                            </tr>
+                          <?php endforeach; ?>
+                        <?php endif; ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </form>
+              </div>
+            </div>
+          <?php endif; ?>
           <!-- CHART -->
 
           <?php if (allowChart(session('level_id'), 1)) : ?>
@@ -146,15 +224,35 @@
               </div>
             </div>
           <?php endif; ?>
-
-
-
         </div>
-        <!-- /.row -->
+
+        <?php if (session('level_id') == 1) : ?>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="row mb-3">
+                <div class="col-md-9">
+                  <hr>
+                </div>
+                <div class="col-md-3 text-right">
+                  <h4>Report Laporan Perminggu</h4>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <!-- <div class="card" id="calendarWeek"> -->
+
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+    <?php endif; ?>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
   </div>
 
 
@@ -260,143 +358,166 @@
     <!-- /.modal-dialog -->
   </div>
 
-
+  <?php if ($list_full_laporan_harian != null) : ?>
+    <?php foreach ($list_full_laporan_harian as $list) : ?>
+      <?php $laporan = $list['uraian_kegiatan']; ?>
+      <?php $data = json_decode($laporan); ?>
+      <?php $list_uraian = $data->uraian; ?>
+      <?php foreach ($list_uraian as $uraian) : ?>
+        <?php $list_uraian_unik[] = $uraian; ?>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
+  <?php endif; ?>
 
   <!-- MODAL TAMBAH KEGIATAN -->
-  <div class="modal fade" id="modal-tambah">
-    <div class="modal-dialog modal-xl ">
-      <form action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content" enctype="multipart/form-data">
-        <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
-        <div class="modal-header">
-          <h4 class="modal-title">Tambah Laporan Kegiatan</h4>
-          <button id="btn-close-modal-tambah" type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body px-5 py-3">
-          <div class="row">
-            <div class="col-12 p-0">
-              <div class="form-group">
-                <p>tanggal Kegiatan
-                </p>
-                <h2 class="mb-3" id="tanggal-tambah"></h2>
-                <input type="date" class="form-control d-none" name="tanggal" id="hari-ini" class="form-control">
+  <?php if (session('level_id') == 7) : ?>
+    <div class="modal fade" id="modal-tambah">
+      <div class="modal-dialog modal-xl ">
+        <form action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content" enctype="multipart/form-data">
+          <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
+          <div class="modal-header">
+            <h4 class="modal-title">Tambah Laporan Kegiatan</h4>
+            <button id="btn-close-modal-tambah" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body px-5 py-3">
+            <div class="row">
+              <div class="col-12 p-0">
+                <div class="form-group">
+                  <p>tanggal Kegiatan
+                  </p>
+                  <h2 class="mb-3" id="tanggal-tambah"></h2>
+                  <input type="date" class="form-control d-none" name="tanggal" id="hari-ini" class="form-control">
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- lama -->
-          <div id="lama">
-            <div class="row rounded position-relative pt-2 kegiatan-baru ">
-              <div class="col-xl-1 baris-kegiatan">
-                <div class="row"><strong>NO</strong></div>
-                <div class="row">1</div>
+            <!-- lama -->
+            <div class="row mb-2">
+              <div class="col-5">
+                <hr>
               </div>
-              <div class="col-xl-4 baris-kegiatan">
-                <div class="row"><strong>Uraian Kegiatan</strong></div>
-                <?php if ($list_full_laporan_harian != null) : ?>
-                  <?php foreach ($list_full_laporan_harian as $list) : ?>
-                    <?php $laporan = $list['uraian_kegiatan']; ?>
-                    <?php $data = json_decode($laporan); ?>
-                    <?php $list_uraian = $data->uraian; ?>
-                    <?php foreach ($list_uraian as $uraian) : ?>
-                      <?php $list_uraian_unik[] = $uraian; ?>
-                    <?php endforeach; ?>
-                  <?php endforeach; ?>
-                <?php endif; ?>
-                <div class="row px-1  w-100">
-                  <div class="form-group w-100 position-relative">
-                    <textarea id="kegiatan-input" class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
-                    <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
-                      <?php if ($list_full_laporan_harian != null) : ?>
-                        <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?>
-                          <option class="option-kegiatan border-bottom d-none"><?= $uraian; ?></option>
-                        <?php endforeach; ?>
-                      <?php endif; ?>
+              <div class="col-2 text-center">
+                <em><strong>Tugas Utama</strong></em>
+              </div>
+              <div class="col-5">
+                <hr>
+              </div>
+            </div>
+            <div id="lama">
+              <div class="row rounded position-relative pt-2 kegiatan-baru ">
+                <div class="col-xl-1 baris-kegiatan">
+                  <div class="row"><strong>NO</strong></div>
+                  <div class="row">1</div>
+                </div>
+                <div class="col-xl-4 baris-kegiatan">
+                  <div class="row"><strong>Uraian Kegiatan</strong></div>
+
+                  <div class="row px-1  w-100">
+                    <div class="form-group w-100 position-relative">
+                      <textarea id="kegiatan-input" class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
+                      <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                        <?php if ($list_full_laporan_harian != null) : ?>
+                          <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?>
+                            <option class="option-kegiatan border-bottom d-none"><?= $uraian; ?></option>
+                          <?php endforeach; ?>
+                        <?php endif; ?>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-xl-1 baris-kegiatan">
-                <div class="row"><strong>Jumlah</strong></div>
-                <div class="row px-1  w-100">
-                  <div class="form-group  w-100">
-                    <input type="number" class="form-control  w-100" value="1" name="field_jumlah[]" min="1" required>
+                <div class="col-xl-1 baris-kegiatan">
+                  <div class="row"><strong>Jumlah</strong></div>
+                  <div class="row px-1  w-100">
+                    <div class="form-group  w-100">
+                      <input type="number" class="form-control  w-100" value="1" name="field_jumlah[]" min="1" required>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-xl-2 baris-kegiatan">
-                <div class="row"><strong>Satuan</strong></div>
-                <div class="row px-1  w-100">
-                  <div class="input-group  w-100">
-                    <select class=" form-control  w-100" name="field_satuan[]" required>
-                      <?php if ($list_satuan != NULL) : ?>
-                        <?php foreach ($list_satuan as $satuan) : ?>
-                          <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?></option>
-                        <?php endforeach; ?>
-                      <?php endif; ?>
-                    </select>
+                <div class="col-xl-2 baris-kegiatan">
+                  <div class="row"><strong>Satuan</strong></div>
+                  <div class="row px-1  w-100">
+                    <div class="input-group  w-100">
+                      <select class=" form-control  w-100" name="field_satuan[]" required>
+                        <?php if ($list_satuan != NULL) : ?>
+                          <?php foreach ($list_satuan as $satuan) : ?>
+                            <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?></option>
+                          <?php endforeach; ?>
+                        <?php endif; ?>
+                      </select>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-xl-2 baris-kegiatan">
-                <div class="row"><strong>Hasil Kegiatan</strong></div>
-                <div class="row px-1  w-100">
-                  <div class="form-group  w-100 position-relative">
-                    <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
-                    <!-- <textarea id="kegiatan-input" class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea> -->
-                    <!-- <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
+                <div class="col-xl-2 baris-kegiatan">
+                  <div class="row"><strong>Hasil Kegiatan</strong></div>
+                  <div class="row px-1  w-100">
+                    <div class="form-group  w-100 position-relative">
+                      <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
+                      <!-- <textarea id="kegiatan-input" class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea> -->
+                      <!-- <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
                                         <option class="option-kegiatan border-bottom d-none">Option 1</option>
                                     </div> -->
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-xl-2 baris-kegiatan mb-2">
-                <div class="row"><strong>Bukti Dukung</strong></div>
-                <div class="row w-100">
-                  <div class="input-group w-100">
-                    <div class="custom-file w-100 position-relative">
-                      <input type="file" class="custom-file-input w-100" name="field_bukti1[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
-                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      <p class="file-tip d-none">
-                        <strong class="mt-2 d-flex align-items-center">
-                          <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
-                          Jenis file :
-                        </strong> <br>
-                        .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
-                        <strong>
-                          Ukuran File Maks : 200kb
-                        </strong>
-                      </p>
+                <div class="col-xl-2 baris-kegiatan mb-2">
+                  <div class="row"><strong>Bukti Dukung</strong></div>
+                  <div class="row w-100">
+                    <div class="input-group w-100">
+                      <div class="custom-file w-100 position-relative">
+                        <input type="file" class="custom-file-input w-100" name="field_bukti1[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <p class="file-tip d-none">
+                          <strong class="mt-2 d-flex align-items-center">
+                            <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
+                            Jenis file :
+                          </strong> <br>
+                          .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
+                          <strong>
+                            Ukuran File Maks : 200kb
+                          </strong>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- baru -->
-          <div id="baru">
+            <!-- baru -->
+            <div class="row mt-5">
+              <div class="col-5">
+                <hr>
+              </div>
+              <div class="col-2 text-center">
+                <em><strong>Tugas Tambahan</strong></em>
+              </div>
+              <div class="col-5">
+                <hr>
+              </div>
+            </div>
+            <div id="baru">
 
-          </div>
-          <!-- tombol -->
-          <div class="row ">
-            <div class="col-12 py-3 px-0">
-              <button id="tambah-baris" type="button" class="btn btn-info w-100">
-                <i class="fas fa-plus"></i> Tambah
-              </button>
+            </div>
+            <!-- tombol -->
+            <div class="row ">
+              <div class="col-12 py-3 px-0">
+                <button id="tambah-baris" type="button" class="btn btn-default w-100 font-weight-bold">
+                  <i class="fas fa-plus mr-2"></i>Tambah
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer justify-content-between">
-          <button data-dismiss="modal" type="button" class="btn btn-default">Tutup</button>
-          <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
-        </div>
-      </form>
-      <!-- /.modal-content -->
+          <div class="modal-footer justify-content-between">
+            <button data-dismiss="modal" type="button" class="btn btn-default">Tutup</button>
+            <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+          </div>
+        </form>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-  </div>
-
+  <?php endif; ?>
   <!-- MODAL DETAIL -->
   <div class="modal fade" id="<?= $modal_detail; ?>" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -447,9 +568,16 @@
                           <?php $list_jumlah = $data->jumlah; ?>
                           <?= $list_jumlah[$i]; ?>
                         </td>
-                        <td>
-                          <?php $list_satuan2 = $data->satuan; ?>
-                          <?= $satuan['nama_satuan']; ?>
+                        <?php $list_satuan2 = $data->satuan; ?>
+                        <td> <?php if ($list_satuan != NULL) : ?>
+                            <?php foreach ($list_satuan as $satuan) : ?>
+                              <?php if ($satuan['nama_satuan'] == $list_satuan2[$i]) : ?>
+                                <div class="p-2 mb-1 text-center rounded-sm card-laporan">
+                                  <?= $satuan['nama_satuan']; ?>
+                                </div>
+                              <?php endif; ?>
+                            <?php endforeach; ?>
+                          <?php endif; ?>
                         </td>
                         <td>
                           <?php $list_hasil = $data->hasil; ?>
@@ -483,8 +611,7 @@
 
   <!-- /.modal -->
 
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="<?= base_url('dist/js/pages/dashboard.js') ?>"></script>
+
 
   <!-- fullCalendar 2.2.5 -->
   <script src="<?= base_url('plugins/moment/moment.min.js') ?>"></script>
@@ -708,12 +835,37 @@
         y = date.getFullYear();
 
       var Calendar = FullCalendar.Calendar;
+      var calendarEl = document.getElementById('calendarWeek');
+      var calendar = new Calendar(calendarEl, {
+        displayEventTime: false,
+        initialView: 'timeGridWeek',
+        hiddenDays: [0, 6],
+        headerToolbar: {
+          left: 'prev,next today',
+          right: 'title',
+        },
+        themeSystem: 'bootstrap',
+        events: '',
+        editable: false,
+        droppable: false,
+      });
+      calendar.render();
+    });
+
+
+
+    $(function() {
+      var date = new Date();
+      var d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+
+      var Calendar = FullCalendar.Calendar;
       var calendarEl = document.getElementById('calendar');
       var calendar = new Calendar(calendarEl, {
         headerToolbar: {
           left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          right: 'title'
         },
         themeSystem: 'bootstrap',
         events: '',
@@ -727,90 +879,88 @@
     $('#btn-list-laporan').click(function() {
       $('#modal-list-laporan').modal('show');
     })
-    <?php if (session('level_id') == 7) : ?>
-      var check = <?= $events ?>;
 
-      const start = new Date("2022-07-01");
-      const end = new Date();
-      let uncheck = []
-      let j = 0
+    var check = <?= $events ?>;
 
-      for (var loop = new Date(start); loop <= end; loop.setDate(loop.getDate() + 1)) {
-        uncheck[j] = loop.toISOString().slice(0, 10)
-        j++
+    const start = new Date("<?= $tanggal_mulai; ?>");
+    const end = new Date();
+    let uncheck = []
+    let j = 0
+
+    for (var loop = new Date(start); loop <= end; loop.setDate(loop.getDate() + 1)) {
+      uncheck[j] = loop.toISOString().slice(0, 10)
+      j++
+    }
+
+    for (i = 0; i < check.length; i++) {
+      for (j = 0; j < uncheck.length; j++) {
+        if (check[i]['tgl'] == uncheck[j]) {
+          uncheck[j] = ''
+        }
       }
+    }
 
+    function appendIconKalender() {
       for (i = 0; i < check.length; i++) {
-        for (j = 0; j < uncheck.length; j++) {
-          if (check[i]['tgl'] == uncheck[j]) {
-            uncheck[j] = ''
-          }
-        }
-      }
-
-      function appendIconKalender() {
-        for (i = 0; i < check.length; i++) {
-          $('.fc-daygrid-day').each(function() {
-            if ($(this).data('date') == check[i]['tgl']) {
-              $(this).find('.fc-daygrid-day-events').addClass('d-flex justify-content-center')
-              $(this).find('.fc-daygrid-day-events').append(`<a href="` + check[i]['link'] + `" class="iconKalender"><i class="fas fa-check-circle fa-2x text-green"></i></a>`)
-            }
-          })
-        }
-      }
-
-      function appendIconKalenderUncheck() {
-        for (i = 0; i < uncheck.length; i++) {
-          $('.fc-daygrid-day').each(function() {
-            if ($(this).data('date') == uncheck[i]) {
-              $(this).find('.fc-daygrid-day-events').addClass('d-flex justify-content-center')
-              $(this).find('.fc-daygrid-day-events').append(`<a href="" id="btn-uncheck" data-toggle="modal" data-target="#modal-tambah" data-date_click="` + $(this).data('date') +
-                `" class="iconKalender"><i class="fas fa-exclamation-circle fa-2x text-red"></i></a>`)
-            }
-          })
-        }
-      }
-
-
-
-      $(document).ready(function() {
-        appendIconKalender();
-        appendIconKalenderUncheck();
-        disableBPH()
-        // 
-        $('.fc-prev-button').click(function() {
-          hapusAppend()
-          appendIconKalender()
-          appendIconKalenderUncheck()
-          disableBPH()
-        })
-        $('.fc-next-button').click(function() {
-          hapusAppend();
-          appendIconKalender()
-          appendIconKalenderUncheck()
-          disableBPH()
-        })
-        $('.fc-today-button').click(function() {
-          hapusAppend();
-
-          appendIconKalender()
-          appendIconKalenderUncheck()
-          disableBPH()
-        })
-      })
-
-      // disable bulan pekan hari
-      function disableBPH() {
-        $('.fc-header-toolbar div:last-child').remove()
-      }
-
-      function hapusAppend() {
         $('.fc-daygrid-day').each(function() {
-          $(this).find('.iconKalender').remove()
+          if ($(this).data('date') == check[i]['tgl']) {
+            $(this).find('.fc-daygrid-day-events').addClass('d-flex justify-content-center')
+            $(this).find('.fc-daygrid-day-events').append(`<a href="` + check[i]['link'] + `" class="iconKalender"><i class="fas fa-check-circle fa-2x text-green"></i></a>`)
+          }
         })
       }
+    }
 
-    <?php endif; ?>
+    function appendIconKalenderUncheck() {
+      for (i = 0; i < uncheck.length; i++) {
+        $('.fc-daygrid-day').each(function() {
+          if ($(this).data('date') == uncheck[i]) {
+            $(this).find('.fc-daygrid-day-events').addClass('d-flex justify-content-center')
+            $(this).find('.fc-daygrid-day-events').append(`<a href="" id="btn-uncheck" data-toggle="modal" data-target="#modal-tambah" data-date_click="` + $(this).data('date') +
+              `" class="iconKalender"><i class="fas fa-exclamation-circle fa-2x text-red"></i></a>`)
+          }
+        })
+      }
+    }
+
+
+
+    $(document).ready(function() {
+      appendIconKalender();
+      appendIconKalenderUncheck();
+
+      // 
+      $('.fc-prev-button').click(function() {
+        hapusAppend()
+        appendIconKalender()
+        appendIconKalenderUncheck()
+
+      })
+      $('.fc-next-button').click(function() {
+        hapusAppend();
+        appendIconKalender()
+        appendIconKalenderUncheck()
+
+      })
+      $('.fc-today-button').click(function() {
+        hapusAppend();
+
+        appendIconKalender()
+        appendIconKalenderUncheck()
+
+      })
+    })
+
+    // disable bulan pekan hari
+    // function disableBPH() {
+    //   $('.fc-header-toolbar div:last-child').remove()
+    // }
+
+    function hapusAppend() {
+      $('.fc-daygrid-day').each(function() {
+        $(this).find('.iconKalender').remove()
+      })
+    }
   </script>
 
   <script src="<?= base_url('js/tanggal.js') ?>"></script>
@@ -920,6 +1070,31 @@
         },
       });
     });
+  </script>
+
+  <script type="text/javascript">
+    $('#tabelData4').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      'ordering': false,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "pageLength": 15
+
+    });
+
+    $('#tabelData4_wrapper').children().first().addClass('d-none')
+    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
+    $('.dataTables_info').addClass('text-sm text-gray py-2')
+    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
+
+    $(document).on('keyup', '#pencarian4', function() {
+      $('#tabelData4').DataTable().search(
+        $(this).val()
+      ).draw();
+    })
   </script>
 
   </script <?= $this->endSection(); ?> <?php endif; ?>

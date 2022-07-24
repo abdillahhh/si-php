@@ -53,6 +53,16 @@ class MasterPegawaiModel extends Model
             ->getResultArray();
     }
 
+    public function getAllPegawaiBySatker($satker_kd)
+    {
+        return $this
+            ->table('mst_pegawai')
+            ->where('satker_kd', $satker_kd)
+            ->get()
+            ->getResultArray();
+    }
+
+
     public function getPegawaiById($id_pegawai)
     {
         return $this
@@ -61,6 +71,18 @@ class MasterPegawaiModel extends Model
             ->get()
             ->getRowArray();
     }
+
+    public function getNipLama($id_pegawai)
+    {
+        return $this
+            ->table('mst_pegawai')
+            ->select('nip_lama')
+            ->where('id', $id_pegawai)
+            ->get()
+            ->getRowArray();
+    }
+
+
 
     public function search($keyword)
     {

@@ -68,7 +68,8 @@
                     </div>
                 </div>
                 <div class="<?= $class_modal_setup; ?>">
-                    <div class="card">
+                    <div class="card position-relative">
+                        <a href="<?= base_url('/masterUser') ?>" class="delete-kegiatan"><i class="fas fa-times"></i></a>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
@@ -294,7 +295,7 @@
 <!-- MODAL TAMBAH USER -->
 <div class="modal fade" id="modal-tambah-user">
     <div class="modal-dialog modal-xl">
-        <form action="<?= base_url('') ?>" method="POST" class="modal-content">
+        <form action="<?= base_url('/tambahUser') ?>" method="POST" class="modal-content">
             <input type="text" class="d-none" name="id_pegawai" id="id_pegawai">
             <div class="modal-header border-0">
                 <h4 class="modal-title">Tambah User</h4>
@@ -306,39 +307,63 @@
                 <div class="row">
                     <div class="col-lg-6 px-4"><label>Pilih Level</label>
                         <div class="d-flex flex-wrap">
+                            <div class="pilih-level">
+                                <label for="level6" class="checkbox-level">
+                                    <i class="far fa-check-square"></i>
+                                    Staf/ Pegawai
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <hr>
+                            </div>
+                            <div class="col-4 text-center text-gray opsional">
+                                <small>
+                                    <em>Level Tambahan</em>
+                                </small>
+                            </div>
+                            <div class="col-4">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap">
                             <?php $no = 0; ?>
                             <?php if ($level_tersedia != NULL) : ?>
                                 <?php foreach ($level_tersedia as $tersedia) : ?>
-                                    <div class="pilih-level">
+
+                                    <div class="pilih-level <?php if ($tersedia['nama_level'] == 'Staf/ Pegawai') : ?>d-none<?php endif; ?>">
                                         <label for="level<?= $no ?>" class="checkbox-level active">
-                                            <input class="d-none" type="checkbox" name="level" id="level<?= $no ?>">
+                                            <input class="d-none" type="checkbox" name="level_pick<?= $no ?>" id="level<?= $no ?>" <?php if ($tersedia['nama_level'] == 'Staf/ Pegawai') : ?>checked<?php endif; ?>>
                                             <i class="far fa-square"></i>
                                             <?= $tersedia['nama_level']; ?>
                                         </label>
                                     </div>
+
                                     <?php $no++ ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
                         <div class="form-group mt-3">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username ...">
+                            <input type="text" name="username_tambah" class="form-control" placeholder="Username ...">
                         </div>
                         <div class="form-group mt-3">
                             <label>Fullname</label>
-                            <input type="text" name="fullname" class="form-control" placeholder="Fullname ...">
+                            <input type="text" name="fullname_tambah" class="form-control" placeholder="Fullname ...">
                         </div>
                         <div class="form-group mt-3">
                             <label>Email</label>
-                            <input type="text" name="email" class="form-control" placeholder="Email ...">
+                            <input type="text" name="email_tambah" class="form-control" placeholder="Email ...">
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="1 2 3 4 5 6" disabled>
+                            <input type="password" name="password_tambah" class="form-control" placeholder="123456" disabled>
                         </div>
                         <div class="form-group">
                             <label>Is Active</label>
-                            <select id="is_active" name="is_active" class="form-control mr-2" style="border-radius: 5px;">
+                            <select id="is_active" name="is_active_tambah" class="form-control mr-2" style="border-radius: 5px;">
                                 <option value="Y">Active</option>
                                 <option value="N">Non-active</option>
                             </select>
@@ -363,9 +388,7 @@
                             <!-- KETERANGAN -->
                             <div class="col-md-12 py-2 border rounded">
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        <img class="img-fluid rounded" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>">
-                                    </div>
+
                                     <div class="col-sm-8">
                                         <strong>Nama Lengkap</strong>
                                         <p id="nama_pegawai_tambah" class="text-muted">

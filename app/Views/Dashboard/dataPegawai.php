@@ -29,11 +29,14 @@
                     <!-- small box -->
                     <div class="small-box  bg-white" style="border: 1px solid gray; padding: 0;">
                         <div class="inner" style="color: #55415C; padding-left: 15px;">
-                            <h3 style="font-size: 70px;">33</h3>
-                            <p style="font-weight: bold;">Jumlah Laporan</p>
+                            <h3 style="font-size: 70px;"><?= $total_pegawai; ?></h3>
+                            <p style="font-weight: bold;">Total Pegawai</p>
                         </div>
-                        <a href="" class="selanjutnya">
+                        <!-- <a href="" class="selanjutnya">
                             <p style="margin:0;">More info</p> <i class="fas fa-arrow-circle-down"></i>
+                        </a> -->
+                        <a href="#" class="selanjutnya">
+                            <p style="margin:0;">&nbsp;</p>
                         </a>
                     </div>
                 </div>
@@ -43,12 +46,15 @@
                     <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
                         <div class="inner" style="color: #55415C; padding-left: 15px;">
 
-                            <h3 style="font-size: 70px;">13</h3>
+                            <h3 style="font-size: 70px;"><?= $total_tb; ?></h3>
 
-                            <p style="font-weight: bold;">Jumlah Kegiatan</p>
+                            <p style="font-weight: bold;">Pegawai Tugas Belajar</p>
                         </div>
-                        <a href="#" data-toggle="modal" data-target="#modal-list-laporan" class="selanjutnya">
+                        <!-- <a href="#" data-toggle="modal" data-target="#modal-list-laporan" class="selanjutnya">
                             <p style="margin:0;">More info</p> <i class="fas fa-arrow-circle-down"></i>
+                        </a> -->
+                        <a href="#" class="selanjutnya">
+                            <p style="margin:0;">&nbsp;</p>
                         </a>
                     </div>
                 </div>
@@ -57,9 +63,9 @@
                     <!-- small box -->
                     <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
                         <div class="inner" style="color: #55415C; padding-left: 15px;">
-                            <h3 style="font-size: 70px;">12</h3>
+                            <h3 style="font-size: 70px;"><?= $total_pegawai_aktif; ?></h3>
 
-                            <p style="font-weight: bold;">Jumlah User</p>
+                            <p style="font-weight: bold;">Jumlah Pegawai Aktif</p>
                         </div>
                         <a href="#" class="selanjutnya">
                             <p style="margin:0;">&nbsp;</p>
@@ -72,9 +78,9 @@
                     <!-- small box -->
                     <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
                         <div class="inner" style="color: #55415C; padding-left: 15px;">
-                            <h3 style="font-size: 70px;">0</h3>
+                            <h3 style="font-size: 70px;"><?= $jumlah_user; ?></h3>
 
-                            <p style="font-weight: bold;">Angka Kredit</p>
+                            <p style="font-weight: bold;">Jumlah User</p>
                         </div>
                         <a href="#" class="selanjutnya">
                             <p style="margin:0;">&nbsp;</p>
@@ -92,19 +98,30 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row mb-3">
-                <div class="col-2">
+                <div class="col-3">
                     <div class="input-group">
-                        <select class="form-control filter mr-2" style="border-radius: 5px;">
-                            <option selected value="">- Satuan Kerja -</option>
-                        </select>
+                        <form action="" method="GET">
+                            <select class="form-control filter mr-2" name="satker_choose" id="satker_choose" style="border-radius: 5px;">
+                                <option selected value="">- Satuan Kerja -</option>
+                                <?php if ($list_satker != null) : ?>
+                                    <?php foreach ($list_satker as $satker) : ?>
+                                        <option value="<?= $satker['kd_satker']; ?>">[<?= $satker['kd_satker'];  ?>] <?= $satker['satker']; ?></option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                            <button id="btn-submit" class="d-none" type="submit">test</button>
+                        </form>
                     </div>
+                </div>
+                <div class="col-2 d-flex align-items-center">
+                    <a href="<?= base_url('/dataPegawai') ?>" class="py-1 rounded reset-satker d-none" style=" color: #db9a9a; border: 2px solid #db9a9a; background-color: #ffdbdb; padding: 12px;"><i class="fas fa-times"></i></a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-header border-0 pt-4">
-                            <h6 class="text-center"><strong>Laporan Berdasarkan Pendidikan</strong></h6>
+                            <h6 class="text-center"><strong>Pegawai Berdasarkan Pendidikan</strong></h6>
                         </div>
                         <div class="card-body">
                             <canvas id="barChartPendidikan" style="min-height: 250px;  height: 250px;  max-height: 250px; max-width: 100%;"></canvas>
@@ -121,42 +138,46 @@
                                 <div class="col-md-4"></div>
                                 <div class="col-md-4 d-flex justify-content-center align-items-center flex-column" style="min-height: 313px;  height: 313px;  max-height: 313px;">
                                     <h6>DATABASE PEGAWAI</h6>
-                                    <h2 class="fa-3x"><strong>13:09 WIB</strong></h2>
-                                    <h6>Selasa, 19 Juli 2022</h6>
+                                    <h2 class="fa-3x"><strong id="jam"></strong></h2>
+                                    <h6 id="hari-ini"></h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-header border-0 pt-4">
-                            <h6 class="text-center"><strong>Laporan Berdasarkan Jenis kelamin</strong></h6>
+                            <h6 class="text-center"><strong>Pegawai Berdasarkan Jenis kelamin</strong></h6>
                         </div>
                         <div class="card-body">
                             <canvas id="donutChart" style="min-height: 250px;  height: 250px;  max-height: 250px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <div class="card">
                         <div class="card-header border-0 pt-4">
-                            <h6 class="text-center"><strong>Laporan Berdasarkan Golongan</strong></h6>
+                            <h6 class="text-center"><strong>Pegawai Berdasarkan Golongan</strong></h6>
                         </div>
                         <div class="card-body">
                             <canvas id="barChartGolongan" style="min-height: 250px;  height: 250px;  max-height: 250px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header border-0 pt-4">
-                            <h6 class="text-center"><strong>Laporan Berdasarkan Jabatan Fungsional</strong></h6>
+                            <h6 class="text-center"><strong>Pegawai Berdasarkan Jabatan Fungsional</strong></h6>
                         </div>
                         <div class="card-body">
-                            <canvas id="barChartFungsional" style="min-height: 250px;  height: 250px;  max-height: 250px; max-width: 100%;"></canvas>
+                            <canvas id="barChartFungsional" style="min-height: 250px;  height:800px;  max-height: 1000px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -169,40 +190,66 @@
 </div>
 <!-- ChartJS -->
 <script src="<?= base_url('plugins/chart.js/Chart.min.js') ?>"></script>
-
+<script src="<?= base_url('js/tanggal.js') ?>"></script>
 <!-- BARCHART -->
 <script>
     var areaChartData = {
         labels: [
-            "SMA",
-            "Diploma",
-            "Sarjana"
+            <?php if ($list_pendidikan != null) : ?>
+                <?php foreach ($list_pendidikan as $pendidikan) : ?> "<?= $pendidikan['tk_pendidikan']; ?>",
+                <?php endforeach; ?>
+            <?php endif; ?>
         ],
         datasets: [{
             backgroundColor: "#3c4b64",
-            data: [28, 48, 40],
+            data: [
+                <?php if ($pdd != null) : ?>
+                    <?php for ($pd = 0; $pd < count($pdd); $pd++) : ?>
+                        <?= $pdd[$pd]; ?>,
+                    <?php endfor ?>
+                <?php endif; ?>
+
+                , 0
+            ],
         }],
     };
 
     var golonganChartData = {
         labels: [
-            "IA", "IB", "IC", "ID", "IIA", "IIB", "IIC", "IID", "IIIA", "IIIB", "IIIC", "IIID", "IVA", "IVB", "IVC", "IVD", "IVE"
+            <?php if ($list_golongan != null) : ?>
+                <?php foreach ($list_golongan as $golongan) : ?> "<?= $golongan['golongan']; ?>",
+                <?php endforeach; ?>
+            <?php endif; ?>
         ],
         datasets: [{
             backgroundColor: "#3c4b64",
-            data: [28, 48, 40, 33, 12, 44, 6, 1, 12, 12, 24, 53, 11, 13, 43, 12, 56],
+            data: [<?php if ($gol != null) : ?>
+                    <?php for ($g = 0; $g < count($gol); $g++) : ?>
+                        <?= $gol[$g]; ?>,
+                    <?php endfor ?>
+                <?php endif; ?>
+            ],
         }],
     };
 
     var fungsionalChartData = {
         labels: [
-            "SMA",
-            "Diploma",
-            "Sarjana"
+            <?php if ($list_fungsional != null) : ?>
+                <?php foreach ($list_fungsional as $fungsional) : ?> "<?= $fungsional['jabatan_fungsional']; ?>",
+
+
+                <?php endforeach; ?>
+            <?php endif; ?>
         ],
         datasets: [{
+
             backgroundColor: "#3c4b64",
-            data: [28, 48, 40],
+            data: [<?php if ($total_fungsional != null) : ?>
+                    <?php for ($f = 0; $f < count($total_fungsional); $f++) : ?>
+                        <?= $total_fungsional[$f]; ?>,
+                    <?php endfor ?>
+                <?php endif; ?>
+            ],
         }],
     };
 
@@ -254,7 +301,11 @@
     var donutData = {
         labels: ["Laki-laki", "Perempuan"],
         datasets: [{
-            data: [114, 98],
+            data: [<?php if ($jk != null) : ?>
+
+                    <?= $jk[0]; ?>, <?= $jk[1]; ?>
+                <?php endif; ?>
+            ],
             backgroundColor: [
                 "#3c4b64",
                 "#e3bfe0",
@@ -268,12 +319,52 @@
             position: 'bottom'
         }
     };
-
     new Chart(donutChartCanvas, {
         type: "doughnut",
         data: donutData,
         options: donutOptions,
     });
+
+
+    let searchParams = new URLSearchParams(window.location.search)
+    searchParams.has('satker_choose') // true
+
+    if (searchParams.has('satker_choose')) {
+        $('.reset-satker').removeClass('d-none')
+    }
+    let param = searchParams.get('satker_choose')
+    $('#satker_choose').val(param)
+    $(document).on('change', '#satker_choose', function() {
+        $('#btn-submit').click()
+
+        $(this).val()
+    })
+
+
+    var date = new Date();
+
+    var currentDate = '<?php
+
+                        use CodeIgniter\I18n\Time;
+
+                        $myTime = Time::today('Asia/Jakarta');
+                        echo $myTime->toLocalizedString('yyyy-MM-dd');
+                        ?>';
+    document.getElementById('hari-ini').value = currentDate;
+
+    $('#hari-ini').html(ubahFormatTanggal(currentDate))
+
+    setInterval(customClock, 500);
+
+    function customClock() {
+        var time = new Date();
+        var hrs = (time.getHours() < 10 ? '0' : '') + time.getHours();
+        var min = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes();
+        var sec = time.getSeconds();
+
+        document.getElementById('jam').innerHTML = hrs + ":" + min + " WIB";
+    }
 </script>
+
 
 <?= $this->endSection(); ?>

@@ -41,6 +41,10 @@ class MasterLaporanHarianModel extends Model
             ->get()
             ->getResultArray();
     }
+
+
+
+
     public function getAllYear($user_id)
     {
         return $this
@@ -77,10 +81,20 @@ class MasterLaporanHarianModel extends Model
 
     public function search($user_id, $keyword)
     {
-        d($keyword);
         return $this
             ->table($this->table)
             ->where('user_id', $user_id)
             ->where('tgl_kegiatan', $keyword);
+    }
+
+
+    public function getUserIdbyLaporanId($laporan_id)
+    {
+        return $this
+            ->table($this->table)
+            ->select('user_id')
+            ->where('id', $laporan_id)
+            ->get()
+            ->getRowArray();
     }
 }

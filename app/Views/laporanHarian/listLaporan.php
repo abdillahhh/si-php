@@ -201,6 +201,17 @@
                 </div>
 
                 <!-- lama -->
+                <div class="row mb-2">
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                    <div class="col-2 text-center">
+                        <em><strong>Tugas Utama</strong></em>
+                    </div>
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                </div>
                 <div id="lama">
                     <div class="row rounded position-relative pt-2 kegiatan-baru ">
                         <div class="col-xl-1 baris-kegiatan">
@@ -208,7 +219,6 @@
                             <div class="row">1</div>
                         </div>
                         <div class="col-xl-4 baris-kegiatan">
-
                             <div class="row"><strong>Uraian Kegiatan</strong></div>
                             <div class="row px-1  w-100">
                                 <?php if ($list_full_laporan_harian != null) : ?>
@@ -292,14 +302,24 @@
                     </div>
                 </div>
                 <!-- baru -->
+                <div class="row mt-5">
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                    <div class="col-2 text-center">
+                        <em><strong>Tugas Tambahan</strong></em>
+                    </div>
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                </div>
                 <div id="baru">
-
                 </div>
                 <!-- tombol -->
                 <div class="row ">
                     <div class="col-12 py-3 px-0">
-                        <button id="tambah-baris" type="button" class="btn btn-info w-100">
-                            <i class="fas fa-plus"></i> Tambah
+                        <button id="tambah-baris" type="button" class="btn btn-default w-100 font-weight-bold">
+                            <i class="fas fa-plus mr-2"></i>Tambah
                         </button>
                     </div>
                 </div>
@@ -345,6 +365,17 @@
                     <input type="hidden" name="id_laporan_harian_tertentu" value="<?= $laporan_harian_tertentu['id']; ?>">
                 <?php endif; ?>
                 <!-- lama -->
+                <div class="row mb-2">
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                    <div class="col-2 text-center">
+                        <em><strong>Tugas Utama</strong></em>
+                    </div>
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                </div>
                 <div id="lama2">
                     <?php if ($laporan_harian_tertentu != NULL) : ?>
                         <?php $laporan = $laporan_harian_tertentu['uraian_kegiatan']; ?>
@@ -462,14 +493,25 @@
                     <?php endif; ?>
                 </div>
                 <!-- baru -->
+                <div class="row mt-5">
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                    <div class="col-2 text-center">
+                        <em><strong>Tugas Tambahan</strong></em>
+                    </div>
+                    <div class="col-5">
+                        <hr>
+                    </div>
+                </div>
                 <div id="baru2">
 
                 </div>
                 <!-- tombol -->
                 <div class="row ">
                     <div class="col-12 py-3 px-0">
-                        <button id="tambah-baris2" type="button" class="btn btn-info w-100">
-                            <i class="fas fa-plus"></i> Tambah
+                        <button id="tambah-baris2" type="button" class="btn btn-default w-100 font-weight-bold">
+                            <i class="fas fa-plus mr-2"></i>Tambah
                         </button>
                     </div>
                 </div>
@@ -537,9 +579,16 @@
                                                 <?php $list_jumlah = $data->jumlah; ?>
                                                 <?= $list_jumlah[$i]; ?>
                                             </td>
-                                            <td>
-                                                <?php $list_satuan2 = $data->satuan; ?>
-                                                <?= $satuan['nama_satuan']; ?>
+                                            <?php $list_satuan2 = $data->satuan; ?>
+                                            <td> <?php if ($list_satuan != NULL) : ?>
+                                                    <?php foreach ($list_satuan as $satuan) : ?>
+                                                        <?php if ($satuan['nama_satuan'] == $list_satuan2[$i]) : ?>
+                                                            <div class="p-2 mb-1 text-center rounded-sm card-laporan">
+                                                                <?= $satuan['nama_satuan']; ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
                                             </td>
                                             <td>
                                                 <?php $list_hasil = $data->hasil; ?>

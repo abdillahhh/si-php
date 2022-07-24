@@ -50,6 +50,8 @@ $routes->get('/dashboard', 'masterDashboard::index');
 $routes->get('/dataPegawai', 'masterDashboard::dataPegawai');
 //routes untuk membuka detail di dashboard
 $routes->get('/showDetailLaporanHarianOnDashboard/(:segment)', 'masterDashboard::showDetailLaporanHarianOnDashboard/$1');
+//rutes untuk show calender per pegawai
+$routes->get('/showKegiatanPegawai/(:segment)', 'masterDashboard::showKegiatanPegawai/$1');
 //Routes Ke views dan controller Dashboard
 $routes->get('/profile', 'masterUser::profile');
 
@@ -91,9 +93,8 @@ $routes->post('/tambahLevelUser', 'masterKelolaMaster::tambahLevelUser');
 $routes->post('/resetPasswordUser', 'masterKelolaMaster::resetPasswordUser');
 //routes untuk hapus level user
 $routes->post('/hapusLevelUser', 'masterKelolaMaster::hapusLevelUser');
-
-//Routes Ke views dan controller Kelola Master Tambah
-$routes->get('/tambahUser', 'masterKelolaMaster::tambahUser');
+//Routes  controller Kelola Master Tambah user
+$routes->post('/tambahUser', 'masterKelolaMaster::tambahUser');
 //rotes ke save data pegawai baru
 $routes->post('/savePegawai', 'masterKelolaMaster::savePegawai');
 //routes ke update pegawai

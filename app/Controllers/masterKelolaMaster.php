@@ -89,6 +89,7 @@ class masterKelolaMaster extends BaseController
             'class_modal_default' => 'col-md-6 d-none',
             'class_modal_setup' => 'col-md-6'
         ];
+        //dd($data);
         return view('kelolaMaster/masterUser', $data);
     }
 
@@ -242,6 +243,55 @@ class masterKelolaMaster extends BaseController
 
         return redirect()->to('/showDataUser/' . $id_user);
     }
+
+
+
+    public function tambahUser()
+    {
+        $id_pegawai = $this->request->getVar('id_pegawai');
+        $nip_lama_tambah = $this->masterPegawaiModel->getNipLama($id_pegawai);
+        $username_tambah = $this->request->getVar('username_tambah');
+        $fullname_tambah = $this->request->getVar('fullname_tambah');
+        $email_tambah = $this->request->getVar('email_tambah');
+        $is_active_tambah = $this->request->getVar('is_active_tambah');
+        $pass_default_tambah =  password_hash('123456', PASSWORD_DEFAULT);
+
+        $image_user = ($nip_lama_tambah['nip_lama'] . '.jpg');
+
+        $this->masterUserModel->save([
+            'username' => $username_tambah,
+            'fullname' => $fullname_tambah,
+            'email' => $email_tambah,
+            'password' => $pass_default_tambah,
+            'token' => null,
+            'image' => $image_user,
+            'nip_lama_user' => $nip_lama_tambah['nip_lama'],
+            'is_active' => $is_active_tambah,
+        ]);
+
+        $last_input_user_id = $this->masterUserModel->getLastId();
+
+
+        $all_level = $this->masterUserLevelModel->getAlllevel();
+        for ($al = 0; $al <= count($all_level); $al++) {
+            if ($this->request->getVar('level_pick' . $al) != null) {
+                $Level_choose[] = ($al + 1);
+            }
+        }
+
+        for ($lev = 0; $lev < count($Level_choose); $lev++) {
+            $this->masterAksesUserLevelModel->save([
+                'user_id' => $last_input_user_id,
+                'level_id' => $Level_choose[$lev]
+            ]);
+        }
+
+        session()->setFlashdata('pesan', 'tambah user ' . $username_tambah . ' berhasil');
+        session()->setFlashdata('icon', 'success');
+
+        return redirect()->to('/masterUser');
+    }
+
 
     public function masterPegawai()
     {
@@ -448,15 +498,7 @@ class masterKelolaMaster extends BaseController
         return view('kelolaMaster/masterKegiatan', $data);
     }
 
-    public function tambahUser()
-    {
-        $data = [
-            'title' => 'Tambah User',
-            'menu' => 'Kelola Master',
-            'subMenu' => 'Master User'
-        ];
-        return view('kelolaMaster/tambahUser', $data);
-    }
+
 
     public function get_autofillPegawai()
     {

@@ -55,4 +55,61 @@ class MasterUserModel extends Model
             ->get()
             ->getRowArray();
     }
+
+    public function getLastId()
+    {
+        return $this
+            ->table('tbl_user')
+            ->select('id')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->getRowArray();
+    }
+
+
+    public function getAllUserBySatker($kd_satker)
+    {
+        return $this
+            ->table($this->table)
+            ->select('tbl_user.*', 'mst_pegawai.*')
+            ->where('mst_pegawai.satker_kd', $kd_satker)
+            ->join('mst_pegawai', 'mst_pegawai.nip_lama= tbl_user.nip_lama_user')
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getUserId($nip_lama)
+    {
+        return $this
+            ->table('tbl_user')
+            ->select('id')
+            ->where('nip_lama_user', $nip_lama)
+            ->get()
+            ->getRowArray();
+    }
+
+    public function getTotalByUserJoinPegawai($pegawai_id)
+    {
+        return $this
+            ->table($this->table)
+            ->select('mst_laporanharian.*,tbl_user.*,mst_pegawai.*')
+            ->where('mst_pegawai.id', $pegawai_id)
+            ->join('mst_pegawai', 'tbl_user.nip_lama_user = mst_pegawai.nip_lama')
+            ->join('mst_laporanharian', 'tbl_user.id = mst_laporanharian.user_id')
+            ->orderBy('mst_pegawai.id', 'ASC')
+            ->get()
+            ->getResultArray();
+    }
+
+
+    public function getDataPegawaiByUserId($user_id)
+    {
+        return $this
+            ->table($this->table)
+            ->select('tbl_user.*,mst_pegawai.*')
+            ->where('tbl_user.id', $user_id)
+            ->join('mst_pegawai', 'tbl_user.nip_lama_user = mst_pegawai.nip_lama')
+            ->get()
+            ->getRowArray();
+    }
 }
