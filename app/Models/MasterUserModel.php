@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 
 class MasterUserModel extends Model
@@ -94,6 +95,21 @@ class MasterUserModel extends Model
             ->table($this->table)
             ->select('mst_laporanharian.*,tbl_user.*,mst_pegawai.*')
             ->where('mst_pegawai.id', $pegawai_id)
+            ->join('mst_pegawai', 'tbl_user.nip_lama_user = mst_pegawai.nip_lama')
+            ->join('mst_laporanharian', 'tbl_user.id = mst_laporanharian.user_id')
+            ->orderBy('mst_pegawai.id', 'ASC')
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getTotalByUserJoinPegawai2($pegawai_id)
+    {
+        return $this
+            ->table($this->table)
+            ->select('mst_laporanharian.*,tbl_user.*,mst_pegawai.*')
+            ->where('mst_pegawai.id', $pegawai_id)
+            ->where('mst_laporanharian.tgl_kegiatan >=', date("Y-m-d", strtotime("last monday")))
+            ->where('mst_laporanharian.tgl_kegiatan <=', date("Y-m-d", strtotime("next sunday")))
             ->join('mst_pegawai', 'tbl_user.nip_lama_user = mst_pegawai.nip_lama')
             ->join('mst_laporanharian', 'tbl_user.id = mst_laporanharian.user_id')
             ->orderBy('mst_pegawai.id', 'ASC')

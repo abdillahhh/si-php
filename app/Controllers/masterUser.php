@@ -101,7 +101,7 @@ class masterUser extends BaseController
             if ($image_user_baru->getError() == 4) {
                 $nama_image = $image_user_lama;
             } else {
-                if ($image_user_lama != 'default.png') {
+                if ($image_user_lama != 'default.png' && $image_user_lama != 'default.jpg') {
                     unlink('images/profil/' . $image_user_lama);
                 }
                 $ekstensi = $image_user_baru->getExtension();

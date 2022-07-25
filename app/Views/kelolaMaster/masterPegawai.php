@@ -102,16 +102,7 @@
                                                                 <?php foreach ($list_user as $user) : ?>
                                                                     <?php if ($pegawai['nip_lama'] === $user['nip_lama_user']) : ?>
                                                                         <?php $ada_akun = true ?>
-                                                                        <?php $src1 =  base_url('/images/profil/' . $user['image']); ?>
-                                                                        <?php $src2 = base_url('/images/profil/default.jpg'); ?>
-
-                                                                        <?php if (file_exists($src1)) {
-                                                                            $src = $src1;
-                                                                        } else {
-                                                                            $src = $src2;
-                                                                        } ?>
-
-                                                                        <img style="width: 90px;" src="<?= $src ?>" alt="">
+                                                                        <img style="width: 90px;" src="<?= base_url('images/profil/' . $user['image']); ?>" alt="">
                                                                         <?php break; ?>
                                                                     <?php else : ?>
                                                                         <?php $ada_akun = false; ?>

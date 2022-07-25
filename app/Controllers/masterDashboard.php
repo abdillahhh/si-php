@@ -391,6 +391,16 @@ class masterDashboard extends BaseController
                 $jml_bulan_pegawai[$i] = 0;
             }
         }
+        $ke_minggu = 0;
+        foreach ($list_pegawai as $pegawai) {
+            $total_laporan_mingguan_masing[$ke_minggu] = $this->masterUserModel->getTotalByUserJoinPegawai2($pegawai['id']);
+
+            $ke_minggu++;
+        }
+
+        for ($t = 0; $t < count($total_laporan_mingguan_masing); $t++) {
+            $jml_minggu_pegawai[] = count($total_laporan_mingguan_masing[$t]);
+        }
 
 
 
@@ -423,6 +433,7 @@ class masterDashboard extends BaseController
             'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
             'list_pegawai' => $list_pegawai,
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
+            'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'tanggal_mulai' => $tanggal_mulai,
             'user_dipilih' => null,
             'div_card' => 'd-none'
@@ -826,6 +837,17 @@ class masterDashboard extends BaseController
             }
         }
 
+        $ke_minggu = 0;
+        foreach ($list_pegawai as $pegawai) {
+            $total_laporan_mingguan_masing[$ke_minggu] = $this->masterUserModel->getTotalByUserJoinPegawai2($pegawai['id']);
+
+            $ke_minggu++;
+        }
+
+        for ($t = 0; $t < count($total_laporan_mingguan_masing); $t++) {
+            $jml_minggu_pegawai[] = count($total_laporan_mingguan_masing[$t]);
+        }
+
 
         $data = [
             'title' => 'Dashboard',
@@ -864,6 +886,7 @@ class masterDashboard extends BaseController
             'list_full_laporan_harian' =>  $list_full_laporan_harian_detail,
             'tanggal_mulai' => '2022-07-01',
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
+            'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'list_pegawai' => $list_pegawai,
             'user_dipilih' => null,
             'div_card' => 'd-none'
@@ -1542,7 +1565,16 @@ class masterDashboard extends BaseController
             }
         }
 
+        $ke_minggu = 0;
+        foreach ($list_pegawai as $pegawai) {
+            $total_laporan_mingguan_masing[$ke_minggu] = $this->masterUserModel->getTotalByUserJoinPegawai2($pegawai['id']);
 
+            $ke_minggu++;
+        }
+
+        for ($t = 0; $t < count($total_laporan_mingguan_masing); $t++) {
+            $jml_minggu_pegawai[] = count($total_laporan_mingguan_masing[$t]);
+        }
 
         $data = [
             'title' => 'Dashboard',
@@ -1575,6 +1607,7 @@ class masterDashboard extends BaseController
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
             'tanggal_mulai' => $tanggal_mulai,
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
+            'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'user_dipilih' => $data_user_pilih,
             'div_card' => ''
 

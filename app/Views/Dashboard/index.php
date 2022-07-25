@@ -22,7 +22,7 @@
     </div>
     <!-- /.content-header -->
 
-    <?php if (session('level_id') == 1 || session('level_id') == 7) : ?>
+    <?php if (session('level_id') == 7) : ?>
       <section class="content">
         <div class="container-fluid">
           <!-- Small boxes (Stat box) -->
@@ -113,7 +113,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-7">
-            <?php if (session('level_id') == 1) : ?>
+            <?php if (session('level_id') == 1 || session('level_id') == 8) : ?>
               <div class="row <?= $div_card; ?>">
                 <div class="col-md-12">
                   <div class="card p-3">
@@ -167,8 +167,8 @@
                         <tr>
                           <th class="text-center">NO.</th>
                           <th>NAMA</th>
-                          <th>BULAN INI</th>
-                          <!-- <th>MINGGU INI</th> -->
+                          <th>LAPORAN BULAN INI</th>
+                          <th>LAPORAN MINGGU INI</th>
                           <th>AKSI</th>
                         </tr>
                       </thead>
@@ -179,11 +179,12 @@
                             <tr>
                               <td class="text-center"><?= $no_ke; ?></td>
                               <td><?= $pegawai['nama_pegawai']; ?></td>
-                              <td>
+                              <td class="text-center">
                                 <?= $jml_perbulan_pegawai[($no_ke - 1)]; ?>
                               </td>
+
+                              <td class="text-center"> <?= $jml_perminggu_pegawai[($no_ke - 1)]; ?></td>
                               <?php $no_ke++ ?>
-                              <!-- <td>25</td> -->
                               <td>
                                 <a href="<?= base_url('/showKegiatanPegawai/' . $pegawai['nip_lama']); ?>" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-search-plus"></i></a>
                               </td>
