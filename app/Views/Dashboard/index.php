@@ -22,87 +22,89 @@
     </div>
     <!-- /.content-header -->
 
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
-            <!-- small box -->
-            <div class="small-box  bg-white" style="border: 1px solid gray; padding: 0;">
-              <div class="inner" style="color: #55415C; padding-left: 15px;">
-                <h3 style="font-size: 70px;"><?= $total_laporan; ?></h3>
-                <p style="font-weight: bold;">Jumlah Laporan</p>
+    <?php if (session('level_id') == 1 || session('level_id') == 7) : ?>
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box  bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
+                  <h3 style="font-size: 70px;"><?= $total_laporan; ?></h3>
+                  <p style="font-weight: bold;">Jumlah Laporan</p>
+                </div>
+                <?php if (session('level_id') == 7) : ?>
+                  <a href="<?= base_url('/listLaporan'); ?>" class="selanjutnya">
+                    <p style="margin:0;">More info</p> <i class="fas fa-arrow-circle-down"></i>
+                  </a>
+                <?php else : ?>
+                  <a href="" class="selanjutnya">
+                    <p style="margin:0;">&nbsp;</p>
+                  </a>
+                <?php endif; ?>
               </div>
-              <?php if (session('level_id') == 7) : ?>
-                <a href="<?= base_url('/listLaporan'); ?>" class="selanjutnya">
-                  <p style="margin:0;">More info</p> <i class="fas fa-arrow-circle-down"></i>
-                </a>
-              <?php else : ?>
-                <a href="" class="selanjutnya">
-                  <p style="margin:0;">&nbsp;</p>
-                </a>
-              <?php endif; ?>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
-            <!-- small box -->
-            <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
-              <div class="inner" style="color: #55415C; padding-left: 15px;">
+            <!-- ./col -->
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
 
-                <h3 style="font-size: 70px;"><?= $total_kegiatan_bulan_ini; ?></h3>
+                  <h3 style="font-size: 70px;"><?= $total_kegiatan_bulan_ini; ?></h3>
 
-                <p style="font-weight: bold;">Jumlah Kegiatan Bulan <?= $nama_bulan; ?></p>
-              </div>
-              <?php if ($total_kegiatan_bulan_ini != null && session('level_id') == 7) {
-                echo '<a href="#" data-toggle="modal" data-target="#modal-list-laporan" class="selanjutnya">
+                  <p style="font-weight: bold;">Jumlah Kegiatan Bulan <?= $nama_bulan; ?></p>
+                </div>
+                <?php if ($total_kegiatan_bulan_ini != null && session('level_id') == 7) {
+                  echo '<a href="#" data-toggle="modal" data-target="#modal-list-laporan" class="selanjutnya">
                 <p style="margin:0;">More info</p> <i class="fas fa-arrow-circle-down"></i>
               </a>';
-              } else {
-                echo
-                '<a href="#" class="selanjutnya">
+                } else {
+                  echo
+                  '<a href="#" class="selanjutnya">
                 <p style="margin:0;">&nbsp;</p>
               </a>';
-              } ?>
+                } ?>
 
 
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
-            <!-- small box -->
-            <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
-              <div class="inner" style="color: #55415C; padding-left: 15px;">
-                <?php if ($jumlah_user != null) : ?>
-                  <h3 style="font-size: 70px;"><?= $jumlah_user; ?></h3>
-                <?php endif; ?>
-                <p style="font-weight: bold;">Jumlah User</p>
               </div>
-              <a href="#" class="selanjutnya">
-                <p style="margin:0;">&nbsp;</p>
-              </a>
-
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
-            <!-- small box -->
-            <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
-              <div class="inner" style="color: #55415C; padding-left: 15px;">
-                <h3 style="font-size: 70px;">0</h3>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
+                  <?php if ($jumlah_user != null) : ?>
+                    <h3 style="font-size: 70px;"><?= $jumlah_user; ?></h3>
+                  <?php endif; ?>
+                  <p style="font-weight: bold;">Jumlah User</p>
+                </div>
+                <a href="#" class="selanjutnya">
+                  <p style="margin:0;">&nbsp;</p>
+                </a>
 
-                <p style="font-weight: bold;">Angka Kredit</p>
               </div>
-              <a href="#" class="selanjutnya">
-                <p style="margin:0;">&nbsp;</p>
-              </a>
             </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
+                  <h3 style="font-size: 70px;">0</h3>
+
+                  <p style="font-weight: bold;">Angka Kredit</p>
+                </div>
+                <a href="#" class="selanjutnya">
+                  <p style="margin:0;">&nbsp;</p>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
           </div>
-          <!-- ./col -->
+          <!-- /.row -->
         </div>
-        <!-- /.row -->
-      </div>
-    </section>
+      </section>
+    <?php endif; ?>
 
 
 
@@ -135,7 +137,8 @@
               </div>
             </div>
           </div>
-          <?php if (session('level_id') == 1) : ?>
+          <!-- DIUBAH MENGGUNAKAN HELPERRRRRR -->
+          <?php if (session('level_id') == 8 || session('level_id') == 1) : ?>
             <div class="col-md-5">
               <div class="row mb-3">
                 <div class="col-md-6">
@@ -227,7 +230,7 @@
         </div>
 
         <?php if (session('level_id') == 1) : ?>
-          <div class="row mt-3">
+          <!-- <div class="row mt-3">
             <div class="col-md-12">
               <div class="row mb-3">
                 <div class="col-md-9">
@@ -240,19 +243,19 @@
               </div>
               <div class="row">
                 <div class="col-12">
-                  <!-- <div class="card" id="calendarWeek"> -->
+                  <div class="card" id="calendarWeek">
 
                 </div>
               </div>
             </div>
           </div>
+      </div> -->
+        <?php endif; ?>
+        <!-- /.row -->
       </div>
-    <?php endif; ?>
-    <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
-  </section>
-  <!-- /.content -->
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
   </div>
 
 
