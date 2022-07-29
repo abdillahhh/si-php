@@ -12,6 +12,14 @@ class MasterLaporanHarianModel extends Model
     protected $allowedFields = ['user_id', 'tgl_kegiatan', 'uraian_kegiatan',];
 
 
+    public function getAllLaporan()
+    {
+        return $this
+            ->table($this->table)
+            ->select('*')
+            ->get()
+            ->getResultArray();
+    }
     public function getAll($user_id)
     {
         return $this

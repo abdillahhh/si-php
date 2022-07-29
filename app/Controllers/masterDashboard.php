@@ -381,8 +381,8 @@ class masterDashboard extends BaseController
             if (count($total_laporan_masing[$i]) != 0) {
                 for ($a = 0; $a < count($total_laporan_masing[$i]); $a++) {
                     $data = explode('-', $total_laporan_masing[$i][$a]['tgl_kegiatan']);
-                    $bulan[] = $data[1];
-                    if ($bulan[$i] == date('m')) {
+                    $bulan = $data[1];
+                    if ($bulan == date('m')) {
                         $laporan_bulan_pegawai[$i][] = $total_laporan_masing[$i][$a];
                     }
                     $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
@@ -436,7 +436,14 @@ class masterDashboard extends BaseController
             'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'tanggal_mulai' => $tanggal_mulai,
             'user_dipilih' => null,
-            'div_card' => 'd-none'
+            'div_card' => 'd-none',
+            'list_golongan' => $this->masterGolonganModel->getAllGolongan(),
+            'list_fungsional' => $this->masterFungsionalModel->getAllFungsional(),
+            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawai()),
+            'jumlah_laporan' => count($this->masterLaporanHarianModel->getAllLaporan()),
+            'jumlah_user_aktif' => count($this->masterUserModel->getAllUserAktif()),
+            'jumlah_user_tidak_aktif' => count($this->masterUserModel->getAllUserTidakAktif()),
+            'nip_lama_pegawai_terpilih' => null
 
         ];
         //dd($data);
@@ -826,8 +833,8 @@ class masterDashboard extends BaseController
             if (count($total_laporan_masing[$i]) != 0) {
                 for ($a = 0; $a < count($total_laporan_masing[$i]); $a++) {
                     $data = explode('-', $total_laporan_masing[$i][$a]['tgl_kegiatan']);
-                    $bulan[] = $data[1];
-                    if ($bulan[$i] == date('m')) {
+                    $bulan = $data[1];
+                    if ($bulan == date('m')) {
                         $laporan_bulan_pegawai[$i][] = $total_laporan_masing[$i][$a];
                     }
                     $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
@@ -847,6 +854,8 @@ class masterDashboard extends BaseController
         for ($t = 0; $t < count($total_laporan_mingguan_masing); $t++) {
             $jml_minggu_pegawai[] = count($total_laporan_mingguan_masing[$t]);
         }
+
+        $nip_lama = $this->masterUserModel->getProfilUser($user_id_detail);
 
 
         $data = [
@@ -889,10 +898,17 @@ class masterDashboard extends BaseController
             'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'list_pegawai' => $list_pegawai,
             'user_dipilih' => null,
-            'div_card' => 'd-none'
+            'div_card' => 'd-none',
+            'list_golongan' => $this->masterGolonganModel->getAllGolongan(),
+            'list_fungsional' => $this->masterFungsionalModel->getAllFungsional(),
+            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawai()),
+            'jumlah_laporan' => count($this->masterLaporanHarianModel->getAllLaporan()),
+            'jumlah_user_aktif' => count($this->masterUserModel->getAllUserAktif()),
+            'jumlah_user_tidak_aktif' => count($this->masterUserModel->getAllUserTidakAktif()),
+            'nip_lama_pegawai_terpilih' => $nip_lama['nip_lama_user']
 
         ];
-        // dd($data);
+
         return view('Dashboard/index', $data);
     }
 
@@ -1554,8 +1570,8 @@ class masterDashboard extends BaseController
             if (count($total_laporan_masing[$i]) != 0) {
                 for ($a = 0; $a < count($total_laporan_masing[$i]); $a++) {
                     $data = explode('-', $total_laporan_masing[$i][$a]['tgl_kegiatan']);
-                    $bulan[] = $data[1];
-                    if ($bulan[$i] == date('m')) {
+                    $bulan = $data[1];
+                    if ($bulan == date('m')) {
                         $laporan_bulan_pegawai[$i][] = $total_laporan_masing[$i][$a];
                     }
                     $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
@@ -1609,7 +1625,14 @@ class masterDashboard extends BaseController
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
             'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'user_dipilih' => $data_user_pilih,
-            'div_card' => ''
+            'div_card' => '',
+            'list_golongan' => $this->masterGolonganModel->getAllGolongan(),
+            'list_fungsional' => $this->masterFungsionalModel->getAllFungsional(),
+            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawai()),
+            'jumlah_laporan' => count($this->masterLaporanHarianModel->getAllLaporan()),
+            'jumlah_user_aktif' => count($this->masterUserModel->getAllUserAktif()),
+            'jumlah_user_tidak_aktif' => count($this->masterUserModel->getAllUserTidakAktif()),
+            'nip_lama_pegawai_terpilih' => $nip_lama
 
         ];
 

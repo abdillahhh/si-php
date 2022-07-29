@@ -35,9 +35,9 @@
                         <!-- <a href="" class="selanjutnya">
                             <p style="margin:0;">More info</p> <i class="fas fa-arrow-circle-down"></i>
                         </a> -->
-                        <a href="#" class="selanjutnya">
+                        <span href="#" class="selanjutnya">
                             <p style="margin:0;">&nbsp;</p>
-                        </a>
+                        </span>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -53,9 +53,9 @@
                         <!-- <a href="#" data-toggle="modal" data-target="#modal-list-laporan" class="selanjutnya">
                             <p style="margin:0;">More info</p> <i class="fas fa-arrow-circle-down"></i>
                         </a> -->
-                        <a href="#" class="selanjutnya">
+                        <span href="#" class="selanjutnya">
                             <p style="margin:0;">&nbsp;</p>
-                        </a>
+                        </span>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -67,9 +67,9 @@
 
                             <p style="font-weight: bold;">Jumlah Pegawai Aktif</p>
                         </div>
-                        <a href="#" class="selanjutnya">
+                        <span href="#" class="selanjutnya">
                             <p style="margin:0;">&nbsp;</p>
-                        </a>
+                        </span>
 
                     </div>
                 </div>
@@ -82,9 +82,9 @@
 
                             <p style="font-weight: bold;">Jumlah User</p>
                         </div>
-                        <a href="#" class="selanjutnya">
+                        <span href="#" class="selanjutnya">
                             <p style="margin:0;">&nbsp;</p>
-                        </a>
+                        </span>
                     </div>
                 </div>
 

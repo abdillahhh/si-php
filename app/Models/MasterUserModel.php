@@ -29,6 +29,24 @@ class MasterUserModel extends Model
             ->getRowArray();
     }
 
+    public function getAllUserAktif()
+    {
+        return $this
+            ->table('tbl_user')
+            ->where('is_active', 'Y')
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getAllUserTidakAktif()
+    {
+        return $this
+            ->table('tbl_user')
+            ->where('is_active', 'N')
+            ->get()
+            ->getResultArray();
+    }
+
     public function getProfilUser($user_id)
     {
         return $this

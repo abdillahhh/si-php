@@ -105,6 +105,89 @@
         </div>
       </section>
     <?php endif; ?>
+    <?php if (session('level_id') == 8 || session('level_id') == 9) : ?>
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box  bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
+                  <h3 style="font-size: 70px;"><?php if ($jumlah_laporan) {
+                                                  echo $jumlah_laporan;
+                                                } else {
+                                                  echo 0;
+                                                }; ?></h3>
+                  <p style="font-weight: bold;">Jumlah Laporan</p>
+                </div>
+                <span href="#" class="selanjutnya">
+                  <p style="margin:0;">&nbsp;</p>
+                </span>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
+
+                  <h3 style="font-size: 70px;"><?php if ($jumlah_pegawai) {
+                                                  echo $jumlah_pegawai;
+                                                } else {
+                                                  echo 0;
+                                                }; ?></h3>
+
+                  <p style="font-weight: bold;">Jumlah Pegawai</p>
+                </div>
+                <span href="#" class="selanjutnya">
+                  <p style="margin:0;">&nbsp;</p>
+                </span>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
+                  <?php if ($jumlah_user != null) : ?>
+                    <h3 style="font-size: 70px;"><?php if ($jumlah_user_aktif) {
+                                                    echo $jumlah_user_aktif;
+                                                  } else {
+                                                    echo 0;
+                                                  }; ?></h3>
+                  <?php endif; ?>
+                  <p style="font-weight: bold;">Jumlah User Aktif</p>
+                </div>
+                <span href="#" class="selanjutnya">
+                  <p style="margin:0;">&nbsp;</p>
+                </span>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+              <!-- small box -->
+              <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
+                <div class="inner" style="color: #55415C; padding-left: 15px;">
+                  <h3 style="font-size: 70px;"><?php if ($jumlah_user_tidak_aktif) {
+                                                  echo $jumlah_user_tidak_aktif;
+                                                } else {
+                                                  echo 0;
+                                                }; ?></h3>
+
+                  <p style="font-weight: bold;">Jumlah User Tidak Aktif</p>
+                </div>
+                <span href="#" class="selanjutnya">
+                  <p style="margin:0;">&nbsp;</p>
+                </span>
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+          <!-- /.row -->
+        </div>
+      </section>
+    <?php endif; ?>
 
 
 
@@ -113,20 +196,64 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-7">
-            <?php if (session('level_id') == 1 || session('level_id') == 8) : ?>
+            <?php if (session('level_id') == 1 || session('level_id') == 8 || session('level_id') == 9) : ?>
               <div class="row <?= $div_card; ?>">
                 <div class="col-md-12">
                   <div class="card p-3">
-                    <small>Menampilkan Kegiatan Milik</small>
-                    <?php if ($user_dipilih != null) : ?>
-                      <h5 class="mt-2"> <img style="width: 100px;" class="mr-3" src="<?= base_url('images/profil/' . $user_dipilih['image']) ?>" alt=""><strong><?= $user_dipilih['nama_pegawai']; ?></strong></h5>
-                    <?php endif; ?>
+                    <div class="row">
+                      <div class="col-12">
+                        <small>Menampilkan Kegiatan Milik</small>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <?php if ($user_dipilih != null) : ?>
+                        <div class="col-2 text-center">
+                          <img style="width: 100%; max-width: 100px;" class="mr-3" src="<?= base_url('images/profil/' . $user_dipilih['image']) ?>" alt="">
+                        </div>
+                        <div class="col-6 d-flex flex-column">
+                          <strong class=" mt-2"><?= $user_dipilih['nama_pegawai']; ?></strong>
+                          <small><?= $user_dipilih['nip_baru'] ?></small>
+                          <small><?= $user_dipilih['email'] ?></small>
+                          <div class="d-flex">
+                            <?php if ($list_golongan != null) : ?>
+                              <?php foreach ($list_golongan as $golongan) : ?>
+                                <?php if ($golongan['id'] == $user_dipilih['gol_kd']) : ?>
+                                  <span class="badge badge-secondary py-1"><?= $golongan['golongan'] ?></span>
+                                <?php endif; ?>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?php if ($list_fungsional != null) : ?>
+                              <?php foreach ($list_fungsional as $fungsional) : ?>
+                                <?php if ($fungsional['id'] == $user_dipilih['fungsional_kd']) : ?>
+                                  <span class="ml-2 badge badge-secondary py-1"><?= $fungsional['jabatan_fungsional'] ?></span>
+                                <?php endif; ?>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                          </div>
+                        </div>
+
+                      <?php endif; ?>
+
+                    </div>
                     <?php if ($user_dipilih == null) : ?>
                       <strong>Pegawai Belum Memiliki Akun</strong>
                     <?php endif; ?>
+
                   </div>
                 </div>
               </div>
+              <?php if ($user_dipilih == null) : ?>
+                <div class="row">
+                  <div class="col-12 ">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="background-color: #ffe8a8; color: #664b00;">
+                      <i style="color: #8f6c0d;" class="fas fa-info-circle mr-3"></i> Silahkan pilih pegawai untuk menampilkan kegiatan
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              <?php endif; ?>
             <?php endif; ?>
             <div class="row">
               <div class="col-md-12">
@@ -138,7 +265,7 @@
             </div>
           </div>
           <!-- DIUBAH MENGGUNAKAN HELPERRRRRR -->
-          <?php if (session('level_id') == 8 || session('level_id') == 1) : ?>
+          <?php if (session('level_id') == 8 || session('level_id') == 1 || session('level_id') == 9) : ?>
             <div class="col-md-5">
               <div class="row mb-3">
                 <div class="col-md-6">
@@ -159,41 +286,44 @@
                   <input type="search" id="pencarian4" name="table_search" class="form-control float-right" placeholder="Search ..." />
                 </div>
 
-                <form action="/showDataUser" method="POST">
-                  <!-- /.card-header -->
-                  <div class="card-body table-responsive px-0 overflow-hidden">
-                    <table class="table table-hover text-nowrap" id="tabelData4">
-                      <thead>
-                        <tr>
-                          <th class="text-center">NO.</th>
-                          <th>NAMA</th>
-                          <th>LAPORAN BULAN INI</th>
-                          <th>LAPORAN MINGGU INI</th>
-                          <th>AKSI</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php $no_ke = 1; ?>
-                        <?php if ($list_pegawai != null) : ?>
-                          <?php foreach ($list_pegawai as $pegawai) : ?>
-                            <tr>
-                              <td class="text-center"><?= $no_ke; ?></td>
-                              <td><?= $pegawai['nama_pegawai']; ?></td>
-                              <td class="text-center">
-                                <?= $jml_perbulan_pegawai[($no_ke - 1)]; ?>
-                              </td>
 
-                              <td class="text-center"> <?= $jml_perminggu_pegawai[($no_ke - 1)]; ?></td>
-                              <?php $no_ke++ ?>
-                              <td>
-                                <a href="<?= base_url('/showKegiatanPegawai/' . $pegawai['nip_lama']); ?>" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-search-plus"></i></a>
-                              </td>
-                            </tr>
-                          <?php endforeach; ?>
-                        <?php endif; ?>
-                      </tbody>
-                    </table>
-                  </div>
+                <!-- /.card-header -->
+                <form action="<?= base_url('/showDataUser') ?>" method="POST" class="card-body table-responsive pb-0 px-0">
+                  <table class="table table-hover text-nowrap" id="tabelData4">
+                    <thead>
+                      <tr>
+                        <th class="text-center" rowspan="2">NO.</th>
+                        <th rowspan="2">NAMA</th>
+                        <th colspan="2" class="text-center">LAPORAN</th>
+                        <th rowspan="2">AKSI</th>
+                      </tr>
+                      <tr>
+                        <th>BULAN INI</th>
+                        <th>MINGGU INI</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php $no_ke = 1; ?>
+                      <?php if ($list_pegawai != null) : ?>
+                        <?php foreach ($list_pegawai as $pegawai) : ?>
+                          <tr>
+                            <td class="text-center"><?= $no_ke; ?></td>
+                            <td><?= $pegawai['nama_pegawai']; ?></td>
+                            <td class="text-center">
+                              <?= $jml_perbulan_pegawai[($no_ke - 1)]; ?>
+                            </td>
+
+                            <td class="text-center"> <?= $jml_perminggu_pegawai[($no_ke - 1)]; ?></td>
+                            <?php $no_ke++ ?>
+                            <td>
+
+                              <a href="<?= base_url('/showKegiatanPegawai/' . $pegawai['nip_lama']); ?>" class="btn btn-info btn-xs tombol" style="background-color: #2D95C9; border:none;"><i class="fas fa-search-plus"></i></a>
+                            </td>
+                          </tr>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
+                    </tbody>
+                  </table>
                 </form>
               </div>
             </div>
@@ -527,9 +657,16 @@
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
       <div class="modal-content">
         <div class="modal-header pt-3" style="border: none;">
-          <a href="<?= base_url('/dashboard'); ?>" type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </a>
+          <?php if (session('level_id') == "7") :  ?>
+            <a href="<?= base_url('/dashboard'); ?>" type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </a>
+          <?php endif; ?>
+          <?php if (session('level_id') != "7") :  ?>
+            <a href="<?= base_url('/showKegiatanPegawai/' . $nip_lama_pegawai_terpilih); ?>" type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </a>
+          <?php endif; ?>
         </div>
         <div class="modal-body px-5 py-3">
           <div class="row mb-2">
@@ -625,6 +762,29 @@
   <script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
   <!-- Toastr -->
   <script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
+  <script type="text/javascript">
+    $('#tabelData4').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      'ordering': false,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "pageLength": 15
+    });
+
+    $('#tabelData4_wrapper').children().first().addClass('d-none')
+    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
+    $('.dataTables_info').addClass('text-sm text-gray py-2')
+    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
+
+    $(document).on('keyup', '#pencarian4', function() {
+      $('#tabelData4').DataTable().search(
+        $(this).val()
+      ).draw();
+    })
+  </script>
   <script>
     $(function() {
       bsCustomFileInput.init();
@@ -1076,29 +1236,6 @@
     });
   </script>
 
-  <script type="text/javascript">
-    $('#tabelData4').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": true,
-      'ordering': false,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "pageLength": 15
 
-    });
-
-    $('#tabelData4_wrapper').children().first().addClass('d-none')
-    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
-    $('.dataTables_info').addClass('text-sm text-gray py-2')
-    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
-
-    $(document).on('keyup', '#pencarian4', function() {
-      $('#tabelData4').DataTable().search(
-        $(this).val()
-      ).draw();
-    })
-  </script>
 
   </script <?= $this->endSection(); ?> <?php endif; ?>

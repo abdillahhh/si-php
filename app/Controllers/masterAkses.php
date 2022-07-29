@@ -130,6 +130,18 @@ class masterAkses extends BaseController
         $pass_baru = $this->request->getVar('password_baru');
         $confirm_pass = $this->request->getVar('confirm_password');
         $user = $this->masterUserModel->getProfilUser($user_id);
+
+        if ($pass_baru == $confirm_pass && $pass_baru == '123456') {
+            //alert gagal ubah password 
+            $alert = true;
+            $data = [
+                'alert' => $alert,
+                'data_user' => $user
+            ];
+
+            return view('Login/gantiPassword', $data);
+        }
+
         if ($pass_baru == $confirm_pass) {
             $pass_baru_hash = password_hash($pass_baru, PASSWORD_DEFAULT);
 
@@ -144,11 +156,37 @@ class masterAkses extends BaseController
                 'nip_lama_user' => $user['nip_lama_user'],
                 'is_active' => $user['is_active'],
             ]);
-            ///alert berhasil ubah password
-            session()->setFlashdata('pesan', 'Password berhasil diubah!');
-            session()->setFlashdata('pesan_text', 'Silahkan login kembali');
-            session()->setFlashdata('icon', 'success');
-            return redirect()->to('/');
+
+            $list_user_level = $this->masterAksesUserLevelModel->getUserLevel($user['id']);
+            $level_id = $list_user_level[count($list_user_level) - 1]['level_id'];
+            $list_menu = $this->masterAksesUserLevelModel->getAksesMenu($level_id, $user['id']);
+            $list_submenu = $this->masterAksesUserLevelModel->getAksesSubmenu($level_id, $user['id']);
+
+            if ($user['is_active'] == 'Y') {
+                $data = [
+                    'log' => TRUE,
+                    'user_id' => $user['id'],
+                    'level_id' => $level_id,
+                    'list_user_level' => $list_user_level,
+                    'list_menu'  => $list_menu,
+                    'list_submenu' => $list_submenu,
+                    'fullname' => $user['fullname'],
+                    'data_user' => $user
+                ];
+            } else {
+                session()->setFlashdata('pesan', 'Akun Tidak Aktif');
+                session()->setFlashdata('icon', 'error');
+                return redirect()->to('/');
+            }
+
+            session()->set($data);
+            session()->setFlashdata('pesan', 'berhasil login');
+            return redirect()->to('/dashboard');
+            // ///alert berhasil ubah password
+            // session()->setFlashdata('pesan', 'Password berhasil diubah!');
+            // session()->setFlashdata('pesan_text', 'Silahkan login kembali');
+            // session()->setFlashdata('icon', 'success');
+            // return redirect()->to('/');
         } else {
             //alert gagal ubah password 
             $alert = true;
