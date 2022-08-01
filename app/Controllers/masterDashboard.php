@@ -82,6 +82,11 @@ class masterDashboard extends BaseController
         $oktober = [];
         $november = [];
         $desember = [];
+        $laporan_bulan_ini = [];
+        $list_uraian = [];
+        $jml_bulan_pegawai = [];
+        $jml_bulan_pegawai = [];
+        $laporan_bulan_pegawai = [];
         if ($total_laporan != NULL) {
             for ($i = 0; $i < count($total_laporan); $i++) {
                 $data = explode('-', $total_laporan[$i]['tgl_kegiatan']);
@@ -370,6 +375,7 @@ class masterDashboard extends BaseController
             $namaBulan = 'Desember';
         }
 
+
         $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
         $ke = 0;
         foreach ($list_pegawai as $pegawai) {
@@ -384,8 +390,10 @@ class masterDashboard extends BaseController
                     $bulan = $data[1];
                     if ($bulan == date('m')) {
                         $laporan_bulan_pegawai[$i][] = $total_laporan_masing[$i][$a];
+                        $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
+                    } else {
+                        $jml_bulan_pegawai[$i] = 0;
                     }
-                    $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
                 }
             } else {
                 $jml_bulan_pegawai[$i] = 0;
@@ -446,7 +454,7 @@ class masterDashboard extends BaseController
             'nip_lama_pegawai_terpilih' => null
 
         ];
-        //dd($data);
+
         return view('Dashboard/index', $data);
     }
 
@@ -507,6 +515,11 @@ class masterDashboard extends BaseController
         $oktober = [];
         $november = [];
         $desember = [];
+        $laporan_bulan_ini = [];
+        $list_uraian = [];
+        $jml_bulan_pegawai = [];
+        $jml_bulan_pegawai = [];
+        $laporan_bulan_pegawai = [];
 
         if ($total_laporan != NULL) {
             for ($i = 0; $i < count($total_laporan); $i++) {
@@ -836,14 +849,15 @@ class masterDashboard extends BaseController
                     $bulan = $data[1];
                     if ($bulan == date('m')) {
                         $laporan_bulan_pegawai[$i][] = $total_laporan_masing[$i][$a];
+                        $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
+                    } else {
+                        $jml_bulan_pegawai[$i] = 0;
                     }
-                    $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
                 }
             } else {
                 $jml_bulan_pegawai[$i] = 0;
             }
         }
-
         $ke_minggu = 0;
         foreach ($list_pegawai as $pegawai) {
             $total_laporan_mingguan_masing[$ke_minggu] = $this->masterUserModel->getTotalByUserJoinPegawai2($pegawai['id']);
@@ -1270,6 +1284,11 @@ class masterDashboard extends BaseController
         $oktober = [];
         $november = [];
         $desember = [];
+        $laporan_bulan_ini = [];
+        $list_uraian = [];
+        $jml_bulan_pegawai = [];
+        $jml_bulan_pegawai = [];
+        $laporan_bulan_pegawai = [];
         if ($total_laporan != NULL) {
             for ($i = 0; $i < count($total_laporan); $i++) {
                 $data = explode('-', $total_laporan[$i]['tgl_kegiatan']);
@@ -1573,8 +1592,10 @@ class masterDashboard extends BaseController
                     $bulan = $data[1];
                     if ($bulan == date('m')) {
                         $laporan_bulan_pegawai[$i][] = $total_laporan_masing[$i][$a];
+                        $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
+                    } else {
+                        $jml_bulan_pegawai[$i] = 0;
                     }
-                    $jml_bulan_pegawai[$i] = count($laporan_bulan_pegawai[$i]);
                 }
             } else {
                 $jml_bulan_pegawai[$i] = 0;

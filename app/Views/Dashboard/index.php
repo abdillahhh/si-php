@@ -292,14 +292,11 @@
                   <table class="table table-hover text-nowrap" id="tabelData4">
                     <thead>
                       <tr>
-                        <th class="text-center" rowspan="2">NO.</th>
-                        <th rowspan="2">NAMA</th>
-                        <th colspan="2" class="text-center">LAPORAN</th>
-                        <th rowspan="2">AKSI</th>
-                      </tr>
-                      <tr>
+                        <th class="text-center">NO.</th>
+                        <th>NAMA</th>
                         <th>BULAN INI</th>
                         <th>MINGGU INI</th>
+                        <th>AKSI</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -392,105 +389,107 @@
 
 
   <!-- MODAL KEGIATAN -->
-  <div class="modal fade" id="modal-list-laporan">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl ">
-      <div class="modal-content" enctype="multipart/form-data">
-        <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
-        <div class="modal-header">
-          <h4 class="modal-title">Kegiatan Bulan <?php if ($nama_bulan != null) {
-                                                    echo $nama_bulan;
-                                                  } else {
-                                                    echo '';
-                                                  }; ?></h4>
-          <button id="btn-close-modal-tambah" type="button" class="close" aria-label="Close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form action="" method="get">
-          <div class="input-group input-group-md float-right mr-5 mt-3" style="width: 450px">
-            <input type="text" name="keyword" class="form-control float-right auto_search" placeholder="Search" onkeypress="return event.keyCode != 13" />
-            <div class="input-group-append">
-              <button type="button" class="btn btn-default " id="btn-search">
-                <i class="fas fa-search"></i>
-              </button>
+  <?php if (session('level_id') == 7) : ?>
+    <div class="modal fade" id="modal-list-laporan">
+      <div class="modal-dialog modal-dialog-scrollable modal-xl ">
+        <div class="modal-content" enctype="multipart/form-data">
+          <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
+          <div class="modal-header">
+            <h4 class="modal-title">Kegiatan Bulan <?php if ($nama_bulan != null) {
+                                                      echo $nama_bulan;
+                                                    } else {
+                                                      echo '';
+                                                    }; ?></h4>
+            <button id="btn-close-modal-tambah" type="button" class="close" aria-label="Close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="get">
+            <div class="input-group input-group-md float-right mr-5 mt-3" style="width: 450px">
+              <input type="text" name="keyword" class="form-control float-right auto_search" placeholder="Search" onkeypress="return event.keyCode != 13" />
+              <div class="input-group-append">
+                <button type="button" class="btn btn-default " id="btn-search">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="modal-body px-5 py-3">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-hover" id="tabelData">
+                  <thead>
+                    <tr>
+                      <th>NO.</th>
+                      <th>URAIAN</th>
+                      <th>JUMLAH</th>
+                      <th>SATUAN</th>
+                      <th>HASIL KEGIATAN</th>
+                      <th>BUKTI DUKUNG</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no = 1; ?>
+
+                    <?php if ($laporan_bulan_ini != null) : ?>
+                      <?php foreach ($laporan_bulan_ini as $list) : ?>
+                        <tr>
+                          <td><?= $no++; ?></td>
+                          <td id="tgl-kegiatan-tabel"><?= $list['tgl_kegiatan']; ?></td>
+                          <?php $laporan = $list['uraian_kegiatan']; ?>
+                          <?php $data = json_decode($laporan); ?>
+                          <?php $list_uraian = $data->uraian; ?>
+                          <td>
+                            <?php foreach ($list_uraian as $uraian) : ?>
+                              <div class="p-2 mb-1 rounded-sm card-laporan">
+                                <?= $uraian; ?>
+                              </div>
+                            <?php endforeach; ?>
+                          </td>
+                          <?php $list_jumlah = $data->jumlah; ?>
+                          <td>
+                            <?php foreach ($list_jumlah as $jumlah) : ?>
+                              <div class="p-2 mb-1 text-center rounded-sm card-laporan">
+                                <?= $jumlah; ?>
+                              </div>
+                            <?php endforeach; ?>
+                          </td>
+                          <?php $list_satuan2 = $data->satuan; ?>
+                          <td>
+                            <?php foreach ($list_satuan2 as $satuan) : ?>
+                              <div class="p-2 mb-1 text-center rounded-sm card-laporan">
+                                <?= $satuan; ?>
+                              </div>
+                            <?php endforeach; ?>
+                          </td>
+                          <?php $list_bukti_dukung = $data->bukti_dukung; ?>
+                          <td>
+                            <?php $data_user = session('data_user'); ?>
+                            <?php $folderNIP = $data_user['nip_lama_user'];  ?>
+                            <?php foreach ($list_bukti_dukung as $bukti_dukung) : ?>
+                              <div class="p-2 mb-1 rounded-sm card-bukti-laporan">
+                                <?php foreach ($bukti_dukung as $b) : ?>
+                                  <a title="<?= $b; ?>" target="_blank" href="<?= base_url('berkas/' . $folderNIP . '/' . $list['tgl_kegiatan'] . '/' . $b) ?>"> <?= $b; ?></a>
+                                <?php endforeach; ?>
+                              </div>
+                            <?php endforeach; ?>
+
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </form>
-        <div class="modal-body px-5 py-3">
-          <div class="row">
-            <div class="col-md-12">
-              <table class="table table-hover" id="tabelData">
-                <thead>
-                  <tr>
-                    <th>NO.</th>
-                    <th>URAIAN</th>
-                    <th>JUMLAH</th>
-                    <th>SATUAN</th>
-                    <th>HASIL KEGIATAN</th>
-                    <th>BUKTI DUKUNG</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $no = 1; ?>
 
-                  <?php if ($laporan_bulan_ini != null) : ?>
-                    <?php foreach ($laporan_bulan_ini as $list) : ?>
-                      <tr>
-                        <td><?= $no++; ?></td>
-                        <td id="tgl-kegiatan-tabel"><?= $list['tgl_kegiatan']; ?></td>
-                        <?php $laporan = $list['uraian_kegiatan']; ?>
-                        <?php $data = json_decode($laporan); ?>
-                        <?php $list_uraian = $data->uraian; ?>
-                        <td>
-                          <?php foreach ($list_uraian as $uraian) : ?>
-                            <div class="p-2 mb-1 rounded-sm card-laporan">
-                              <?= $uraian; ?>
-                            </div>
-                          <?php endforeach; ?>
-                        </td>
-                        <?php $list_jumlah = $data->jumlah; ?>
-                        <td>
-                          <?php foreach ($list_jumlah as $jumlah) : ?>
-                            <div class="p-2 mb-1 text-center rounded-sm card-laporan">
-                              <?= $jumlah; ?>
-                            </div>
-                          <?php endforeach; ?>
-                        </td>
-                        <?php $list_satuan2 = $data->satuan; ?>
-                        <td>
-                          <?php foreach ($list_satuan2 as $satuan) : ?>
-                            <div class="p-2 mb-1 text-center rounded-sm card-laporan">
-                              <?= $satuan; ?>
-                            </div>
-                          <?php endforeach; ?>
-                        </td>
-                        <?php $list_bukti_dukung = $data->bukti_dukung; ?>
-                        <td>
-                          <?php $data_user = session('data_user'); ?>
-                          <?php $folderNIP = $data_user['nip_lama_user'];  ?>
-                          <?php foreach ($list_bukti_dukung as $bukti_dukung) : ?>
-                            <div class="p-2 mb-1 rounded-sm card-bukti-laporan">
-                              <?php foreach ($bukti_dukung as $b) : ?>
-                                <a title="<?= $b; ?>" target="_blank" href="<?= base_url('berkas/' . $folderNIP . '/' . $list['tgl_kegiatan'] . '/' . $b) ?>"> <?= $b; ?></a>
-                              <?php endforeach; ?>
-                            </div>
-                          <?php endforeach; ?>
-
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  <?php endif; ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-
+        <!-- /.modal-content -->
       </div>
-      <!-- /.modal-content -->
+      <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-  </div>
+  <?php endif; ?>
 
   <?php if ($list_full_laporan_harian != null) : ?>
     <?php foreach ($list_full_laporan_harian as $list) : ?>
@@ -647,9 +646,7 @@
             <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
           </div>
         </form>
-        <!-- /.modal-content -->
       </div>
-      <!-- /.modal-dialog -->
     </div>
   <?php endif; ?>
   <!-- MODAL DETAIL -->
@@ -674,8 +671,9 @@
               <p>Tanggal Kegiatan
               </p>
               <?php if ($laporan_harian_tertentu != NULL) : ?>
-                <h1> <?= $laporan_harian_tertentu['tgl_kegiatan']; ?></h1>
-                <p>Last Modified : <?= $laporan_harian_tertentu['updated_at'];; ?></p>
+                <h1 id="tanggal-detail"></h1>
+                <input type="date" id="tanggal-kegiatan-detail" class="d-none" value="<?= $laporan_harian_tertentu['tgl_kegiatan']; ?>">
+                <p>Last Modified : <?= $laporan_harian_tertentu['updated_at']; ?></p>
               <?php endif; ?>
             </div>
           </div>
@@ -760,6 +758,8 @@
   <script src="<?= base_url('dist/js/pages/dashboard3.js') ?>"></script>
   <script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
   <script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+  <script src="<?= base_url('plugins/datatables/jquery.dataTables.min.js') ?>"></script>
+  <script src="<?= base_url('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
   <!-- Toastr -->
   <script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
   <script type="text/javascript">
@@ -767,12 +767,21 @@
       "paging": true,
       "lengthChange": false,
       "searching": true,
+      "responsive": true,
       'ordering': false,
       "info": true,
       "autoWidth": false,
-      "responsive": true,
       "pageLength": 15
+
     });
+
+    $(document).ready(function() {
+      $('#tabelData4').DataTable().search(
+        $('#pencarian4').val()
+      ).draw();
+    })
+
+
 
     $('#tabelData4_wrapper').children().first().addClass('d-none')
     $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
@@ -781,7 +790,7 @@
 
     $(document).on('keyup', '#pencarian4', function() {
       $('#tabelData4').DataTable().search(
-        $(this).val()
+        $('#pencarian4').val()
       ).draw();
     })
   </script>
@@ -1026,6 +1035,7 @@
 
       var Calendar = FullCalendar.Calendar;
       var calendarEl = document.getElementById('calendar');
+
       var calendar = new Calendar(calendarEl, {
         headerToolbar: {
           left: 'prev,next today',
@@ -1035,11 +1045,10 @@
         events: '',
         editable: false,
         droppable: false,
+        locale: 'id'
       });
       calendar.render();
     });
-
-
     $('#btn-list-laporan').click(function() {
       $('#modal-list-laporan').modal('show');
     })
@@ -1135,40 +1144,38 @@
       $('#tanggal-tambah').html(ubahFormatTanggal($('#hari-ini').val()))
     })
     $('#tanggal-edit').html(ubahFormatTanggal($('#tanggal-kegiatan').val()))
+    $('#tanggal-detail').html(ubahFormatTanggal($('#tanggal-kegiatan-detail').val()))
   </script>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
+  <?php if (session('level_id') == 7) : ?>
+    <script type="text/javascript">
+      $('#tabelData').DataTable({
+        "paging": false,
+        "lengthChange": false,
+        "searching": true,
+        "responsive": true,
+        'ordering': false,
+        "info": false,
+        "autoWidth": false
 
-  <script type="text/javascript">
-    $('#tabelData').DataTable({
-      "paging": false,
-      "lengthChange": false,
-      "searching": true,
-      "responsive": true,
-      'ordering': false,
-      "info": false,
-      "autoWidth": false
+      });
 
-    });
+      function filterData() {
+        $('#tabelData').DataTable().search(
+          $('.auto_search').val()
+        ).draw();
+      }
+      $('.auto_search').on('keyup', function() {
+        filterData();
+      });
 
-    function filterData() {
-      $('#tabelData').DataTable().search(
-        $('.auto_search').val()
-      ).draw();
-    }
-    $('.auto_search').on('keyup', function() {
-      filterData();
-    });
+      $(document).ready(function() {
 
-    $(document).ready(function() {
-
-      $('#tabelData_wrapper').children().first().addClass('d-none')
-    })
-  </script>
-
+        $('#tabelData_wrapper').children().first().addClass('d-none')
+      })
+    </script>
+  <?php endif; ?>
 
   <script>
     $(function() {
@@ -1237,5 +1244,4 @@
   </script>
 
 
-
-  </script <?= $this->endSection(); ?> <?php endif; ?>
+  <?= $this->endSection(); ?> <?php endif; ?>
