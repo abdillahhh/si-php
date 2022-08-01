@@ -23,7 +23,7 @@ class masterAkses extends BaseController
         $data = [
             'alert' => $alert,
         ];
-        return view('Login/login', $data);
+        return view('siphp/login', $data);
     }
 
     public function open()
@@ -56,7 +56,7 @@ class masterAkses extends BaseController
                     'alert' => $alert,
                     'data_user' => $user
                 ];
-                return view('Login/gantiPassword', $data);
+                return view('siphp/gantiPassword', $data);
             }
 
 
@@ -139,7 +139,7 @@ class masterAkses extends BaseController
                 'data_user' => $user
             ];
 
-            return view('Login/gantiPassword', $data);
+            return view('siphp/gantiPassword', $data);
         }
 
         if ($pass_baru == $confirm_pass) {
@@ -195,7 +195,7 @@ class masterAkses extends BaseController
                 'data_user' => $user
             ];
 
-            return view('Login/gantiPassword', $data);
+            return view('siphp/gantiPassword', $data);
         }
     }
 }
