@@ -1210,9 +1210,9 @@ class masterDashboard extends BaseController
 
 
         $data = [
-            'subMenu' => 'Data Pegawai',
+            'subMenu' => 'Rekap Data Pegawai',
             'menu' => 'Dashboard',
-            'title' => 'Data Pegawai',
+            'title' => 'Rekap Data Pegawai',
             'list_pendidikan' => $list_pendidikan,
             'list_golongan' => $list_golongan,
             'list_fungsional' => $list_fungsional,

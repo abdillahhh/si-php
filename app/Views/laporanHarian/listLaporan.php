@@ -180,7 +180,7 @@
 <!-- MODAL TAMBAH KEGIATAN -->
 <div class="modal fade" id="modal-tambah">
     <div class="modal-dialog  modal-xl ">
-        <form id="form-tambah" action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content" enctype="multipart/form-data">
+        <form id="form-tambah" action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content form-tambah" enctype="multipart/form-data">
             <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
             <div class="modal-header">
                 <h4 class="modal-title">Tambah Laporan Kegiatan</h4>
@@ -326,7 +326,7 @@
             </div>
             <div class="modal-footer justify-content-between position-relative">
                 <button id="btn-close-modal-tambah2" type="button" class="btn btn-default">Tutup</button>
-                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+                <button id="tombol-simpan" type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
             </div>
         </form>
         <!-- /.modal-content -->
@@ -338,7 +338,7 @@
 <!-- MODAL EDIT KEGIATAN -->
 <div class="modal fade" id="<?= $modal_edit; ?>" data-keyboard="false" data-backdrop="static">
     <div class=" modal-dialog modal-dialog-scrollable modal-xl">
-        <form action="<?= base_url('/updateLaporanHarian'); ?>" method="post" class="modal-content" enctype="multipart/form-data">
+        <form action="<?= base_url('/updateLaporanHarian'); ?>" method="post" class="modal-content form-edit" enctype="multipart/form-data">
             <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
             <div class="modal-header">
                 <h4 class="modal-title">Edit Laporan Kegiatan</h4>
@@ -518,7 +518,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <a href="<?= base_url('/listLaporan'); ?>" type="button" class="btn btn-default">Tutup</a>
-                <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Update</button>
+                <button id="tombol-edit" type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Update</button>
             </div>
         </form>
         <!-- /.modal-content -->
@@ -983,5 +983,17 @@
             $('.auto_search').val()
         ).draw();
     })
+</script>
+<script>
+    (function() {
+        $('.form-tambah').on('submit', function() {
+            $('#tombol-simpan').attr('disabled', 'true');
+        })
+    })();
+    (function() {
+        $('.form-edit').on('submit', function() {
+            $('#tombol-edit').attr('disabled', 'true');
+        })
+    })();
 </script>
 <?= $this->endSection(); ?>

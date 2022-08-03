@@ -506,7 +506,7 @@
   <?php if (session('level_id') == 7) : ?>
     <div class="modal fade" id="modal-tambah">
       <div class="modal-dialog modal-xl ">
-        <form action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content" enctype="multipart/form-data">
+        <form action="<?= base_url('/saveLaporanHarian'); ?>" method="post" class="modal-content form-tambah" enctype="multipart/form-data">
           <input type="text" id="id_kegiatan" name="id_kegiatan" class="d-none">
           <div class="modal-header">
             <h4 class="modal-title">Tambah Laporan Kegiatan</h4>
@@ -643,7 +643,7 @@
           </div>
           <div class="modal-footer justify-content-between">
             <button data-dismiss="modal" type="button" class="btn btn-default">Tutup</button>
-            <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
+            <button id="tombol-simpan" type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
           </div>
         </form>
       </div>
@@ -1241,6 +1241,14 @@
         },
       });
     });
+  </script>
+
+  <script>
+    (function() {
+      $('.form-tambah').on('submit', function() {
+        $('#tombol-simpan').attr('disabled', 'true');
+      })
+    })();
   </script>
 
 
