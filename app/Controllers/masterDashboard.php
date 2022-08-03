@@ -462,6 +462,12 @@ class masterDashboard extends BaseController
     {
         $list_user = $this->masterUserModel->getAllUser();
         $user_id_detail = $this->masterLaporanHarianModel->getUserIdbyLaporanId($laporan_id);
+
+        if ($user_id_detail != null) {
+            $data_user_pilih = $this->masterUserModel->getDataPegawaiByUserId($user_id_detail);
+        } else {
+            $data_user_pilih = null;
+        }
         if ($user_id_detail['user_id'] == session('user_id')) {
             $event_data = $this->masterLaporanHarianModel->getAll(session('user_id'));
             $total_laporan = $this->masterLaporanHarianModel->getTotalByUser(session('user_id'));
@@ -911,7 +917,7 @@ class masterDashboard extends BaseController
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
             'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'list_pegawai' => $list_pegawai,
-            'user_dipilih' => null,
+            'user_dipilih' => $data_user_pilih,
             'div_card' => 'd-none',
             'list_golongan' => $this->masterGolonganModel->getAllGolongan(),
             'list_fungsional' => $this->masterFungsionalModel->getAllFungsional(),

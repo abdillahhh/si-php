@@ -728,7 +728,7 @@
                           <?php $list_bukti_dukung = $data->bukti_dukung; ?>
                           <?php for ($a = 0; $a < count($list_bukti_dukung[$i]); $a++) : ?>
                             <div title="<?= $list_bukti_dukung[$i][$a]; ?>" class="file-list">
-                              <a title="<?= $list_bukti_dukung[$i][$a]; ?>" href="<?= base_url('berkas/' . $folderNIP . '/' . $laporan_harian_tertentu['tgl_kegiatan'] . '/' . $list_bukti_dukung[$i][$a]) ?>"> <?= $list_bukti_dukung[$i][$a]; ?></a>
+                              <a target="_blank" title="<?= $list_bukti_dukung[$i][$a]; ?>" href="<?= base_url('berkas/' . $user_dipilih['nip_lama'] . '/' . $laporan_harian_tertentu['tgl_kegiatan'] . '/' . $list_bukti_dukung[$i][$a]) ?>"> <?= $list_bukti_dukung[$i][$a]; ?></a>
                             </div>
                           <?php endfor; ?>
 
