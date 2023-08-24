@@ -50,6 +50,18 @@ class MasterLaporanHarianModel extends Model
             ->getResultArray();
     }
 
+    public function getTotalByUserDate($tgl_awal, $tgl_akhir, $user_id)
+    {
+        return $this
+            ->table($this->table)
+            ->where('user_id', $user_id)
+            ->where('tgl_kegiatan >=', $tgl_awal)
+            ->where('tgl_kegiatan <=', $tgl_akhir)
+            ->orderBy('tgl_kegiatan', 'ASC')
+            ->get()
+            ->getResultArray();
+    }
+
 
 
 

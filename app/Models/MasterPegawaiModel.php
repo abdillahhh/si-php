@@ -28,6 +28,19 @@ class MasterPegawaiModel extends Model
             ->getRowArray();
     }
 
+
+    public function getProfilCetak($nip_lama_user)
+    {
+        return $this
+            ->table($this->table)
+            ->select('mst_pegawai.*,mst_fungsional.*,mst_satker.*')
+            ->where('mst_pegawai.nip_lama', $nip_lama_user)
+            ->join('mst_fungsional', 'mst_fungsional.id = mst_pegawai.fungsional_kd')
+            ->join('mst_satker', 'mst_satker.kd_satker = mst_pegawai.satker_kd')
+            ->get()
+            ->getRowArray();
+    }
+
     public function getDetailPegawaiById($id_pegawai)
     {
         return $this
@@ -53,6 +66,15 @@ class MasterPegawaiModel extends Model
             ->getResultArray();
     }
 
+    public function getAllPegawaiOnDashboard()
+    {
+        return $this
+            ->table('mst_pegawai')
+            ->where('satker_kd', 1500)
+            ->get()
+            ->getResultArray();
+    }
+
     public function getAllPegawaiBySatker($satker_kd)
     {
         return $this
@@ -68,6 +90,17 @@ class MasterPegawaiModel extends Model
         return $this
             ->table('mst_pegawai')
             ->where('id', $id_pegawai)
+            ->get()
+            ->getRowArray();
+    }
+
+    
+    public function getPegawaiByNipLama($nip_lama)
+    {
+        return $this
+            ->table('mst_pegawai')
+            ->select('*')
+            ->where('nip_lama', $nip_lama)
             ->get()
             ->getRowArray();
     }
@@ -94,5 +127,26 @@ class MasterPegawaiModel extends Model
             ->orLike('ket_jabatan', $keyword)
             ->get()
             ->getResultArray();
+    }
+
+
+    public function getAllPegawaiOnBidang($satker_kd, $es3_kd)
+    {
+        if (intval($es3_kd) != 0) {
+            return $this
+                ->table('tbl_user.*,mst_pegawai.*')
+                ->where('mst_pegawai.satker_kd', $satker_kd)
+                ->where('mst_pegawai.es3_kd', $es3_kd)
+                ->join('tbl_user', 'mst_pegawai.nip_lama = tbl_user.nip_lama_user')
+                ->get()
+                ->getResultArray();
+        } else {
+            return $this
+                ->table('tbl_user.*,mst_pegawai.*')
+                ->where('mst_pegawai.satker_kd', $satker_kd)
+                ->join('tbl_user', 'mst_pegawai.nip_lama = tbl_user.nip_lama_user')
+                ->get()
+                ->getResultArray();
+        }
     }
 }

@@ -1,4 +1,5 @@
 <?= $this->extend('layout/template'); ?>
+
 <?php if (allowHalaman(session('level_id'), 1)) : ?>
 
   <?= $this->section('content'); ?>
@@ -13,7 +14,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Home</a></li>
               <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
@@ -27,12 +28,15 @@
         <div class="container-fluid">
           <!-- Small boxes (Stat box) -->
           <div class="row">
-            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+            <div class="col-lg-6 col-6 widget" style="cursor: pointer;">
               <!-- small box -->
               <div class="small-box  bg-white" style="border: 1px solid gray; padding: 0;">
                 <div class="inner" style="color: #55415C; padding-left: 15px;">
                   <h3 style="font-size: 70px;"><?= $total_laporan; ?></h3>
-                  <p style="font-weight: bold;">Jumlah Laporan</p>
+                  <?php if (session('level_id') == 7) : ?>
+                    <p style="font-weight: bold;">Jumlah Seluruh Laporan</p>
+                  <?php endif; ?>
+
                 </div>
                 <?php if (session('level_id') == 7) : ?>
                   <a href="<?= base_url('/listLaporan'); ?>" class="selanjutnya">
@@ -46,7 +50,7 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+            <div class="col-lg-6 col-6 widget" style="cursor: pointer;">
               <!-- small box -->
               <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
                 <div class="inner" style="color: #55415C; padding-left: 15px;">
@@ -70,8 +74,8 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
-              <!-- small box -->
+            <!-- <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
+        
               <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
                 <div class="inner" style="color: #55415C; padding-left: 15px;">
                   <?php if ($jumlah_user != null) : ?>
@@ -85,9 +89,9 @@
 
               </div>
             </div>
-            <!-- ./col -->
+        
             <div class="col-lg-3 col-6 widget" style="cursor: pointer;">
-              <!-- small box -->
+        
               <div class="small-box bg-white" style="border: 1px solid gray; padding: 0;">
                 <div class="inner" style="color: #55415C; padding-left: 15px;">
                   <h3 style="font-size: 70px;">0</h3>
@@ -98,14 +102,14 @@
                   <p style="margin:0;">&nbsp;</p>
                 </a>
               </div>
-            </div>
-            <!-- ./col -->
+            </div> -->
+
           </div>
           <!-- /.row -->
         </div>
       </section>
     <?php endif; ?>
-    <?php if (session('level_id') == 8 || session('level_id') == 9) : ?>
+    <?php if (session('level_id') == 8 || session('level_id') == 9 || session('level_id') == 5) : ?>
       <section class="content">
         <div class="container-fluid">
           <!-- Small boxes (Stat box) -->
@@ -119,7 +123,7 @@
                                                 } else {
                                                   echo 0;
                                                 }; ?></h3>
-                  <p style="font-weight: bold;">Jumlah Laporan</p>
+                  <p style="font-weight: bold;">Jumlah Laporan Seluruh Pegawai</p>
                 </div>
                 <span href="#" class="selanjutnya">
                   <p style="margin:0;">&nbsp;</p>
@@ -196,7 +200,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-7">
-            <?php if (session('level_id') == 1 || session('level_id') == 8 || session('level_id') == 9) : ?>
+            <?php if (session('level_id') == 1 || session('level_id') == 8 || session('level_id') == 9 || session('level_id') == 5) : ?>
               <div class="row <?= $div_card; ?>">
                 <div class="col-md-12">
                   <div class="card p-3">
@@ -208,7 +212,7 @@
                     <div class="row">
                       <?php if ($user_dipilih != null) : ?>
                         <div class="col-2 text-center">
-                          <img style="width: 100%; max-width: 100px;" class="mr-3" src="<?= base_url('images/profil/' . $user_dipilih['image']) ?>" alt="">
+                          <img style="width: 100%; max-width: 100px;" class="mr-3" src="<?= base_url('/images/profil/' . $user_dipilih['image']) ?>" alt="">
                         </div>
                         <div class="col-6 d-flex flex-column">
                           <strong class=" mt-2"><?= $user_dipilih['nama_pegawai']; ?></strong>
@@ -254,10 +258,24 @@
                   </div>
                 </div>
               <?php endif; ?>
+              <?php if ($user_dipilih != null) : ?>
+                <div class="row mb-3">
+                  <div class="col-12 ">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cetak">Download Rekap <?= $user_dipilih['nama_pegawai']; ?></button>
+                  </div>
+                </div>
+              <?php endif; ?>
             <?php endif; ?>
+
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-12 position-relative">
+
                 <div class="card">
+                  <div class="notesa d-none">
+                    <div class="drop d-none">
+
+                    </div>
+                  </div>
                   <!-- THE CALENDAR -->
                   <div id="calendar"></div>
                 </div>
@@ -265,7 +283,7 @@
             </div>
           </div>
           <!-- DIUBAH MENGGUNAKAN HELPERRRRRR -->
-          <?php if (session('level_id') == 8 || session('level_id') == 1 || session('level_id') == 9) : ?>
+          <?php if (session('level_id') == 8 || session('level_id') == 1 || session('level_id') == 9 || session('level_id') == 5) : ?>
             <div class="col-md-5">
               <div class="row mb-3">
                 <div class="col-md-6">
@@ -282,10 +300,17 @@
                 </form>
               </div>
               <div class="card">
-                <div class="input-group input-group-md pt-3 px-4" style="width: 250px">
-                  <input type="search" id="pencarian4" name="table_search" class="form-control float-right" placeholder="Search ..." />
-                </div>
 
+                <div class="row">
+                  <div class="col-6">
+                    <div class="input-group input-group-md pt-3 px-4" style="width: 250px">
+                      <input type="search" id="pencarian4" name="table_search" class="form-control float-right" placeholder="Search ..." />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <button class="btn btn-primary float-right mt-3 mx-4" data-toggle="modal" data-target="#modal-cetak-bidang">Download Rekap</button>
+                  </div>
+                </div>
 
                 <!-- /.card-header -->
                 <form action="<?= base_url('/showDataUser') ?>" method="POST" class="card-body table-responsive pb-0 px-0">
@@ -328,8 +353,63 @@
           <!-- CHART -->
 
           <?php if (allowChart(session('level_id'), 1)) : ?>
-            <div class="col-md-5">
-              <div class=" mb-3">
+
+            <div class="col-md-5 ">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="mb-3"><strong>Catatan Saya</strong></h5>
+                      <button class="btn btn-sm btn-primary shadow hari-ini">Hari ini</button>
+                      <button class="btn btn-sm ml-3 akan-datang">Akan Datang</button>
+                      <button class="btn btn-sm ml-3 sebelumnya">Sebelumnya</button>
+
+                      <div class="mt-3 w-100 catatan-container-hari-ini px-1 d-flex flex-column align-items-center">
+                      </div>
+                      <div class="mt-3 w-100 catatan-container-akan-datang  px-1 d-none flex-column align-items-center ">
+                      </div>
+                      <div class="mt-3 w-100 catatan-container-sebelumnya d-none px-1 flex-column align-items-center">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-8">
+                          <h5 class="mb-3"><strong>Catatan diterima dan terkirim</strong></h5>
+                        </div>
+                        <div class="col-4">
+                          <a class="float-right" href="<?= base_url('detailCatatan') ?>">Detail</a>
+                        </div>
+                      </div>
+                      <button class="position-relative btn btn-sm btn-primary diterima shadow">
+                        Diterima
+                        <span class="pulse"></span>
+                      </button>
+                      <button class="btn btn-sm terkirim ml-3">Terkirim</button>
+
+                      <div class="mt-3 w-100 catatan-container-diterima px-1 d-flex flex-column align-items-center">
+                      </div>
+                      <div class="mt-3 w-100 catatan-container-terkirim  px-1 d-none flex-column align-items-center ">
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          <?php endif; ?>
+        </div>
+        <?php if (allowChart(session('level_id'), 1)) : ?>
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
                 <div class="card">
                   <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
@@ -354,42 +434,107 @@
                 </div>
               </div>
             </div>
-          <?php endif; ?>
-        </div>
 
-        <?php if (session('level_id') == 1) : ?>
-          <!-- <div class="row mt-3">
-            <div class="col-md-12">
-              <div class="row mb-3">
-                <div class="col-md-9">
-                  <hr>
-                </div>
-                <div class="col-md-3 text-right">
-                  <h4>Report Laporan Perminggu</h4>
-                </div>
-
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <div class="card" id="calendarWeek">
-
-                </div>
-              </div>
-            </div>
           </div>
-      </div> -->
         <?php endif; ?>
-        <!-- /.row -->
       </div>
-      <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
   </div>
 
 
+  <?php if (session('level_id') == 1 || session('level_id') == 8 || session('level_id') == 9 || session('level_id') == 5) : ?>
+    <!-- MODAL CETAK -->
+    <div class="modal fade" id="modal-cetak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <form action="<?= base_url('/cetakLaporanByPimpinan'); ?>" method="POST" class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title" id="exampleModalLabel">Cetak Kegiatan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-4">
+              <div class="col-12 text-center">
+                <h5><strong>Tentukan batas mencetak</strong></h5>
+              </div>
+            </div>
+            <?php if ($user_dipilih != null) : ?>
+              <input type="hidden" name="nip_lama_dipilih" value="<?= $user_dipilih['nip_lama']; ?>">
+            <?php endif; ?>
+            <div class="row">
+              <div class="form-group text-center col-6">
+                <label>Awal</label>
+                <div class="password">
+                  <input type="date" id='tgl_cetak_awal' name="tgl_awal" class="form-control" required>
+                </div>
 
-  <!-- MODAL KEGIATAN -->
+              </div>
+
+              <div class="form-group text-center col-6">
+                <label>Akhir</label>
+                <div class="password">
+                  <input type="date" id='tgl_cetak_akhir' name="tgl_akhir" class="form-control">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary" style="border:none;" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-print mr-2"></i>Cetak</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
+    <!-- MODAL CETAK BIDANG-->
+    <div class="modal fade" id="modal-cetak-bidang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <form action="<?= base_url('/cetakLaporanByBidang'); ?>" method="POST" class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title" id="exampleModalLabel">Cetak Kegiatan Per Bidang</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-4">
+              <div class="col-12 text-center">
+                <h5><strong>Tentukan batas mencetak</strong></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group text-center col-6">
+                <label>Awal</label>
+                <div class="password">
+                  <input type="date" id='tgl_cetak_awal' name="tgl_awal" class="form-control" required>
+                </div>
+
+              </div>
+
+              <div class="form-group text-center col-6">
+                <label>Akhir</label>
+                <div class="password">
+                  <input type="date" id='tgl_cetak_akhir' name="tgl_akhir" class="form-control">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary" style="border:none;" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-print mr-2"></i>Cetak</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  <?php endif; ?>
+
   <?php if (session('level_id') == 7) : ?>
+    <!-- MODAL KEGIATAN -->
     <div class="modal fade" id="modal-list-laporan">
       <div class="modal-dialog modal-dialog-scrollable modal-xl ">
         <div class="modal-content" enctype="multipart/form-data">
@@ -421,10 +566,10 @@
                   <thead>
                     <tr>
                       <th>NO.</th>
+                      <th>TANGGAL</th>
                       <th>URAIAN</th>
                       <th>JUMLAH</th>
                       <th>SATUAN</th>
-                      <th>HASIL KEGIATAN</th>
                       <th>BUKTI DUKUNG</th>
                     </tr>
                   </thead>
@@ -587,10 +732,6 @@
                   <div class="row px-1  w-100">
                     <div class="form-group  w-100 position-relative">
                       <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
-                      <!-- <textarea id="kegiatan-input" class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea> -->
-                      <!-- <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
-                                        <option class="option-kegiatan border-bottom d-none">Option 1</option>
-                                    </div> -->
                     </div>
                   </div>
                 </div>
@@ -747,406 +888,59 @@
 
 
 
+  <script src="<?= base_url('/plugins/moment/moment.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/fullcalendar/main.js') ?>"></script>
+  <script src="<?= base_url('/dist/js/pages/dashboard3.js') ?>"></script>
+  <script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
+  <script src="<?= base_url('/plugins/summernote/summernote-bs4.min.js') ?>"></script>
+  <script src="<?= base_url('/js/tanggal.js') ?>"></script>
+  <script src="<?= base_url('/js/jquery-ui.min.js') ?>"></script>
+<script>
+    <?php if (session()->getFlashdata('pesan')) { ?>
+        Swal.fire({
+            title: "<?= session()->getFlashdata('pesan') ?>",
+            icon: "<?= session()->getFlashdata('icon') ?>",
+            showConfirmButton: true,
+        });
+    <?php } ?>
+</script>
 
-  <!-- /.modal -->
+  <script>
+    var myId = '<?= session('user_id') ?>';
+    var check = <?= $events ?>;
+    var pegawai = <?= $pegawai_json ?>;
+    let noted = <?= $catatan; ?>;
+    const start = new Date("<?= $tanggal_mulai; ?>");
 
-
-
-  <!-- fullCalendar 2.2.5 -->
-  <script src="<?= base_url('plugins/moment/moment.min.js') ?>"></script>
-  <script src="<?= base_url('plugins/fullcalendar/main.js') ?>"></script>
-  <script src="<?= base_url('dist/js/pages/dashboard3.js') ?>"></script>
-  <script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
-  <script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
-  <script src="<?= base_url('plugins/datatables/jquery.dataTables.min.js') ?>"></script>
-  <script src="<?= base_url('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
-  <!-- Toastr -->
-  <script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
-  <script type="text/javascript">
-    $('#tabelData4').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": true,
-      "responsive": true,
-      'ordering': false,
-      "info": true,
-      "autoWidth": false,
-      "pageLength": 15
-
-    });
-
-    $(document).ready(function() {
-      $('#tabelData4').DataTable().search(
-        $('#pencarian4').val()
-      ).draw();
-    })
-
-
-
-    $('#tabelData4_wrapper').children().first().addClass('d-none')
-    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
-    $('.dataTables_info').addClass('text-sm text-gray py-2')
-    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
-
-    $(document).on('keyup', '#pencarian4', function() {
-      $('#tabelData4').DataTable().search(
-        $('#pencarian4').val()
-      ).draw();
-    })
+    const dataBulan = [<?= $total_januari; ?>, <?= $total_februari; ?>, <?= $total_maret; ?>, <?= $total_april; ?>, <?= $total_mei; ?>, <?= $total_juni; ?>, <?= $total_juli; ?>, <?= $total_agustus; ?>, <?= $total_september; ?>, <?= $total_oktober; ?>, <?= $total_november; ?>, <?= $total_desember; ?>]
+    <?php if ($list_full_laporan_harian != null) : ?>
+      const uraian = [
+        <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?> `<?php
+                                                                          $uraian = preg_replace("/\r|\n/", " ", $uraian);
+                                                                          echo $newUraian = str_replace('"', '', $uraian); ?>`,
+        <?php endforeach; ?>
+      ]
+    <?php endif; ?>
+    <?php if ($list_satuan != NULL) : ?>
+      const satuan = [
+        <?php foreach ($list_satuan as $satuan) : ?> "<?= $satuan['nama_satuan']; ?>",
+        <?php endforeach; ?>
+      ]
+    <?php endif; ?>
+    const base_url = '<?= base_url() ?>'
   </script>
+  <script src="<?= base_url('/js/index.js') ?>"></script>
+  <script src="<?= base_url('/js/append.js') ?>"></script>
+
   <script>
     $(function() {
       bsCustomFileInput.init();
     });
   </script>
-
-  <script>
-    $(document).ready(function() {
-
-      let tglTabel = document.querySelectorAll('#tgl-kegiatan-tabel')
-      for (i = 0; i <= tglTabel.length; i++) {
-        tglTabel[i].innerHTML = ubahFormatTanggal2(tglTabel[i].textContent);
-      }
-    })
-    $(document).ready(function() {
-      $(document).on('keyup', '#kegiatan-input', function() {
-        $(this).next().removeClass('d-none')
-        for (i = 0; i <= $(this).next().children().length; i++) {
-          if ($(this).next().children().eq(i).text().toLowerCase().match($(this).val().toLowerCase()) !== null) {
-            $(this).next().children().eq(i).removeClass('d-none')
-          } else {
-            $(this).next().children().eq(i).addClass('d-none')
-          }
-        }
-      })
-
-      $(document).on('blur', '#kegiatan-input', function() {
-        let textarea = $(this)
-        setTimeout(function() {
-          textarea.next().addClass('d-none')
-        }, 400)
-      })
-
-      $(document).on('click', '.option-kegiatan', function() {
-        $(this).parent().prev().val($(this).text())
-        $(this).parent().addClass('d-none')
-      })
-    })
-  </script>
-
-  <script>
-    var Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-    });
-    $(document).on('input', '#formFileMultiple', function() {
-      if (this.files[0].size > 500000) { // ini untuk ukuran 500 Kb
-        Toast.fire({
-          icon: "warning",
-          title: "Ukuran File Melebihi 200Kb!",
-        });
-        this.value = "";
-        return false;
-      };
-      var pathFile = this.value;
-      var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.pdf|\.xlsx|\.docx|\.ppt|\.txt|\.rar|\.zip|\.csv)$/i;
-      if (!ekstensiOk.exec(pathFile)) {
-        Toast.fire({
-          icon: "warning",
-          title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv",
-        });
-        this.value = "";
-        return false;
-      }
-    })
-  </script>
-  <script>
-    $(document).ready(function() {
-      $("#modal-edit").modal("show");
-      $("#modal-detail").modal("show");
-
-      $(document).on("click", "#hapus-baris", function() {
-        if ($(this).parent().parent().attr('id') == 'baru') {
-          $(this).parent().remove();
-          $('#baru').children().find('#hapus-baris').addClass('d-none')
-          $('#baru').children().last().find('#hapus-baris').removeClass('d-none')
-        }
-        if ($(this).parent().parent().attr('id') == 'baru2') {
-          $(this).parent().remove();
-          $('#baru2').children().find('#hapus-baris').addClass('d-none')
-          $('#baru2').children().last().find('#hapus-baris').removeClass('d-none')
-        }
-      });
-
-      function appendBaris(modal, noBaris) {
-        $(modal).append(
-          `
-        <div class="row mt-4 rounded position-relative pt-2 kegiatan-baru">
-                    <span id="hapus-baris" type="button" class="delete-kegiatan"><i class="fas fa-times"></i></span>
-                    <div class="col-xl-1 baris-kegiatan">
-                        <div class="row"><strong>NO</strong></div>
-                        <div class="row">` +
-          noBaris +
-          `</div>
-                    </div>
-                    <div class="col-xl-4 baris-kegiatan">
-                        <div class="row"><strong>Uraian Kegiatan</strong></div>
-                        <div class="row px-1 w-100">
-                        <div class="form-group w-100 position-relative">
-                                    <textarea id="kegiatan-input" class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
-                                    <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
-                                    <?php if ($list_full_laporan_harian != null) : ?>
-                                        <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?>
-                                            <option class="option-kegiatan border-bottom d-none"><?= $uraian; ?></option>
-                                        <?php endforeach; ?>
-                                     <?php endif; ?>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-1 baris-kegiatan">
-                        <div class="row"><strong>Jumlah</strong></div>
-                        <div class="row px-1 w-100">
-                            <div class="form-group w-100">
-                                <input type="number" min="1" value="1" class="form-control w-100" name="field_jumlah[]" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 baris-kegiatan">
-                        <div class="row"><strong>Satuan</strong></div>
-                        <div class="row px-1 w-100">
-                            <div class="input-group w-100">
-                            <select class=" form-control w-100" name="field_satuan[]" required>
-                                    <?php if ($list_satuan != NULL) : ?>
-                                        <?php foreach ($list_satuan as $satuan) : ?>
-                                            <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?></option>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 baris-kegiatan">
-                        <div class="row"><strong>Hasil Kegiatan</strong></div>
-                        <div class="row px-1 w-100">
-                              <div class="form-group  w-100 position-relative">
-                              <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
-                            
-                                </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 baris-kegiatan mb-2">
-                        <div class="row"><strong>Bukti Dukung</strong></div>
-                        <div class="row w-100">
-                            <div class="input-group w-100">
-                                <div class="custom-file w-100">
-                                    <input type="file" class="custom-file-input w-100" name="field_bukti` +
-          noBaris +
-          `[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                    <p class="file-tip d-none">
-                                            <strong class="mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
-                                                Jenis file :
-                                            </strong> <br>
-                                            .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip <br><br>
-                                            <strong>
-                                                Ukuran File Maks : 200kb
-                                            </strong>
-                                        </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-    `
-        );
-      }
-
-      $('[id^="tambah-baris"]').click(function() {
-        let noBaris = $("#lama").children().length + $("#baru").children().length + 1;
-        appendBaris("#baru", noBaris);
-        bsCustomFileInput.init();
-        $('#baru').children().find('#hapus-baris').addClass('d-none')
-        $('#baru').children().last().find('#hapus-baris').removeClass('d-none')
-      });
-
-      $('[id^="tambah-baris2"]').click(function() {
-        let noBaris2 = $("#lama2").children().length + $("#baru2").children().length + 1;
-        appendBaris("#baru2", noBaris2);
-        bsCustomFileInput.init();
-        $('#baru2').children().find('#hapus-baris').addClass('d-none')
-        $('#baru2').children().last().find('#hapus-baris').removeClass('d-none')
-      });
-    });
-  </script>
-
-  <script>
-    $(document).on("mouseover", '.custom-file-input', function() {
-      $(this).next().next().removeClass('d-none')
-    })
-    $(document).on("mouseout", '.custom-file-input', function() {
-      $(this).next().next().addClass('d-none')
-    })
-    $(document).on("mouseover", '.file-list', function() {
-      $(this).next('.file-tip2').removeClass('d-none')
-    })
-    $(document).on("mouseout", '.file-list', function() {
-      $(this).next('.file-tip2').addClass('d-none')
-    })
-  </script>
-
-
-  <script>
-    $(function() {
-      var date = new Date();
-      var d = date.getDate(),
-        m = date.getMonth(),
-        y = date.getFullYear();
-
-      var Calendar = FullCalendar.Calendar;
-      var calendarEl = document.getElementById('calendarWeek');
-      var calendar = new Calendar(calendarEl, {
-        displayEventTime: false,
-        initialView: 'timeGridWeek',
-        hiddenDays: [0, 6],
-        headerToolbar: {
-          left: 'prev,next today',
-          right: 'title',
-        },
-        themeSystem: 'bootstrap',
-        events: '',
-        editable: false,
-        droppable: false,
-      });
-      calendar.render();
-    });
-
-
-
-    $(function() {
-      var date = new Date();
-      var d = date.getDate(),
-        m = date.getMonth(),
-        y = date.getFullYear();
-
-      var Calendar = FullCalendar.Calendar;
-      var calendarEl = document.getElementById('calendar');
-
-      var calendar = new Calendar(calendarEl, {
-        headerToolbar: {
-          left: 'prev,next today',
-          right: 'title'
-        },
-        themeSystem: 'bootstrap',
-        events: '',
-        editable: false,
-        droppable: false,
-        locale: 'id'
-      });
-      calendar.render();
-    });
-    $('#btn-list-laporan').click(function() {
-      $('#modal-list-laporan').modal('show');
-    })
-
-    var check = <?= $events ?>;
-
-    const start = new Date("<?= $tanggal_mulai; ?>");
-    const end = new Date();
-    let uncheck = []
-    let j = 0
-
-    for (var loop = new Date(start); loop <= end; loop.setDate(loop.getDate() + 1)) {
-      uncheck[j] = loop.toISOString().slice(0, 10)
-      j++
-    }
-
-    for (i = 0; i < check.length; i++) {
-      for (j = 0; j < uncheck.length; j++) {
-        if (check[i]['tgl'] == uncheck[j]) {
-          uncheck[j] = ''
-        }
-      }
-    }
-
-    function appendIconKalender() {
-      for (i = 0; i < check.length; i++) {
-        $('.fc-daygrid-day').each(function() {
-          if ($(this).data('date') == check[i]['tgl']) {
-            $(this).find('.fc-daygrid-day-events').addClass('d-flex justify-content-center')
-            $(this).find('.fc-daygrid-day-events').append(`<a href="` + check[i]['link'] + `" class="iconKalender"><i class="fas fa-check-circle fa-2x text-green"></i></a>`)
-          }
-        })
-      }
-    }
-
-    function appendIconKalenderUncheck() {
-      for (i = 0; i < uncheck.length; i++) {
-        $('.fc-daygrid-day').each(function() {
-          if ($(this).data('date') == uncheck[i]) {
-            $(this).find('.fc-daygrid-day-events').addClass('d-flex justify-content-center')
-            $(this).find('.fc-daygrid-day-events').append(`<a href="" id="btn-uncheck" data-toggle="modal" data-target="#modal-tambah" data-date_click="` + $(this).data('date') +
-              `" class="iconKalender"><i class="fas fa-exclamation-circle fa-2x text-red"></i></a>`)
-          }
-        })
-      }
-    }
-
-
-
-    $(document).ready(function() {
-      appendIconKalender();
-      appendIconKalenderUncheck();
-
-      // 
-      $('.fc-prev-button').click(function() {
-        hapusAppend()
-        appendIconKalender()
-        appendIconKalenderUncheck()
-
-      })
-      $('.fc-next-button').click(function() {
-        hapusAppend();
-        appendIconKalender()
-        appendIconKalenderUncheck()
-
-      })
-      $('.fc-today-button').click(function() {
-        hapusAppend();
-
-        appendIconKalender()
-        appendIconKalenderUncheck()
-
-      })
-    })
-
-    // disable bulan pekan hari
-    // function disableBPH() {
-    //   $('.fc-header-toolbar div:last-child').remove()
-    // }
-
-    function hapusAppend() {
-      $('.fc-daygrid-day').each(function() {
-        $(this).find('.iconKalender').remove()
-      })
-    }
-  </script>
-
-  <script src="<?= base_url('js/tanggal.js') ?>"></script>
-  <script>
-    $(document).on('click', '#btn-uncheck', function() {
-      $('#hari-ini').val($(this).data('date_click'));
-
-      $('#tanggal-tambah').html(ubahFormatTanggal($('#hari-ini').val()))
-    })
-    $('#tanggal-edit').html(ubahFormatTanggal($('#tanggal-kegiatan').val()))
-    $('#tanggal-detail').html(ubahFormatTanggal($('#tanggal-kegiatan-detail').val()))
-  </script>
-
 
   <?php if (session('level_id') == 7) : ?>
     <script type="text/javascript">
@@ -1157,9 +951,8 @@
         "responsive": true,
         'ordering': false,
         "info": false,
-        "autoWidth": false
-
-      });
+        "autoWidth": false,
+      })
 
       function filterData() {
         $('#tabelData').DataTable().search(
@@ -1178,78 +971,40 @@
   <?php endif; ?>
 
   <script>
-    $(function() {
-      'use strict';
-
-      var ticksStyle = {
-        fontColor: '#495057',
-        fontStyle: 'bold',
-      };
-
-      var mode = 'index';
-      var intersect = true;
-
-      var $kegiatanChart = $('#kegiatan-chart');
-      // eslint-disable-next-line no-unused-vars
-      var kegiatanChart = new Chart($kegiatanChart, {
-        type: 'horizontalBar',
-        data: {
-          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-          datasets: [{
-            backgroundColor: '#3c4b64',
-            borderColor: '#3c4b64',
-            data: [<?= $total_januari; ?>, <?= $total_februari; ?>, <?= $total_maret; ?>, <?= $total_april; ?>, <?= $total_mei; ?>, <?= $total_juni; ?>, <?= $total_juli; ?>, <?= $total_agustus; ?>, <?= $total_september; ?>, <?= $total_oktober; ?>, <?= $total_november; ?>, <?= $total_desember; ?>],
-          }, ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          tooltips: {
-            mode: mode,
-            intersect: intersect,
-          },
-          hover: {
-            mode: mode,
-            intersect: intersect,
-          },
-          legend: {
-            display: false,
-          },
-          scales: {
-            xAxes: [{
-              range: 1,
-              gridLines: {
-                display: true,
-              },
-              ticks: $.extend({
-                  beginAtZero: true,
-
-                  callback: function(value) {
-                    return value;
-                  },
-                },
-                ticksStyle
-              ),
-            }, ],
-            yAxes: [{
-              display: true,
-              gridLines: {
-                display: false,
-              },
-              ticks: ticksStyle,
-            }, ],
-          },
-        },
+    $(document).ready(function() {
+      appendIconKalender();
+      appendIconKalenderUncheck();
+      <?php if (session('level_id') == 7) : ?>
+        catatan();
+        tips();
+      <?php endif; ?>
+      //
+      $('.fc-prev-button').click(function() {
+        hapusAppend();
+        appendIconKalender();
+        appendIconKalenderUncheck();
+        <?php if (session('level_id') == 7) : ?>
+          catatan();
+        <?php endif; ?>
+      });
+      $('.fc-next-button').click(function() {
+        hapusAppend();
+        appendIconKalender();
+        appendIconKalenderUncheck();
+        <?php if (session('level_id') == 7) : ?>
+          catatan();
+        <?php endif; ?>
+      });
+      $('.fc-today-button').click(function() {
+        hapusAppend();
+        appendIconKalender();
+        appendIconKalenderUncheck();
+        <?php if (session('level_id') == 7) : ?>
+          catatan();
+        <?php endif; ?>
       });
     });
   </script>
 
-  <script>
-    (function() {
-      $('.form-tambah').on('submit', function() {
-        $('#tombol-simpan').attr('disabled', 'true');
-      })
-    })();
-  </script>
-
-
-  <?= $this->endSection(); ?> <?php endif; ?>
+  <?= $this->endSection(); ?>
+<?php endif; ?>

@@ -1,9 +1,7 @@
 <?= $this->extend('layout/template'); ?>
 
 <?= $this->section('content'); ?>
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -12,19 +10,19 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active">User Profile</li>
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- Main content -->
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
-                    <!-- Profile Image -->
+
                     <div class="card card-primary">
                         <form action="<?= base_url('/updateProfileByUser'); ?>" method="POST" enctype="multipart/form-data" class="card-body box-profile">
 
@@ -85,17 +83,11 @@
                                     <button type="button" id="btn-ubah-password" class="btn btn-secondary float-right" style="border: none;" data-toggle="modal" data-target="#modal-ubah-password" disabled>Ubah Password</button>
                                 </div>
                             </div>
-
-
                         </form>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!-- /.col -->
-                <div class="col-md-8">
 
-                    <!-- DATA PEGAWAI-->
+                <div class="col-md-8">
                     <div class="card card-primary card-outline" style="border: none;">
                         <div class="card-header" style="background-color: #3c4b64; color: white;">
                             <h3 class="card-title">Data Kepegawaian</h3>
@@ -200,18 +192,14 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!-- /.col -->
             </div>
         </div>
     </section>
 </div>
-<!-- MODAL UBAH PASSWORD -->
+
 <div class="modal fade" style="padding-top: 8%;" id="modal-ubah-password">
     <div class="modal-dialog">
         <form action="<?= base_url('/gantiPasswordByUser'); ?>" method="POST" class="modal-content">
@@ -251,16 +239,13 @@
                 <button type="submit" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;">Simpan</button>
             </div>
         </form>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
-<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
-<!-- Toastr -->
-<script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
+
+<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
 <script>
     $(function() {
         bsCustomFileInput.init();
@@ -342,7 +327,7 @@
         timer: 3000,
     });
     $(document).on('input', '#image_user', function() {
-        if (this.files[0].size > 500000) { // ini untuk ukuran 500 Kb
+        if (this.files[0].size > 500000) {
             Toast.fire({
                 icon: "warning",
                 title: "Ukuran File Melebihi 500Kb!",

@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item"><a href="<?= base_url('/masterUser') ?>">Master User</a></li>
                         <li class="breadcrumb-item active">Tambah User</li>
                     </ol>
@@ -64,9 +64,9 @@
     </section>
 </div>
 <!-- SweetAlert2 -->
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <!-- Select2 -->
-<script src="<?= base_url('plugins/select2/js/select2.full.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/select2/js/select2.full.min.js') ?>"></script>
 
 <script>
     $(function() {
@@ -104,7 +104,7 @@
                                     <input type="text" name="nip" class="form-control" placeholder="NIP ...">
                                 </div>
                                 <hr>
-                                <img class="img-fluid mb-4" src="<?= base_url('images/default.jpg') ?>" style="width: 150px;" alt="">
+                                <img class="img-fluid mb-4" src="<?= base_url('/images/default.jpg') ?>" style="width: 150px;" alt="">
                                 <!-- KETERANGAN -->
 
                                 <div class="form-group">

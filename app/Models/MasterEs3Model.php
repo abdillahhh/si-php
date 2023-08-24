@@ -18,4 +18,13 @@ class MasterEs3Model extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function getBidangById($es3_kd)
+    {
+        return $this
+            ->table('mst_es3')
+            ->where('kd_es3', $es3_kd)
+            ->get()
+            ->getRowArray();
+    }
 }

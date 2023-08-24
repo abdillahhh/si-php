@@ -5,7 +5,10 @@ namespace App\Controllers;
 
 
 
+use App\Models\MasterEs3Model;
+use App\Models\MasterEs4Model;
 use App\Models\MasterLaporanHarianModel;
+use App\Models\MasterLaporanPekerjaanModel;
 use App\Models\MasterUserModel;
 use App\Models\MasterSatuanModel;
 use App\Models\MasterPegawaiModel;
@@ -13,6 +16,8 @@ use App\Models\MasterGolonganModel;
 use App\Models\MasterPendidikanModel;
 use App\Models\MasterSatkerModel;
 use App\Models\MasterFungsionalModel;
+use App\Models\MasterCatatanModel;
+use App\Models\MasterAssignmentPekerjaanModel;
 use CodeIgniter\I18n\Time;
 
 
@@ -26,6 +31,13 @@ class masterDashboard extends BaseController
     protected $masterPendidikanModel;
     protected $masterSatkerModel;
     protected $masterFungsionalModel;
+    protected $masterCatatanModel;
+    protected $masterSatuanModel;
+    //tambahan
+    protected $masterLaporanPekerjaanModel;
+    protected $masterEs3Model;
+    protected $masterAssignmentPekerjaanModel;
+    protected $masterEs4Model;
 
     public function __construct()
     {
@@ -38,12 +50,19 @@ class masterDashboard extends BaseController
         $this->masterPendidikanModel = new MasterPendidikanModel();
         $this->masterSatkerModel = new MasterSatkerModel();
         $this->masterFungsionalModel = new MasterFungsionalModel();
+        $this->masterCatatanModel = new MasterCatatanModel();
+        //tambahan
+        $this->masterLaporanPekerjaanModel = new MasterLaporanPekerjaanModel();
+        $this->masterEs3Model = new MasterEs3Model();
+        $this->masterAssignmentPekerjaanModel = new MasterAssignmentPekerjaanModel();
+        $this->masterEs4Model = new MasterEs4Model();
     }
 
     public function index()
     {
         $event_data = $this->masterLaporanHarianModel->getAll(session('user_id'));
-        $list_user = $this->masterUserModel->getAllUser();
+
+        $list_user = $this->masterUserModel->getAllUserOnDashboard();
         if (session('level_id') == "7") {
             if ($event_data != NULL) {
                 foreach ($event_data as $row) {
@@ -65,6 +84,37 @@ class masterDashboard extends BaseController
             $events_json = json_encode($events);
             $tanggal_mulai = "";
         }
+
+        $catatan_data = $this->masterCatatanModel->getAll(session('user_id'));
+        if (session('level_id') == "7") {
+            if ($catatan_data != NULL) {
+                foreach ($catatan_data as $catatan) {
+                    $pengirim = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id']);
+                    $penerima = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id_penerima']);
+
+                    $catatan_all[] = array(
+                        'id' => $catatan['id'],
+                        'id_pengirim' => $catatan['user_id'],
+                        'pengirim' => $pengirim['nama_pegawai'],
+                        'id_penerima' => $catatan['user_id_penerima'],
+                        'penerima' => $penerima['nama_pegawai'],
+                        'catatan' => $catatan['catatan'],
+                        'tgl' => $catatan['tgl_catatan']
+                    );
+                }
+                $catatan_json = json_encode($catatan_all);
+            } else {
+                $catatan_all[] = array('');
+                $catatan_json = json_encode($catatan_all);
+            }
+        } else {
+            $catatan_all[] = array('');
+            $catatan_json = json_encode($catatan_all);
+        }
+
+
+
+
 
         $total_laporan = $this->masterLaporanHarianModel->getTotalByUser(session('user_id'));
 
@@ -113,6 +163,7 @@ class masterDashboard extends BaseController
             for ($i = 0; $i < count($total_laporan); $i++) {
                 $data = explode('-', $total_laporan[$i]['tgl_kegiatan']);
                 $tahun[] = $data[0];
+                $tahun[$i] = date('Y');
                 if ($tahun[$i] == date('Y')) {
                     $laporan_tahun_ini[] = $total_laporan[$i];
                 }
@@ -376,11 +427,25 @@ class masterDashboard extends BaseController
         }
 
 
-        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        $list_pegawai = $this->masterPegawaiModel->getAllPegawaiOnDashboard();
         $ke = 0;
         foreach ($list_pegawai as $pegawai) {
             $total_laporan_masing[$ke] = $this->masterUserModel->getTotalByUserJoinPegawai($pegawai['id']);
             $ke++;
+        }
+
+        if ($list_pegawai != NULL) {
+            foreach ($list_pegawai as $pegawai) {
+
+                $pegawai_all[] = array(
+                    'nip_lama' => $pegawai['nip_lama'],
+                    'label' => $pegawai['nama_pegawai'],
+                );
+            }
+            $pegawai_json = json_encode($pegawai_all);
+        } else {
+            $pegawai_all[] = array('');
+            $pegawai_json = json_encode($pegawai_all);
         }
 
         for ($i = 0; $i < count($total_laporan_masing); $i++) {
@@ -409,14 +474,15 @@ class masterDashboard extends BaseController
         for ($t = 0; $t < count($total_laporan_mingguan_masing); $t++) {
             $jml_minggu_pegawai[] = count($total_laporan_mingguan_masing[$t]);
         }
-
-
+        $today = Time::today('Asia/Jakarta');
+        $today->toLocalizedString('yyyy-MM-dd');
 
         $data = [
             'title' => 'Dashboard',
             'menu' => 'Dashboard',
             'subMenu' => 'Kegiatan Harian Pegawai',
             'events' => $events_json,
+            'catatan' => $catatan_json,
             'list_satuan' => $this->masterSatuanModel->getAll(),
             'total_laporan' => count($total_laporan),
             'total_kegiatan_bulan_ini' => $kegiatan_bulan_ini,
@@ -440,6 +506,7 @@ class masterDashboard extends BaseController
             'total_desember' => $kegiatan_desember_ini,
             'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
             'list_pegawai' => $list_pegawai,
+            'pegawai_json' => $pegawai_json,
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
             'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'tanggal_mulai' => $tanggal_mulai,
@@ -447,27 +514,31 @@ class masterDashboard extends BaseController
             'div_card' => 'd-none',
             'list_golongan' => $this->masterGolonganModel->getAllGolongan(),
             'list_fungsional' => $this->masterFungsionalModel->getAllFungsional(),
-            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawai()),
+            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawaiOnDashboard()),
             'jumlah_laporan' => count($this->masterLaporanHarianModel->getAllLaporan()),
             'jumlah_user_aktif' => count($this->masterUserModel->getAllUserAktif()),
             'jumlah_user_tidak_aktif' => count($this->masterUserModel->getAllUserTidakAktif()),
-            'nip_lama_pegawai_terpilih' => null
+            'nip_lama_pegawai_terpilih' => null,
+            'today' => $today
 
         ];
-
+        // dd($data);
         return view('Dashboard/index', $data);
     }
 
     public function showDetailLaporanHarianOnDashboard($laporan_id)
     {
-        $list_user = $this->masterUserModel->getAllUser();
+        $list_user = $this->masterUserModel->getAllUserOnDashboard();
         $user_id_detail = $this->masterLaporanHarianModel->getUserIdbyLaporanId($laporan_id);
+
 
         if ($user_id_detail != null) {
             $data_user_pilih = $this->masterUserModel->getDataPegawaiByUserId($user_id_detail);
         } else {
             $data_user_pilih = null;
         }
+
+
         if ($user_id_detail['user_id'] == session('user_id')) {
             $event_data = $this->masterLaporanHarianModel->getAll(session('user_id'));
             $total_laporan = $this->masterLaporanHarianModel->getTotalByUser(session('user_id'));
@@ -506,6 +577,34 @@ class masterDashboard extends BaseController
             $events_json = json_encode($events);
         }
 
+
+
+        $catatan_data = $this->masterCatatanModel->getAll(session('user_id'));
+        if (session('level_id') == "7") {
+            if ($catatan_data != NULL) {
+                foreach ($catatan_data as $catatan) {
+                    $pengirim = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id']);
+                    $penerima = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id_penerima']);
+
+                    $catatan_all[] = array(
+                        'id' => $catatan['id'],
+                        'id_pengirim' => $catatan['user_id'],
+                        'pengirim' => $pengirim['nama_pegawai'],
+                        'id_penerima' => $catatan['user_id_penerima'],
+                        'penerima' => $penerima['nama_pegawai'],
+                        'catatan' => $catatan['catatan'],
+                        'tgl' => $catatan['tgl_catatan']
+                    );
+                }
+                $catatan_json = json_encode($catatan_all);
+            } else {
+                $catatan_all[] = array('');
+                $catatan_json = json_encode($catatan_all);
+            }
+        } else {
+            $catatan_all[] = array('');
+            $catatan_json = json_encode($catatan_all);
+        }
 
 
         $januari = [];
@@ -841,11 +940,25 @@ class masterDashboard extends BaseController
         $tanggal_input_terakhir = $total[count($total) - 1]['tgl_kegiatan'];
 
 
-        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        $list_pegawai = $this->masterPegawaiModel->getAllPegawaiOnDashboard();
         $ke = 0;
         foreach ($list_pegawai as $pegawai) {
             $total_laporan_masing[$ke] = $this->masterUserModel->getTotalByUserJoinPegawai($pegawai['id']);
             $ke++;
+        }
+
+        if ($list_pegawai != NULL) {
+            foreach ($list_pegawai as $pegawai) {
+
+                $pegawai_all[] = array(
+                    'nip_lama' => $pegawai['nip_lama'],
+                    'label' => $pegawai['nama_pegawai'],
+                );
+            }
+            $pegawai_json = json_encode($pegawai_all);
+        } else {
+            $pegawai_all[] = array('');
+            $pegawai_json = json_encode($pegawai_all);
         }
 
         for ($i = 0; $i < count($total_laporan_masing); $i++) {
@@ -892,6 +1005,7 @@ class masterDashboard extends BaseController
             'modal_detail' => 'modal-detail',
             'tanggal_input_terakhir' => $tanggal_input_terakhir,
             'events' => $events_json,
+            'catatan' => $catatan_json,
             'list_satuan' => $this->masterSatuanModel->getAll(),
             'total_laporan' => count($total_laporan),
             'total_kegiatan_bulan_ini' => $kegiatan_bulan_ini,
@@ -917,11 +1031,12 @@ class masterDashboard extends BaseController
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
             'jml_perminggu_pegawai' => $jml_minggu_pegawai,
             'list_pegawai' => $list_pegawai,
+            'pegawai_json' => $pegawai_json,
             'user_dipilih' => $data_user_pilih,
             'div_card' => 'd-none',
             'list_golongan' => $this->masterGolonganModel->getAllGolongan(),
             'list_fungsional' => $this->masterFungsionalModel->getAllFungsional(),
-            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawai()),
+            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawaiOnDashboard()),
             'jumlah_laporan' => count($this->masterLaporanHarianModel->getAllLaporan()),
             'jumlah_user_aktif' => count($this->masterUserModel->getAllUserAktif()),
             'jumlah_user_tidak_aktif' => count($this->masterUserModel->getAllUserTidakAktif()),
@@ -934,6 +1049,8 @@ class masterDashboard extends BaseController
 
     public function dataPegawai()
     {
+
+
 
         $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
         $list_golongan = $this->masterGolonganModel->getAllGolongan();
@@ -1216,9 +1333,9 @@ class masterDashboard extends BaseController
 
 
         $data = [
-            'subMenu' => 'Rekap Data Pegawai',
+            'subMenu' => 'Data Pegawai',
             'menu' => 'Dashboard',
-            'title' => 'Rekap Data Pegawai',
+            'title' => 'Data Pegawai',
             'list_pendidikan' => $list_pendidikan,
             'list_golongan' => $list_golongan,
             'list_fungsional' => $list_fungsional,
@@ -1246,7 +1363,7 @@ class masterDashboard extends BaseController
         }
 
 
-        $list_user = $this->masterUserModel->getAllUser();
+        $list_user = $this->masterUserModel->getAllUserOnDashboard();
 
 
         if ($user_id_pegawai != null) {
@@ -1271,6 +1388,34 @@ class masterDashboard extends BaseController
             $events[] = array('');
             $events_json = json_encode($events);
             $tanggal_mulai = "";
+        }
+
+
+        $catatan_data = $this->masterCatatanModel->getAll(session('user_id'));
+        if (session('level_id') == "7") {
+            if ($catatan_data != NULL) {
+                foreach ($catatan_data as $catatan) {
+                    $pengirim = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id']);
+                    $penerima = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id_penerima']);
+
+                    $catatan_all[] = array(
+                        'id' => $catatan['id'],
+                        'id_pengirim' => $catatan['user_id'],
+                        'pengirim' => $pengirim['nama_pegawai'],
+                        'id_penerima' => $catatan['user_id_penerima'],
+                        'penerima' => $penerima['nama_pegawai'],
+                        'catatan' => $catatan['catatan'],
+                        'tgl' => $catatan['tgl_catatan']
+                    );
+                }
+                $catatan_json = json_encode($catatan_all);
+            } else {
+                $catatan_all[] = array('');
+                $catatan_json = json_encode($catatan_all);
+            }
+        } else {
+            $catatan_all[] = array('');
+            $catatan_json = json_encode($catatan_all);
         }
 
 
@@ -1321,6 +1466,7 @@ class masterDashboard extends BaseController
             for ($i = 0; $i < count($total_laporan); $i++) {
                 $data = explode('-', $total_laporan[$i]['tgl_kegiatan']);
                 $tahun[] = $data[0];
+                $tahun[$i] = date('Y');
                 if ($tahun[$i] == date('Y')) {
                     $laporan_tahun_ini[] = $total_laporan[$i];
                 }
@@ -1584,11 +1730,25 @@ class masterDashboard extends BaseController
         }
 
 
-        $list_pegawai = $this->masterPegawaiModel->getAllPegawai();
+        $list_pegawai = $this->masterPegawaiModel->getAllPegawaiOnDashboard();
         $ke = 0;
         foreach ($list_pegawai as $pegawai) {
             $total_laporan_masing[$ke] = $this->masterUserModel->getTotalByUserJoinPegawai($pegawai['id']);
             $ke++;
+        }
+
+        if ($list_pegawai != NULL) {
+            foreach ($list_pegawai as $pegawai) {
+
+                $pegawai_all[] = array(
+                    'nip_lama' => $pegawai['nip_lama'],
+                    'label' => $pegawai['nama_pegawai'],
+                );
+            }
+            $pegawai_json = json_encode($pegawai_all);
+        } else {
+            $pegawai_all[] = array('');
+            $pegawai_json = json_encode($pegawai_all);
         }
 
         for ($i = 0; $i < count($total_laporan_masing); $i++) {
@@ -1624,6 +1784,7 @@ class masterDashboard extends BaseController
             'menu' => 'Dashboard',
             'subMenu' => 'Kegiatan Harian Pegawai',
             'events' => $events_json,
+            'catatan' => $catatan_json,
             'list_satuan' => $this->masterSatuanModel->getAll(),
             'total_laporan' => count($total_laporan),
             'total_kegiatan_bulan_ini' => $kegiatan_bulan_ini,
@@ -1647,6 +1808,7 @@ class masterDashboard extends BaseController
             'total_desember' => $kegiatan_desember_ini,
             'list_full_laporan_harian' =>  $this->masterLaporanHarianModel->getTotalByUser(session('user_id')),
             'list_pegawai' => $list_pegawai,
+            'pegawai_json' => $pegawai_json,
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
             'tanggal_mulai' => $tanggal_mulai,
             'jml_perbulan_pegawai' => $jml_bulan_pegawai,
@@ -1655,7 +1817,7 @@ class masterDashboard extends BaseController
             'div_card' => '',
             'list_golongan' => $this->masterGolonganModel->getAllGolongan(),
             'list_fungsional' => $this->masterFungsionalModel->getAllFungsional(),
-            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawai()),
+            'jumlah_pegawai' => count($this->masterPegawaiModel->getAllPegawaiOnDashboard()),
             'jumlah_laporan' => count($this->masterLaporanHarianModel->getAllLaporan()),
             'jumlah_user_aktif' => count($this->masterUserModel->getAllUserAktif()),
             'jumlah_user_tidak_aktif' => count($this->masterUserModel->getAllUserTidakAktif()),
@@ -1663,6 +1825,559 @@ class masterDashboard extends BaseController
 
         ];
 
+        // dd($data);
         return view('Dashboard/index', $data);
     }
+
+
+    public function tambahCatatan()
+    {
+        $user_id = session('user_id');
+        $nip_lama = $this->request->getVar('nip_lama');
+
+        $id_penerima = $this->masterUserModel->getUserId($nip_lama);
+
+
+        if ($nip_lama == null) {
+            $tipe_catatan = 1;
+            $catatan = $this->request->getVar('catatan');
+            $user_id_penerima = $user_id;
+        } else {
+            $tipe_catatan = 2;
+            $catatan = $this->request->getVar('catatan_dikirim');
+            $user_id_penerima = $id_penerima;
+        }
+
+
+        $tgl_catatan = $this->request->getVar('tgl');
+
+        $this->masterCatatanModel->save([
+            'user_id' => $user_id,
+            'user_id_penerima' => $user_id_penerima,
+            'tgl_catatan' => $tgl_catatan,
+            'tipe_catatan' => $tipe_catatan,
+            'catatan' => $catatan
+        ]);
+
+        return redirect()->to('/dashboard');
+    }
+
+    public function updateCatatan()
+    {
+        $id_catatan = $this->request->getVar('id');
+        $catatan_lama = $this->masterCatatanModel->getCatatanById($id_catatan);
+        $catatan = $this->request->getVar('catatan');
+
+
+        $this->masterCatatanModel->save([
+            'id' => $id_catatan,
+            'user_id' => $catatan_lama['user_id'],
+            'user_id_penerima' => $catatan_lama['user_id_penerima'],
+            'tgl_catatan' => $catatan_lama['tgl_catatan'],
+            'tipe_catatan' => $catatan_lama['tipe_catatan'],
+            'catatan' => $catatan
+        ]);
+
+        return redirect()->to('/dashboard');
+    }
+
+    public function hapusCatatan($id_catatan)
+    {
+        $catatan = $this->masterCatatanModel->getCatatanById($id_catatan);
+        if ($catatan['user_id'] == session('user_id')) {
+            $this->masterCatatanModel->delete($id_catatan);
+        }
+        return redirect()->to('/dashboard');
+    }
+    public function detailCatatan()
+    {
+        $list_catatan = $this->masterCatatanModel->getAll(session('user_id'));
+
+
+        foreach ($list_catatan as $catatan) {
+            $pengirim = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id']);
+            $penerima = $this->masterUserModel->getDataPegawaiByUserId($catatan['user_id_penerima']);
+
+            $catatan_all[] = array(
+                'id' => $catatan['id'],
+                'id_pengirim' => $catatan['user_id'],
+                'tipe_catatan' => $catatan['tipe_catatan'],
+                'pengirim' => $pengirim['nama_pegawai'],
+                'id_penerima' => $catatan['user_id_penerima'],
+                'penerima' => $penerima['nama_pegawai'],
+                'catatan' => $catatan['catatan'],
+                'tgl' => $catatan['tgl_catatan']
+            );
+        }
+
+
+
+
+        $data = [
+            'title' => 'Detail Catatan',
+            'menu' => 'Dashboard',
+            'subMenu' => 'Kegiatan Harian Pegawai',
+            'list_catatan' => $catatan_all,
+
+        ];
+        //  dd($data);
+        return view('Dashboard/detailCatatan', $data);
+    }
+
+
+    public function dataPekerjaan()
+    {
+        $list_es3 = $this->masterEs3Model->getAllBidang();
+        $selectedDate = $this->request->getVar('selected_date');
+        $year = date('Y', strtotime($selectedDate));
+        $month = date('m', strtotime($selectedDate));
+        $showAllData = $this->request->getVar('show_all_data');
+
+        $list_es3 = $this->masterEs3Model->getAllBidang();
+        $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+        $list_satker = $this->masterSatkerModel->getAllSatker();
+        $list_es4 = $this->masterEs4Model->getAllSeksi();
+
+        // ... (pemrosesan data lainnya)
+
+        if ($showAllData) {
+            $list_pekerjaan_kab = $this->masterAssignmentPekerjaanModel->countByKabAll();
+            $list_pekerjaan_fungsi = $this->masterLaporanPekerjaanModel->countByFungsiAll();
+            $list_peringkat_kab = $this->masterAssignmentPekerjaanModel->rankByKabAll();
+            $list_peringkat_fungsi = $this->masterAssignmentPekerjaanModel->rankByFungsiAll();
+            $status_penyelesaian = $this->masterLaporanPekerjaanModel->totalByPenyelesaianAll();
+        } else {
+            $list_pekerjaan_kab = $this->masterAssignmentPekerjaanModel->countByKab($year, $month);
+            $list_pekerjaan_fungsi = $this->masterLaporanPekerjaanModel->countByFungsi($year, $month);
+            $list_peringkat_kab = $this->masterAssignmentPekerjaanModel->rankByKab($year, $month);
+            $list_peringkat_fungsi = $this->masterAssignmentPekerjaanModel->rankByFungsi($year, $month);
+            $status_penyelesaian = $this->masterLaporanPekerjaanModel->totalByPenyelesaian($year, $month);
+        }
+        // dd( $list_pekerjaan_kab);
+
+
+        // $selectedDate = $this->request->getVar('selected_date');
+        // // $satker_choose = $this->request->getVar('kdsatker');
+
+        // $year = date('Y', strtotime($selectedDate));
+        // $month = date('m', strtotime($selectedDate));
+        // // $list_es3 = $this->masterEs3Model->getAllBidang();
+        // // dd($list_es3);
+        // $selectedDate = null;
+
+
+        //     $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        //     $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        //     $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+        //     $list_satker = $this->masterSatkerModel->getAllSatker();
+        //     $list_pekerjaan_kab = $this->masterAssignmentPekerjaanModel->countByKab($year, $month);
+        //     $list_pekerjaan_fungsi = $this->masterLaporanPekerjaanModel->countByFungsi($year, $month);
+        //     $list_peringkat_kab = $this->masterAssignmentPekerjaanModel->rankByKab($year, $month);
+        //     $list_peringkat_fungsi = $this->masterAssignmentPekerjaanModel->rankByFungsi($year, $month);
+        //     $list_es4 = $this->masterEs4Model->getAllSeksi();
+        //     $list_es3 = $this->masterEs3Model->getAllBidang();
+        //     $status_penyelesaian = $this->masterLaporanPekerjaanModel->totalByPenyelesaian($year, $month);
+
+            // dd($list_pekerjaan_fungsi);
+
+            $satker_choose = $this->request->getVar('satker_choose');
+            if ($satker_choose) {
+                $data_pegawai = $this->masterPegawaiModel->getAllPegawaiBySatker($satker_choose);
+                $list_user = $this->masterUserModel->getAllUserBySatker($satker_choose);
+            } else {
+                $data_pegawai = $this->masterPegawaiModel->getAllPegawai();
+                $list_user = $this->masterUserModel->getAllUser();
+
+                foreach ($list_es3 as $es3) {
+                    $data_pekerjaan = [
+                        'kd_es3' => $es3['kd_es3'],
+                        'nm_fungsi' => $es3['deskripsi'],
+                        'pekerjaan' => $this->masterLaporanPekerjaanModel->getTotalProvinsiByFungsi($es3['kd_es3'])
+                    ];
+                    $list_pekerjaan[] = $data_pekerjaan;
+                }
+            }
+                
+
+        // dd($list_pekerjaan);
+
+
+
+        $data = [
+            'subMenu' => 'Data Pegawai',
+            'menu' => 'Dashboard',
+            'title' => 'Data Pegawai',
+            'list_satker' => $list_satker,
+            'list_es4' => $list_es4,
+            'list_es3' => $list_es3,
+            'list_pekerjaan' => $list_pekerjaan,
+            'list_pekerjaan_kab' => $list_pekerjaan_kab,
+            'list_pekerjaan_fungsi' => $list_pekerjaan_fungsi,
+            'list_peringkat_kab' => $list_peringkat_kab,
+            'list_peringkat_fungsi' => $list_peringkat_fungsi,
+            'status_penyelesaian' => $status_penyelesaian,
+            'jumlah_user' => count($list_user),
+            'selectedDate' => $selectedDate,
+            'isFiltered' => ($selectedDate !== date('Y-m'))
+
+        ];
+
+        $selectedDate = $this->request->getVar('selected_date');
+        $data['selectedDate'] = $selectedDate ? $selectedDate : date('Y-m');
+        // dd($data);
+
+         // Tambahkan data tambahan untuk mengidentifikasi filter aktif
+        // dd($data);
+        return view('Dashboard/dashboardPekerjaan', $data);
+    }
+
+    public function showAllData()
+    {
+        $list_es3 = $this->masterEs3Model->getAllBidang();
+        $selectedDate = $this->request->getVar('selected_date');
+        // dd($list_es3);
+
+        $list_pekerjaan = [];
+
+
+
+
+
+        // d(session('es3'));
+        
+
+        $list_es3 = $this->masterEs3Model->getAllBidang();
+        $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+        $list_satker = $this->masterSatkerModel->getAllSatker();
+        $list_es4 = $this->masterEs4Model->getAllSeksi();
+        $list_pekerjaan_kab = $this->masterAssignmentPekerjaanModel->countByKabAll();
+        $list_pekerjaan_fungsi = $this->masterLaporanPekerjaanModel->countByFungsiAll();
+        $list_peringkat_kab = $this->masterAssignmentPekerjaanModel->rankByKabAll();
+        $list_peringkat_fungsi = $this->masterAssignmentPekerjaanModel->rankByFungsiAll();
+        $status_penyelesaian = $this->masterLaporanPekerjaanModel->totalByPenyelesaianAll();
+
+        
+        $satker_choose = $this->request->getVar('satker_choose');
+        if ($satker_choose) {
+            $data_pegawai = $this->masterPegawaiModel->getAllPegawaiBySatker($satker_choose);
+            $list_user = $this->masterUserModel->getAllUserBySatker($satker_choose);
+        } else {
+            $data_pegawai = $this->masterPegawaiModel->getAllPegawai();
+            $list_user = $this->masterUserModel->getAllUser();
+
+            foreach ($list_es3 as $es3) {
+                $data_pekerjaan = [
+                    'kd_es3' => $es3['kd_es3'],
+                    'nm_fungsi' => $es3['deskripsi'],
+                    'pekerjaan' => $this->masterLaporanPekerjaanModel->getTotalProvinsiByFungsi($es3['kd_es3'])
+                ];
+                $list_pekerjaan[] = $data_pekerjaan;
+            }
+        }
+
+        // dd($list_pekerjaan);
+
+
+
+        $jk = [];
+        $laki_laki = [];
+        $perempuan = [];
+        $Ia = [];
+        $Ib = [];
+        $Ic = [];
+        $Id = [];
+        $IIa = [];
+        $IIb = [];
+        $IIc = [];
+        $IId = [];
+        $IIIa = [];
+        $IIIb = [];
+        $IIIc = [];
+        $IIId = [];
+        $IVa = [];
+        $IVb = [];
+        $IVc = [];
+        $IVd = [];
+        $IVe = [];
+        $gol = [];
+        $bpf = [];
+        $spp = [];
+        $st = [];
+        $sm = [];
+        $spen = [];
+        $sap = [];
+        $sam = [];
+        $samad = [];
+        $sau = [];
+        $pkpp = [];
+        $pkt = [];
+        $pkm = [];
+        $pkpen = [];
+        $pkap = [];
+        $pkam = [];
+        $pkamad = [];
+        $pkau = [];
+        $aaam = [];
+        $pel = [];
+        $asaam = [];
+        $asap = [];
+        $php = [];
+        $apkaam = [];
+        $pkamah = [];
+        $aamud = [];
+        $arsimud = [];
+        $ppbj = [];
+        $tb = [];
+        $pkat = [];
+        $ksk = [];
+        $fungsional = [];
+        $tk_sd = [];
+        $tk_smp = [];
+        $tk_sma = [];
+        $tk_d1 = [];
+        $tk_d2 = [];
+        $tk_d3 = [];
+        $tk_d4 = [];
+        $tk_s1 = [];
+        $tk_s2 = [];
+        $tk_sk3 = [];
+        $pdd = [];
+
+
+        if ($data_pegawai != null) {
+            foreach ($data_pegawai as $pegawai) {
+                if ($pegawai['jk'] == '1') {
+                    $laki_laki[] = $pegawai;
+                } else {
+                    $perempuan[] = $pegawai;
+                }
+            }
+            $jk[0] = count($laki_laki);
+            $jk[1] = count($perempuan);
+
+            foreach ($data_pegawai as $pegawai) {
+                if ($pegawai['gol_kd'] == '1') {
+                    $Ia[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '2') {
+                    $Ib[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '3') {
+                    $Ic[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '4') {
+                    $Id[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '5') {
+                    $IIa[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '6') {
+                    $IIb[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '7') {
+                    $IIc[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '8') {
+                    $IId[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '9') {
+                    $IIIa[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '10') {
+                    $IIIb[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '11') {
+                    $IIIc[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '12') {
+                    $IIId[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '13') {
+                    $IVa[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '14') {
+                    $IVb[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '15') {
+                    $IVc[] = $pegawai;
+                } elseif ($pegawai['gol_kd'] == '16') {
+                    $IVd[] = $pegawai;
+                } else {
+                    $IVe[] = $pegawai;
+                }
+            }
+
+            $gol[0] = count($Ia);
+            $gol[1] = count($Ib);
+            $gol[2] = count($Ic);
+            $gol[3] = count($Id);
+            $gol[4] = count($IIa);
+            $gol[5] = count($IIb);
+            $gol[6] = count($IIc);
+            $gol[7] = count($IId);
+            $gol[8] = count($IIIa);
+            $gol[9] = count($IIIb);
+            $gol[10] = count($IIIc);
+            $gol[11] = count($IIId);
+            $gol[12] = count($IVa);
+            $gol[13] = count($IVb);
+            $gol[14] = count($IVc);
+            $gol[15] = count($IVd);
+            $gol[16] = count($IVe);
+
+            foreach ($data_pegawai as $pegawai) {
+                if ($pegawai['fungsional_kd'] == '1') {
+                    $bpf[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '2') {
+                    $spp[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '3') {
+                    $st[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '4') {
+                    $sm[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '5') {
+                    $spen[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '6') {
+                    $sap[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '7') {
+                    $sam[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '8') {
+                    $samad[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '9') {
+                    $sau[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '10') {
+                    $pkpp[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '11') {
+                    $pkt[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '12') {
+                    $pkm[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '13') {
+                    $pkpen[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '14') {
+                    $pkap[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '15') {
+                    $pkam[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '16') {
+                    $pkamad[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '17') {
+                    $pkau[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '18') {
+                    $aaam[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '19') {
+                    $pel[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '20') {
+                    $asaam[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '21') {
+                    $asap[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '22') {
+                    $php[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '23') {
+                    $apkaam[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '24') {
+                    $pkamah[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '25') {
+                    $aamud[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '26') {
+                    $arsimud[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '27') {
+                    $ppbj[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '28') {
+                    $tb[] = $pegawai;
+                } elseif ($pegawai['fungsional_kd'] == '29') {
+                    $pkat[] = $pegawai;
+                } else {
+                    $ksk[] = $pegawai;
+                }
+            }
+            $fungsional[0] = count($bpf);
+            $fungsional[1] = count($spp);
+            $fungsional[2] = count($st);
+            $fungsional[3] = count($sm);
+            $fungsional[4] = count($spen);
+            $fungsional[5] = count($sap);
+            $fungsional[6] = count($sam);
+            $fungsional[7] = count($samad);
+            $fungsional[8] = count($sau);
+            $fungsional[9] = count($pkpp);
+            $fungsional[10] = count($pkt);
+            $fungsional[11] = count($pkm);
+            $fungsional[12] = count($pkpen);
+            $fungsional[13] = count($pkap);
+            $fungsional[14] = count($pkam);
+            $fungsional[15] = count($pkamad);
+            $fungsional[16] = count($pkau);
+            $fungsional[17] = count($aaam);
+            $fungsional[18] = count($pel);
+            $fungsional[19] = count($asaam);
+            $fungsional[20] = count($asap);
+            $fungsional[21] = count($php);
+            $fungsional[22] = count($apkaam);
+            $fungsional[23] = count($pkamah);
+            $fungsional[24] = count($aamud);
+            $fungsional[25] = count($arsimud);
+            $fungsional[26] = count($ppbj);
+            $fungsional[27] = count($tb);
+            $fungsional[28] = count($pkat);
+            $fungsional[29] = count($ksk);
+
+
+            foreach ($data_pegawai as $pegawai) {
+                if ($pegawai['pendidikan_kd'] == 1) {
+                    $tk_sd[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 2) {
+                    $tk_smp[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 3) {
+                    $tk_sma[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 4) {
+                    $tk_d1[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 5) {
+                    $tk_d2[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 6) {
+                    $tk_d3[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 7) {
+                    $tk_d4[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 8) {
+                    $tk_s1[] = $pegawai;
+                } elseif ($pegawai['pendidikan_kd'] == 9) {
+                    $tk_s2[] = $pegawai;
+                } else {
+                    $tk_sk3[] = $pegawai;
+                }
+            }
+            $pdd[0] = count($tk_sd);
+            $pdd[1] = count($tk_smp);
+            $pdd[2] = count($tk_sma);
+            $pdd[3] = count($tk_d1);
+            $pdd[4] = count($tk_d2);
+            $pdd[5] = count($tk_d3);
+            $pdd[6] = count($tk_d4);
+            $pdd[7] = count($tk_s1);
+            $pdd[8] = count($tk_s2);
+            $pdd[9] = count($tk_sk3);
+        }
+
+
+
+        $data = [
+            'subMenu' => 'Data Pegawai',
+            'menu' => 'Dashboard',
+            'title' => 'Data Pegawai',
+            'list_pendidikan' => $list_pendidikan,
+            'list_golongan' => $list_golongan,
+            'list_fungsional' => $list_fungsional,
+            'list_satker' => $list_satker,
+            'list_es4' => $list_es4,
+            'list_es3' => $list_es3,
+            'list_pekerjaan' => $list_pekerjaan,
+            'list_pekerjaan_kab' => $list_pekerjaan_kab,
+            'list_pekerjaan_fungsi' => $list_pekerjaan_fungsi,
+            'list_peringkat_kab' => $list_peringkat_kab,
+            'list_peringkat_fungsi' => $list_peringkat_fungsi,
+            'jk' => $jk,
+            'status_penyelesaian' => $status_penyelesaian,
+            'gol' => $gol,
+            'pdd' => $pdd,
+            'total_fungsional' => $fungsional,
+            'total_pegawai' => count($data_pegawai),
+            'total_tb' =>  count($tb),
+            'total_pegawai_aktif' => (count($data_pegawai) - count($tb)),
+            'jumlah_user' => count($list_user),
+            'selectedDate' => $selectedDate,
+            'isFiltered' => ($selectedDate !== date('Y-m'))
+
+        ];
+        // dd($data);
+        return view('Dashboard/dashboardPekerjaan', $data);
+    }
+    
+    
 }

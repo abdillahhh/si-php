@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active">Master Kegiatan</li>
                     </ol>
                 </div>
@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('images/default.jpg') ?>" alt="">
+                                    <img class="img-fluid" style="width: 100%;" src="<?= base_url('/images/default.jpg') ?>" alt="">
                                 </div>
                                 <div class="col-md-6 p-2">
                                     <h2 class="font-weight-bold">John Doe</h2>

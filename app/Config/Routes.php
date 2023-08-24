@@ -46,6 +46,11 @@ $routes->post('/gantiPasswordDefault', 'masterAkses::gantiPasswordDefault');
 $routes->get('/logout', 'masterAkses::logout');
 //Routes Ke views dan controller Dashboard
 $routes->get('/dashboard', 'masterDashboard::index');
+//Routes Ke method Catatan
+$routes->post('/tambahCatatan', 'masterDashboard::tambahCatatan');
+$routes->post('/updateCatatan', 'masterDashboard::updateCatatan');
+$routes->get('/hapusCatatan/(:segment)', 'masterDashboard::hapusCatatan/$1');
+
 //Routes Ke views dan controller Dashboard Data Pegawai
 $routes->get('/dataPegawai', 'masterDashboard::dataPegawai');
 //routes untuk membuka detail di dashboard
@@ -76,6 +81,37 @@ $routes->get('/showEditLaporanHarian/(:segment)', 'masterLaporanHarian::showEdit
 $routes->get('/showDetailLaporanHarian/(:segment)', 'masterLaporanHarian::showDetailLaporanHarian/$1');
 //Routes hapus Bukti Dukung
 $routes->post('/hapusBuktiDukung', 'masterLaporanHarian::hapusBuktiDukung');
+//Routes ke cetak Laporam
+$routes->post('/cetakLaporan', 'masterLaporanHarian::cetakLaporan');
+$routes->post('/cetakLaporanByPimpinan', 'masterLaporanHarian::cetakLaporanByPimpinan');
+$routes->post('/cetakLaporanByBidang', 'masterLaporanHarian::cetakLaporanByBidang');
+
+//Routes Ke views dan controller list Laporan dan Input Pekerjaan
+$routes->get('/listPekerjaan', 'masterLaporanPekerjaan::listPekerjaan');
+$routes->get('/inputPekerjaan', 'masterLaporanPekerjaan::inputPekerjaan');
+$routes->get('/detailPekerjaan', 'masterLaporanPekerjaan::detailPekerjaan');
+//Routes ke save laporan harian dan controller save laporan pekerjaan
+$routes->post('/saveLaporanPekerjaan', 'masterLaporanPekerjaan::saveLaporanPekerjaan');
+//Routes ke save laporan harian dan controller save assignment pekerjaan
+$routes->post('/updateRealisasiPekerjaan', 'masterLaporanPekerjaan::updateRealisasiPekerjaan');
+//Routes ke  update realisasi pekerjaan
+$routes->post('/saveAssignmentPekerjaan', 'masterLaporanPekerjaan::saveAssignmentPekerjaan');
+//Routes ke get laporan pekerjaan dan controller get assignment pekerjaan
+$routes->post('/getAssignmentPekerjaan', 'masterLaporanPekerjaan::getAssignmentPekerjaan');
+//routes ke detail laporan
+$routes->get('/showDetailLaporanPekerjaan/(:segment)', 'masterLaporanPekerjaan::showDetailLaporanPekerjaan/$1');
+//routes ke getData Assignment
+$routes->post('/getTargetAssignment', 'masterLaporanPekerjaan::getData');
+//Routes ke update laporan pekerjaan dan controller save laporan pekerjaan
+$routes->post('/updateLaporanPekerjaan', 'masterLaporanPekerjaan::updateLaporanPekerjaan');
+//Routes ke hapus laporan pekerjaan dan controller save laporan pekerjaan
+$routes->get('/hapusPekerjaan/(:segment)', 'masterLaporanPekerjaan::hapusPekerjaan/$1');
+//Routes ke dashboard pekerjaan
+$routes->get('/dashboardPekerjaan', 'masterDashboard::dataPekerjaan');
+//Routes ke master pekerjaan
+$routes->get('/masterPekerjaan', 'masterKelolaMaster::masterPekerjaan');
+//Routes ke tambah master pekerjaan
+$routes->post('/tambahPekerjaan', 'masterKelolaMaster::tambahPekerjaan');
 
 
 //Routes Ke views dan controller Kelola Master
@@ -129,7 +165,17 @@ $routes->post('/saveSubmenu', 'masterSistem::saveSubmenu');
 //routes ke switch level akun dan controller master akses
 $routes->post('/switchLevel', 'masterAkses::switchLevel');
 
+// routes ke Detail Catatan
+$routes->get('/detailCatatan', 'masterDashboard::detailCatatan');
 
+// baru
+$routes->post('/verifikasi/insert', 'masterLaporanPekerjaan::updateStatus');
+$routes->post('/penyelesaian/insert', 'masterLaporanPekerjaan::updatePenyelesaian');
+$routes->get('masterPembobotan/skor', 'masterPembobotan::insertSkor');
+$routes->get('grafik', 'GrafikController::index');
+$routes->get('/dashboardPekerjaan/showAll', 'masterDashboard::showAllData');
+//Routes ke hapus master pekerjaan
+$routes->get('/hapusMasterPekerjaan/(:segment)', 'masterKelolaMaster::hapusMasterPekerjaan/$1');
 
 
 

@@ -32,8 +32,10 @@ class MasterUserModel extends Model
     public function getAllUserAktif()
     {
         return $this
-            ->table('tbl_user')
-            ->where('is_active', 'Y')
+            ->table('tbl_user.*,mst_pegawai.*')
+            ->where('tbl_user.is_active', 'Y')
+            ->where('mst_pegawai.satker_kd', 1500)
+            ->join('mst_pegawai', 'mst_pegawai.nip_lama= tbl_user.nip_lama_user')
             ->get()
             ->getResultArray();
     }
@@ -41,8 +43,10 @@ class MasterUserModel extends Model
     public function getAllUserTidakAktif()
     {
         return $this
-            ->table('tbl_user')
-            ->where('is_active', 'N')
+            ->table('tbl_user.*,mst_pegawai.*')
+            ->where('tbl_user.is_active', 'N')
+            ->where('mst_pegawai.satker_kd', 1500)
+            ->join('mst_pegawai', 'mst_pegawai.nip_lama= tbl_user.nip_lama_user')
             ->get()
             ->getResultArray();
     }
@@ -60,6 +64,16 @@ class MasterUserModel extends Model
     {
         return $this
             ->table('tbl_user')
+            ->get()
+            ->getResultArray();
+    }
+    
+    public function getAllUserOnDashboard()
+    {
+        return $this
+            ->table('tbl_user.*,mst_pegawai.*')
+            ->where('mst_pegawai.satker_kd', 1500)
+            ->join('mst_pegawai', 'mst_pegawai.nip_lama= tbl_user.nip_lama_user')
             ->get()
             ->getResultArray();
     }

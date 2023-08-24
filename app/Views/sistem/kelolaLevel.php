@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active">Kelola Level</li>
                     </ol>
                 </div>
@@ -31,7 +31,6 @@
                             <div class="float-left">
                                 <div class="input-group">
                                     <button type="button" class="btn btn-info tombol" style="background-color: #3c4b64; border:none;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus mr-2"></i> Tambah</button>
-                                    <button type="button" class="btn btn-info tombol ml-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-download"></i></button>
                                 </div>
                             </div>
                         </form>

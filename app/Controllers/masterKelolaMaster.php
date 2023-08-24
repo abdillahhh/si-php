@@ -13,6 +13,9 @@ use App\Models\MasterPendidikanModel;
 use App\Models\MasterSatkerModel;
 use App\Models\MasterEs4Model;
 use App\Models\MasterFungsionalModel;
+use CodeIgniter\Session\Session;
+
+use App\Models\MasterPekerjaanModel;
 
 
 class masterKelolaMaster extends BaseController
@@ -30,6 +33,8 @@ class masterKelolaMaster extends BaseController
     protected $masterEs4Model;
     protected $masterFungsionalModel;
 
+    protected $masterPekerjaanModel;
+
     public function __construct()
     {
         $this->masterUserModel = new masterUserModel();
@@ -43,6 +48,8 @@ class masterKelolaMaster extends BaseController
         $this->masterSatkerModel = new MasterSatkerModel();
         $this->masterEs4Model = new MasterEs4Model();
         $this->masterFungsionalModel = new MasterFungsionalModel();
+
+        $this->masterPekerjaanModel = new MasterPekerjaanModel();
     }
 
     public function masterUser()
@@ -339,6 +346,195 @@ class masterKelolaMaster extends BaseController
         ];
         // dd($data);
         return view('kelolaMaster/masterPegawai', $data);
+    }
+
+    public function masterPekerjaan()
+    {
+        $keyword = $this->request->getVar('keyword');
+        // dd($keyword);
+
+        if (session('es3') == 98) {
+            $list_pekerjaan = [];
+        } else {
+            // dd(session('es3'));
+            $list_pekerjaan = $this->masterPekerjaanModel->getAllPekerjaanbySubFungsi(session('es4'));
+            // dd($list_pekerjaan);
+        }
+
+
+        $list_bidang = $this->masterEs3Model->getAllBidang();
+        $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        $list_jabatan = $this->masterJabatanModel->getAllJabatan();
+        $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        $list_satker = $this->masterSatkerModel->getAllSatker();
+        $list_seksi = $this->masterEs4Model->getAllSeksi();
+        $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+
+        $data_user = $this->masterUserModel->getAllUser();
+
+
+        $data = [
+            'title' => 'Master Pekerjaan',
+            'menu' => 'Kelola Master',
+            'subMenu' => 'Master Pekerjaan',
+            'list_user' => $data_user,
+            'list_pekerjaan' => $list_pekerjaan,
+            'list_bidang' => $list_bidang,
+            'list_golongan' => $list_golongan,
+            'list_jabatan' => $list_jabatan,
+            'list_pendidikan' => $list_pendidikan,
+            'list_satker' => $list_satker,
+            'list_seksi' => $list_seksi,
+            'list_fungsional' => $list_fungsional,
+            'pegawai_tertentu' => null,
+            'modal_edit' => '',
+            'modal_detail' => '',
+            'detail_pegawai' => null,
+            'image_pegawai' => null,
+            'keyword' => $keyword
+
+
+        ];
+        // dd($data);
+        return view('kelolaMaster/masterPekerjaan', $data);
+    }
+
+    public function tambahPekerjaan()
+    {
+
+        if($this->masterPekerjaanModel->insert([
+            'kdes3' => session('es3'),
+            'kdes4' => session('es4'),
+            'nmkerjaan' => $this->request->getVar('nama_pekerjaan'),
+        ])) {
+            session()->setFlashdata('pesan', 'Tambah Pekerjaan ' . $this->request->getVar('nama_pekerjaan') . ' Berhasil');
+            session()->setFlashdata('icon', 'success');
+        } else {
+            session()->setFlashdata('pesan', 'Tambah Pekerjaan ' . $this->request->getVar('nama_pekerjaan') . ' Gagal');
+            session()->setFlashdata('icon', 'error');
+        }
+
+        $keyword = $this->request->getVar('keyword');
+        // dd($keyword);
+
+        if (session('es3') == 98) {
+            $list_pekerjaan = [];
+        } else {
+            // dd(session('es3'));
+            $list_pekerjaan = $this->masterPekerjaanModel->getAllPekerjaanbySubFungsi(session('es4'));
+            // dd($list_pekerjaan);
+        }
+
+
+        $list_bidang = $this->masterEs3Model->getAllBidang();
+        $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        $list_jabatan = $this->masterJabatanModel->getAllJabatan();
+        $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        $list_satker = $this->masterSatkerModel->getAllSatker();
+        $list_seksi = $this->masterEs4Model->getAllSeksi();
+        $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+
+        $data_user = $this->masterUserModel->getAllUser();
+
+
+        $data = [
+            'title' => 'Master Pekerjaan',
+            'menu' => 'Kelola Master',
+            'subMenu' => 'Master Pekerjaan',
+            'list_user' => $data_user,
+            'list_pekerjaan' => $list_pekerjaan,
+            'list_bidang' => $list_bidang,
+            'list_golongan' => $list_golongan,
+            'list_jabatan' => $list_jabatan,
+            'list_pendidikan' => $list_pendidikan,
+            'list_satker' => $list_satker,
+            'list_seksi' => $list_seksi,
+            'list_fungsional' => $list_fungsional,
+            'pegawai_tertentu' => null,
+            'modal_edit' => '',
+            'modal_detail' => '',
+            'detail_pegawai' => null,
+            'image_pegawai' => null,
+            'keyword' => $keyword
+
+
+        ];
+        // dd($data);
+
+
+        return view('kelolaMaster/masterPekerjaan', $data);
+    }
+
+    public function hapusMasterPekerjaan($pekerjaan_id)
+    {
+        // dd($laporan_id);
+
+        try {
+            $publicationId = $this->request->getPost('publicationId');
+
+            // Perform the deletion using the model
+            $this->masterPekerjaanModel->delete($pekerjaan_id, true);
+
+            // Return a success response
+            session()->setFlashdata('pesan', 'Hapus Pekerjaan Berhasil');
+            session()->setFlashdata('icon', 'success');
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Failed to delete publication. Error: ' . $e->getMessage()
+            ]);
+
+            session()->setFlashdata('pesan', 'Gagal Hapus Pekerjaan');
+            session()->setFlashdata('icon', 'error');
+        }
+
+        
+
+        if (session('es3') == 98) {
+            $list_pekerjaan = [];
+        } else {
+            // dd(session('es3'));
+            $list_pekerjaan = $this->masterPekerjaanModel->getAllPekerjaanbySubFungsi(session('es4'));
+            // dd($list_pekerjaan);
+        }
+
+        $list_bidang = $this->masterEs3Model->getAllBidang();
+        $list_golongan = $this->masterGolonganModel->getAllGolongan();
+        $list_jabatan = $this->masterJabatanModel->getAllJabatan();
+        $list_pendidikan = $this->masterPendidikanModel->getAllPendidikan();
+        $list_satker = $this->masterSatkerModel->getAllSatker();
+        $list_seksi = $this->masterEs4Model->getAllSeksi();
+        $list_fungsional = $this->masterFungsionalModel->getAllFungsional();
+
+        $data_user = $this->masterUserModel->getAllUser();
+
+
+        $data = [
+            'title' => 'Master Pekerjaan',
+            'menu' => 'Kelola Master',
+            'subMenu' => 'Master Pekerjaan',
+            'list_user' => $data_user,
+            'list_pekerjaan' => $list_pekerjaan,
+            'list_bidang' => $list_bidang,
+            'list_golongan' => $list_golongan,
+            'list_jabatan' => $list_jabatan,
+            'list_pendidikan' => $list_pendidikan,
+            'list_satker' => $list_satker,
+            'list_seksi' => $list_seksi,
+            'list_fungsional' => $list_fungsional,
+            'pegawai_tertentu' => null,
+            'modal_edit' => '',
+            'modal_detail' => '',
+            'detail_pegawai' => null,
+            'image_pegawai' => null,
+
+
+        ];
+
+
+
+        return view('kelolaMaster/masterPekerjaan', $data);
     }
 
     public function savePegawai()

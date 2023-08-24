@@ -3,17 +3,20 @@
 namespace App\Controllers;
 
 use App\Models\MasterUserModel;
+use App\Models\MasterPegawaiModel;
 use App\Models\MasterAksesUserLevelModel;
 
 
 class masterAkses extends BaseController
 {
     protected $masterUserModel;
+    protected $masterPegawaiModel;
     protected $masterAksesUserLevelModel;
 
     public function __construct()
     {
         $this->masterUserModel = new masterUserModel();
+        $this->masterPegawaiModel = new masterPegawaiModel();
         $this->masterAksesUserLevelModel = new masterAksesUserLevelModel();
     }
 
@@ -31,6 +34,7 @@ class masterAkses extends BaseController
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
         $user = $this->masterUserModel->getUser($username);
+        $pegawai = $this->masterPegawaiModel->getPegawaiByNipLama($user['nip_lama_user']);
 
 
         $pass_default =  password_hash('123456', PASSWORD_DEFAULT);
@@ -69,8 +73,13 @@ class masterAkses extends BaseController
                     'list_menu'  => $list_menu,
                     'list_submenu' => $list_submenu,
                     'fullname' => $user['fullname'],
+                    'es3' =>$pegawai['es3_kd'],
+                    'es4' =>$pegawai['es4_kd'],
+                    'kdsatker' =>$pegawai['satker_kd'],
+                    'data_pegawai' => $pegawai,
                     'data_user' => $user
                 ];
+
             } else {
                 session()->setFlashdata('pesan', 'Akun Tidak Aktif');
                 session()->setFlashdata('icon', 'error');
@@ -104,6 +113,9 @@ class masterAkses extends BaseController
             'list_menu'  => $list_menu,
             'list_submenu' => $list_submenu,
             'fullname' => session('fullname'),
+            'es3' =>session('es3'),
+            'es4' =>session('es4'),
+            'data_pegawai' => session('data_pegawai'),
             'data_user' => session('data_user')
 
         ];

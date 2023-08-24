@@ -19,7 +19,12 @@ function allowHalaman($level_id, $id_menu) //untuk list menu tanpa child
     }
 }
 
-
+function rootbaseurl($text){
+    $fullbaseurl = base_url();
+    $baseurlonly = parse_url($fullbaseurl);
+    $baseurlonly = $baseurlonly['scheme']."://".$baseurlonly['host'];
+    return $baseurlonly.$text;
+}
 
 
 function allowChart($level_id, $id_chart)

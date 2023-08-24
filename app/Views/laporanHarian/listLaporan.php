@@ -4,9 +4,8 @@
 <?= $this->section('content'); ?>
 
 
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -15,21 +14,19 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active">Daftar Laporan Harian</li>
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- TABLE HEADER-->
             <div class="card card-primary card-outline" style="border: #3c4b64;">
                 <div class="card-body box-profile">
                     <div class="row">
-                        <form method="" action="" class="col-md-5 py-1">
+                        <div class="col-md-6 py-1">
                             <div class="input-group">
                                 <?php if ($tanggal_input_terakhir != null) {
                                     if (date('Y-m-d') != $tanggal_input_terakhir['tgl_kegiatan']) {
@@ -38,7 +35,7 @@
                                 } else {
                                     echo '<button type="button" id="btn-modal-tambah" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-plus mr-2"></i>Tambah</button>';
                                 } ?>
-
+                                <button type="button" id="btn-cetak" data-toggle="modal" data-target="#modal-cetak" class="btn btn-info tombol mr-2" style="background-color: #3c4b64; border:none;"><i class="fas fa-print mr-2"></i>Cetak</button>
                                 <select name="tahun" class="form-control tahun" style="border-radius: 5px;">
                                     <option value="">--PILIH TAHUN--</option>
                                     <?php if ($tahun_tersedia != null) : ?>
@@ -47,7 +44,7 @@
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </select>
-                                <select name="bulan" class="form-control ml-2 bulan" style="border-radius: 5px;">
+                                <select name="bulan" class="form-control ml-2 bulan opacity-0" style="border-radius: 5px;">
                                     <option value="">--PILIH BULAN--</option>
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
@@ -64,10 +61,8 @@
                                 </select>
 
                             </div>
-                        </form>
-
-                        <div class="col-md-1">
                         </div>
+
                         <div class="col-md-6 py-1">
                             <div>
                                 <div id="tabelData_filter" class="input-group input-group-md float-right" style="width: 250px">
@@ -76,19 +71,15 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
             </div>
 
-            <!-- /.card -->
-            <!-- /.row -->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <!-- /.card-header -->
+
                         <div class="card-body table-responsive p-0 overflow-hidden">
-                            <!-- tabel lama -->
+
                             <table class="table table-hover " id="tabelData">
                                 <thead>
                                     <tr>
@@ -98,6 +89,7 @@
                                         <th>JUMLAH</th>
                                         <th>SATUAN</th>
                                         <th>BUKTI DUKUNG</th>
+                                        <th>STATUS</th>
                                         <th>AKSI</th>
                                     </tr>
                                 </thead>
@@ -108,7 +100,7 @@
                                     $no = 1;
                                     if ($list_full_laporan_harian != NULL) : ?>
                                         <?php
-
+                                             $urlberkas = rootbaseurl("/myDrive/siphp/berkas/");
                                         foreach ($list_full_laporan_harian as $list) : ?>
                                             <tr>
                                                 <td><?= $no++; ?></td>
@@ -144,11 +136,14 @@
                                                     <?php foreach ($list_bukti_dukung as $bukti_dukung) : ?>
                                                         <div class="p-2 mb-1 rounded-sm card-bukti-laporan">
                                                             <?php foreach ($bukti_dukung as $b) : ?>
-                                                                <a title="<?= $b; ?>" target="_blank" href="<?= base_url('berkas/' . $folderNIP . '/' . $list['tgl_kegiatan'] . '/' . $b) ?>"> <?= $b; ?></a>
+                                                                <a title="<?= $b; ?>" target="_blank" href="<?= $urlberkas . $folderNIP . '/' . $list['tgl_kegiatan'] . '/' . $b ?>"> <?= $b; ?></a>
                                                             <?php endforeach; ?>
                                                         </div>
                                                     <?php endforeach; ?>
 
+                                                </td>
+                                                <td>
+                                                    
                                                 </td>
                                                 <td>
                                                     <a href="<?= base_url('/showDetailLaporanHarian/' . $list['id']) ?>" type="button" id="btn-detail" class="btn btn-info btn-xs tombol" style="background-color: #E18939; border:none;">
@@ -165,13 +160,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
-
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
-            <!-- /.row -->
         </div>
     </section>
 </div>
@@ -333,7 +324,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
+
 
 <!-- MODAL EDIT KEGIATAN -->
 <div class="modal fade" id="<?= $modal_edit; ?>" data-keyboard="false" data-backdrop="static">
@@ -526,7 +517,7 @@
     <!-- /.modal-dialog -->
 </div>
 
-<!-- /.modal -->
+
 
 <!-- MODAL DETAIL -->
 <div class="modal fade" id="<?= $modal_detail; ?>" data-keyboard="false" data-backdrop="static">
@@ -598,7 +589,7 @@
                                                 <?php $list_bukti_dukung = $data->bukti_dukung; ?>
                                                 <?php for ($a = 0; $a < count($list_bukti_dukung[$i]); $a++) : ?>
                                                     <div title="<?= $list_bukti_dukung[$i][$a]; ?>" class="file-list">
-                                                        <a title="<?= $list_bukti_dukung[$i][$a]; ?>" href="<?= base_url('berkas/' . $folderNIP . '/' . $laporan_harian_tertentu['tgl_kegiatan'] . '/' . $list_bukti_dukung[$i][$a]) ?>"> <?= $list_bukti_dukung[$i][$a]; ?></a>
+                                                        <a title="<?= $list_bukti_dukung[$i][$a]; ?>" href="<?= $urlberkas . $folderNIP . '/' . $laporan_harian_tertentu['tgl_kegiatan'] . '/' . $list_bukti_dukung[$i][$a] ?>"> <?= $list_bukti_dukung[$i][$a]; ?></a>
                                                     </div>
                                                 <?php endfor; ?>
 
@@ -649,26 +640,55 @@
     </div>
 </div>
 
+<!-- MODAL CETAK -->
+<div class="modal fade" id="modal-cetak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="<?= base_url('/cetakLaporan'); ?>" method="POST" class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="exampleModalLabel">Cetak Kegiatan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h5><strong>Tentukan batas mencetak</strong></h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group text-center col-6">
+                        <label>Awal</label>
+                        <div class="password">
+                            <input type="date" id='tgl_cetak_awal' name="tgl_awal" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group text-center col-6">
+                        <label>Akhir</label>
+                        <div class="password">
+                            <input type="date" id='tgl_cetak_akhir' name="tgl_akhir" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" style="border:none;" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary tombol" style="background-color: #3c4b64; border:none;"><i class="fas fa-print mr-2"></i>Cetak</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 
-
-
-
-
-
-<!-- dropzonejs -->
-<script src="<?= base_url('plugins/dropzone/min/dropzone.min.js') ?>"></script>
-<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
-<!-- jquery-validation -->
-<script src="<?= base_url('plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
-<script src="<?= base_url('plugins/jquery-validation/additional-methods.min.js') ?>"></script>
-<script src="<?= base_url('plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
-<!-- Toastr -->
-<script src="<?= base_url('plugins/toastr/toastr.min.js') ?>"></script>
-
-
-
-
+<script src="<?= base_url('/plugins/dropzone/min/dropzone.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/jquery-validation/additional-methods.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('/plugins/toastr/toastr.min.js') ?>"></script>
 <script>
     <?php if (session()->getFlashdata('pesan')) { ?>
         Swal.fire({
@@ -679,201 +699,20 @@
     <?php } ?>
 </script>
 <script>
-    $(function() {
-        bsCustomFileInput.init();
-    });
-
-    $(document).ready(function() {
-
-        let tglTabel = document.querySelectorAll('#tgl-kegiatan-tabel')
-        for (i = 0; i <= tglTabel.length; i++) {
-            tglTabel[i].innerHTML = ubahFormatTanggal2(tglTabel[i].textContent);
-        }
-    })
-</script>
-
-<script>
-    $(document).ready(function() {
-        $(document).on('keyup', '#kegiatan-input', function() {
-            $(this).next().removeClass('d-none')
-            for (i = 0; i <= $(this).next().children().length; i++) {
-                if ($(this).next().children().eq(i).text().toLowerCase().match($(this).val().toLowerCase()) !== null) {
-                    $(this).next().children().eq(i).removeClass('d-none')
-                } else {
-                    $(this).next().children().eq(i).addClass('d-none')
-                }
-            }
-        })
-
-        $(document).on('blur', '#kegiatan-input', function() {
-            let textarea = $(this)
-            setTimeout(function() {
-                textarea.next().addClass('d-none')
-            }, 400)
-        })
-
-        $(document).on('click', '.option-kegiatan', function() {
-            $(this).parent().prev().val($(this).text())
-            $(this).parent().addClass('d-none')
-        })
-    })
-</script>
-
-
-<script>
-    var Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-    });
-    $(document).on('input', '#formFileMultiple', function() {
-        if (this.files[0].size > 500000) { // ini untuk ukuran 500 Kb
-            Toast.fire({
-                icon: "warning",
-                title: "Ukuran File Melebihi 500Kb!",
-            });
-            this.value = "";
-            return false;
-        };
-        var pathFile = this.value;
-        var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.pdf|\.xlsx|\.docx|\.ppt|\.txt|\.rar|\.zip|\.csv)$/i;
-        if (!ekstensiOk.exec(pathFile)) {
-            Toast.fire({
-                icon: "warning",
-                title: "Silakan upload file yang dengan ekstensi .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv",
-            });
-            this.value = "";
-            return false;
-        }
-    })
-</script>
-
-<script src="<?= base_url('js/tanggal.js') ?>"></script>
-<script>
-    $(document).ready(function() {
-        $("#modal-edit").modal("show");
-        $("#modal-detail").modal("show");
-
-        $(document).on("click", "#hapus-baris", function() {
-            if ($(this).parent().parent().attr('id') == 'baru') {
-                $(this).parent().remove();
-                $('#baru').children().find('#hapus-baris').addClass('d-none')
-                $('#baru').children().last().find('#hapus-baris').removeClass('d-none')
-            }
-            if ($(this).parent().parent().attr('id') == 'baru2') {
-                $(this).parent().remove();
-                $('#baru2').children().find('#hapus-baris').addClass('d-none')
-                $('#baru2').children().last().find('#hapus-baris').removeClass('d-none')
-            }
-        });
-
-        function appendBaris(modal, noBaris) {
-            $(modal).append(
-                `
-        <div class="row mt-4 rounded position-relative pt-2 kegiatan-baru">
-                    <span id="hapus-baris" type="button" class="delete-kegiatan d-none"><i class="fas fa-times"></i></span>
-                    <div class="col-xl-1 baris-kegiatan">
-                        <div class="row"><strong>NO</strong></div>
-                        <div class="row">` +
-                noBaris +
-                `</div>
-                    </div>
-                    <div class="col-xl-4 baris-kegiatan">
-                        <div class="row"><strong>Uraian Kegiatan</strong></div>
-                        <div class="row px-1 w-100">
-                            <div class="form-group w-100 position-relative">
-                                    <textarea id="kegiatan-input" class="form-control  w-100" name="field_uraian[]" rows="3" placeholder="Masukkan Uraian Kegiatan ..." required></textarea>
-                                    <div class="option-kegiatan-wrapper w-100 mt-2 bg-white py-2 rounded shadow-lg position-absolute d-none">
-                                    <?php if ($list_full_laporan_harian != null) : ?>
-                                        <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?>
-                                            <option class="option-kegiatan border-bottom d-none"><?= $uraian; ?></option>
-                                        <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-1 baris-kegiatan">
-                        <div class="row"><strong>Jumlah</strong></div>
-                        <div class="row px-1 w-100">
-                            <div class="form-group w-100">
-                                <input type="number" min="1" value="1" class="form-control w-100" name="field_jumlah[]" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 baris-kegiatan">
-                        <div class="row"><strong>Satuan</strong></div>
-                        <div class="row px-1 w-100">
-                            <div class="input-group w-100">
-                            <select class=" form-control w-100" name="field_satuan[]" required>
-                                    <?php if ($list_satuan != NULL) : ?>
-                                        <?php foreach ($list_satuan as $satuan) : ?>
-                                            <option value="<?= $satuan['nama_satuan']; ?>"><?= $satuan['nama_satuan']; ?></option>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 baris-kegiatan">
-                        <div class="row"><strong>Hasil Kegiatan</strong></div>
-                        <div class="row px-1  w-100">
-                                <div class="form-group  w-100 position-relative">
-                                <textarea class="form-control  w-100" name="field_hasil[]" rows="3" placeholder="Masukkan Hasil Kegiatan ..." required></textarea>
-                               
-                                </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 baris-kegiatan mb-2">
-                        <div class="row"><strong>Bukti Dukung</strong></div>
-                        <div class="row w-100">
-                            <div class="input-group w-100">
-                                <div class="custom-file w-100">
-                                    <input type="file" class="custom-file-input w-100" name="field_bukti` +
-                noBaris +
-                `[]" id="formFileMultiple" accept=".png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv" required multiple />
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                    <p class="file-tip d-none">
-                                    <strong class="mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle fa-2x text-yellow mr-2"></i>
-                                                Jenis file :
-                                            </strong> <br>
-                                            .png, .jpg, .jpeg, .pdf, .xlsx, .docx, .ppt, .txt, .rar, .zip, .csv<br><br>
-                                            <strong>
-                                                Ukuran File Maks : 200kb
-                                            </strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-    `
-            );
-        }
-
-        $('[id^="tambah-baris"]').click(function() {
-            let noBaris = $("#lama").children().length + $("#baru").children().length + 1;
-            appendBaris("#baru", noBaris);
-            bsCustomFileInput.init();
-            $('#baru').children().find('#hapus-baris').addClass('d-none')
-            $('#baru').children().last().find('#hapus-baris').removeClass('d-none')
-        });
-
-        $('[id^="tambah-baris2"]').click(function() {
-            let noBaris2 = $("#lama2").children().length + $("#baru2").children().length + 1;
-            appendBaris("#baru2", noBaris2);
-            bsCustomFileInput.init();
-            $('#baru2').children().find('#hapus-baris').addClass('d-none')
-            $('#baru2').children().last().find('#hapus-baris').removeClass('d-none')
-        });
-    });
-</script>
-<script>
-    var date = new Date();
-
+    <?php if ($list_full_laporan_harian != null) : ?>
+        const uraian = [
+            <?php foreach (array_unique($list_uraian_unik) as $uraian) : ?> `<?php
+                                                                                $uraian = preg_replace("/\r|\n/", " ", $uraian);
+                                                                                echo $newUraian = str_replace('"', '', $uraian); ?>`,
+            <?php endforeach; ?>
+        ]
+    <?php endif; ?>
+    <?php if ($list_satuan != NULL) : ?>
+        const satuan = [
+            <?php foreach ($list_satuan as $satuan) : ?> "<?= $satuan['nama_satuan']; ?>",
+            <?php endforeach; ?>
+        ]
+    <?php endif; ?>
     var currentDate = '<?php
 
                         use CodeIgniter\I18n\Time;
@@ -881,119 +720,9 @@
                         $myTime = Time::today('Asia/Jakarta');
                         echo $myTime->toLocalizedString('yyyy-MM-dd');
                         ?>';
-    document.getElementById('hari-ini').value = currentDate;
-
-    $('#tanggal-tambah').html(ubahFormatTanggal(currentDate))
-    $('#tanggal-edit').html(ubahFormatTanggal($('#tanggal-kegiatan').val()))
-    $('#tanggal-detail').html(ubahFormatTanggal($('#tanggal-kegiatan-detail').val()))
 </script>
+<script src="<?= base_url('/js/append.js') ?>"></script>
+<script src="<?= base_url('/js/tanggal.js') ?>"></script>
+<script src="<?= base_url('/js/laporan.js') ?>"></script>
 
-<script>
-    $(document).on("mouseover", '.custom-file-input', function() {
-        $(this).next().next().removeClass('d-none')
-    })
-    $(document).on("mouseout", '.custom-file-input', function() {
-        $(this).next().next().addClass('d-none')
-    })
-    $(document).on("mouseover", '.file-list', function() {
-        $(this).next('.file-tip2').removeClass('d-none')
-    })
-    $(document).on("mouseout", '.file-list', function() {
-        $(this).next('.file-tip2').addClass('d-none')
-    })
-</script>
-
-<script>
-    // Mengambil Data edit dengan menggunakan Jquery
-    $(document).on('click', '#btn-edit-hapus', function() {
-        $('#id_laporan_tertentu').val($(this).data('id_laporan_tertentu'));
-        $('#posisi_array').val($(this).data('posisi_array'));
-        $('#posisi_dalam_array').val($(this).data('posisi_dalam_array'));
-        $('#tanggal_hapus').val($(this).data('tanggal_hapus'));
-        $('#nama_bukti_dukung').text($(this).data('nama_bukti_dukung'));
-
-    })
-</script>
-
-<script>
-    $('#btn-modal-tambah').click(function() {
-        $('#modal-tambah').modal('show');
-    })
-
-    $('#btn-close-modal-tambah').click(function() {
-        $('#modal-tambah').modal('hide');
-    })
-
-    $('#btn-close-modal-tambah2').click(function() {
-        $('#modal-tambah').modal('hide');
-    })
-</script>
-
-<script type="text/javascript">
-    $('#tabelData').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "responsive": true,
-        'ordering': false,
-        "info": true,
-        "autoWidth": false,
-        "pageLength": 30
-
-    });
-
-    function filterData() {
-        $('#tabelData').DataTable().search(
-            $('.tahun').val() + '-' + $('.bulan').val()
-        ).draw();
-    }
-    $('.tahun').on('change', function() {
-        filterData();
-    });
-
-    $('.bulan').on('change', function() {
-        filterData();
-    });
-
-    function filterData2() {
-        $('#tabelData').DataTable().search(
-            $('.auto_search').val()
-        ).draw();
-    }
-    $('#btn-search').on('click', function() {
-        filterData2();
-    });
-
-
-    $(document).ready(function() {
-        $('#tabelData').DataTable().search(
-            $('.auto_search').val()
-        ).draw();
-    })
-
-
-
-    $('#tabelData_wrapper').children().first().addClass('d-none')
-    $('.dataTables_paginate').addClass('Pager2').addClass('float-right')
-    $('.dataTables_info').addClass('text-sm text-gray py-2')
-    $('.dataTables_paginate').parent().parent().addClass('card-footer clearfix')
-
-    $(document).on('keyup', '#pencarian', function() {
-        $('#tabelData').DataTable().search(
-            $('.auto_search').val()
-        ).draw();
-    })
-</script>
-<script>
-    (function() {
-        $('.form-tambah').on('submit', function() {
-            $('#tombol-simpan').attr('disabled', 'true');
-        })
-    })();
-    (function() {
-        $('.form-edit').on('submit', function() {
-            $('#tombol-edit').attr('disabled', 'true');
-        })
-    })();
-</script>
 <?= $this->endSection(); ?>

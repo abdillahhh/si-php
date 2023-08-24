@@ -12,7 +12,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div><!-- /.col -->
@@ -133,7 +133,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4 d-flex justify-content-center align-items-center">
-                                    <img class="img-fluid rounded" style="width: 100%;" src="<?= base_url('images/bps.png') ?>">
+                                    <img class="img-fluid rounded" style="width: 100%;" src="<?= base_url('/images/bps.png') ?>">
                                 </div>
                                 <div class="col-md-4"></div>
                                 <div class="col-md-4 d-flex justify-content-center align-items-center flex-column" style="min-height: 313px;  height: 313px;  max-height: 313px;">
@@ -189,8 +189,8 @@
     <!-- /.content -->
 </div>
 <!-- ChartJS -->
-<script src="<?= base_url('plugins/chart.js/Chart.min.js') ?>"></script>
-<script src="<?= base_url('js/tanggal.js') ?>"></script>
+<script src="<?= base_url('/plugins/chart.js/Chart.min.js') ?>"></script>
+<script src="<?= base_url('/js/tanggal.js') ?>"></script>
 <!-- BARCHART -->
 <script>
     var areaChartData = {
